@@ -42,7 +42,7 @@ should also read through our
    [[troubleshooting instructions|Troubleshooting]].
 
 <!--
-TODO(#2): Add link to IDE tutorial.
+TODO(#4): Add link to IDE tutorial.
 -->
 
 1. Update your GitHub settings:
