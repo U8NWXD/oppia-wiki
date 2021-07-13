@@ -64,6 +64,11 @@ and assign them! Some developers only look at their GitHub notifications
 (which at-mentions trigger), while others only look at what they're
 assigned to.
 
+You can even mention whole teams of people! For example, if you find an
+issue that is destabilizing the project, you could notify all the core
+maintainers by including `@oppia/core-maintainers` in your issue. The
+teams are all listed [here](https://github.com/orgs/oppia/teams).
+
 ## How to Ask Good Questions
 
 At Oppia we don’t care how silly your question is! Just ensure your
