@@ -4,7 +4,7 @@ Oppia has many webpages and this is a comprehensive guide on how to access all t
 
 Many Oppia Pages require authentication to access. In order to sign in:
 
-1. Click the sign-in button on the top left navigation bar
+1. Click the sign-in button on the top left navigation bar.
 
    ![Sign-In Button](images/Webpage-Guide/signInButton.png)
 
@@ -50,31 +50,31 @@ There are two ways to become a super-administrator: use an email address with im
 
 The admin page is a page accessible only to super-administrators. It has many functionalities including changing permissions, configuration values, and running jobs. Certain webpages cannot be accessed unless the current user has the required permissions. 
 
-1. Log in as a super-admin
+1. Log in as a super-admin.
 
-2. Go to the profile menu and click on the "Admin Page" link
+2. Go to the profile menu and click on the "Admin Page" link.
 
    ![Admin Panel Link](https://user-images.githubusercontent.com/16653571/41501009-e04e9a76-71b9-11e8-958e-985f5bc7122a.png)
 
 #### Assign roles
 
-1. Navigate to the Admin page
+1. Navigate to the Admin page.
 
-2. Click the "ROLES" tab
+2. Click the "ROLES" tab.
 
    ![Admin Role Tab](https://user-images.githubusercontent.com/16653571/41501684-a543b22e-71c6-11e8-883c-cec35e32535e.png)
 
-3. Change the role of your username to the desired role, in this example "collection editor"
+3. Change the role of your username to the desired role, "collection editor" in this example.
 
    ![assignrole](https://user-images.githubusercontent.com/16653571/41503346-ff754c9e-71ee-11e8-9b72-9e16dae46418.png)
 
 ### About page
 
-The About page provides a brief overview of Oppia. It details the goals of the Oppia organization, credits its contributors, and provides links to guides and tutorials on how to further explore Oppia
+The About page provides a brief overview of Oppia. It details the goals of the Oppia organization, credits its contributors, and provides links to guides and tutorials on how to further explore Oppia.
 
-1. Click the "About Menu" button on the top right navigation bar
+1. Click the "About Menu" button on the top right navigation bar.
 
-2. Click on the "About Oppia" link
+2. Click on the "About Oppia" link.
 
    ![AboutPageLink](images/Webpage-Guide/aboutPageLink.png)
 
@@ -82,15 +82,15 @@ The About page provides a brief overview of Oppia. It details the goals of the O
 
 The Collection editor page allows users to create collections, which group explorations together. The collection editor page can only be accessed by users with the "collection editor" role.
 
-1. Log in as a super-admin and change your user's role to "collection editor"
+1. Log in as a super-admin and change your user's role to "collection editor."
 
-2. Navigate to the splash page (http://localhost:8181/splash) 
+2. Navigate to the splash page (http://localhost:8181/splash).
 
-3. Click on the "Create" button in the top navigation bar 
+3. Click on the "Create" button in the top navigation bar.
 
    ![Create Button](https://user-images.githubusercontent.com/16653571/41504441-a7f60512-720c-11e8-85c2-8fee5f55a42c.png)
 
-4. Select "Create Collection"
+4. Select "Create Collection."
 
    ![CREATE COLLECTION button](https://user-images.githubusercontent.com/16653571/41504483-d946fd3c-720d-11e8-997d-943cd8703e57.png)
 
@@ -98,77 +98,77 @@ The Collection editor page allows users to create collections, which group explo
 
 The collection player page allows users to explore collections in Oppia.
 
-1. Log in as a super-admin
+1. Log in as a super-admin.
 
-2. Change role to "collection editor"
+2. Change role to "collection editor."
 
 3. Go to the admin activities tab and reload the collection "welcome_to_collections.yaml"
 
    ![Reload Collections](images/Webpage-Guide/reloadCollections.png)
 
-4. Navigate back to the community library page and type in the search bar "collections"
+4. Navigate back to the community library page and type in the search bar "collections."
 
-5. Click on the card titled "Introduction to collections in Oppia"
+5. Click on the card titled "Introduction to collections in Oppia."
 
 ### Contact Page
 
-The contact page details the ways to communicate with the Oppia team and get involved
+The contact page details the ways to communicate with the Oppia team and get involved.
 
-1. Click on the About menu at the top navigation Bar
+1. Click on the "About" menu at the top navigation bar.
 
-2. Click on the "Contact Us" link
+2. Click on the "Contact Us" link.
 
 ### Creator dashboard page
 
 The creator dashboard page allows users to view all explorations they have created, or are currently creating.
 
-1. Log in
+1. Log in.
 
-2. Navigate to the creator dashboard page at http://localhost:8181/creator-dashboard
+2. Navigate to the creator dashboard page at http://localhost:8181/creator-dashboard.
 
 ### Contributor dashboard page
 
 The contributor dashboard page allows users to translate existing explorations into a different language, or create questions for existing Oppia explorations. This lets more people become "contributors" by helping create Oppia content.
 
-1. Log in
+1. Log in.
 
-2. Navigate to the contributor dashboard page at http://localhost:8181/contributor-dashboard
+2. Navigate to the contributor dashboard page at http://localhost:8181/contributor-dashboard.
 
 ### Delete account page
 
 The delete account page allows users to delete their accounts. Currently, it is deactivated and certain code needs to be changed to access it.
 
-1. Go to constants.ts and change `ENABLE_ACCOUNT_DELETION` from `false` to `true`
+1. Go to constants.ts and change `ENABLE_ACCOUNT_DELETION` from `false` to `true`.
 
-2. Navigate to http://localhost:8181/delete-account
+2. Navigate to http://localhost:8181/delete-account.
 
 ### Donate page
 
-The donate page provides a way for people to donate to the Oppia organization
+The donate page provides a way for people to donate to the Oppia organization.
 
-1. Go to http://localhost:8181/donate or click on the donate button in the navigation bar
+1. Go to http://localhost:8181/donate or click on the donate button in the navigation bar.
 
 ### Email dashboard page
 
-1. Log in as a super-admin and change role to "admin"
+1. Log in as a super-admin and change role to "admin."
 
-2. Navigate to http://localhost:8181/emaildashboard
+2. Navigate to http://localhost:8181/emaildashboard.
 
 ### Exploration editor page
 
 The exploration editor page allows users to create explorations, or lessons, in Oppia.
 
-1. Log in
+1. Log in.
 
-2. Click the "Create" button on the top right to open the exploration editor
+2. Click the "Create" button on the top right to open the exploration editor.
 
 ### Exploration player page
 
 The exploration player page allows users to play explorations in Oppia.
 
-1. Navigate to http://localhost:8181/community-library
+1. Navigate to http://localhost:8181/community-library.
 
-2. Enter "fractions" into the search bar
+2. Enter "fractions" into the search bar.
 
 3. Click on the exploration titled "Fractions 1 - What is the Fraction?"
 
@@ -176,45 +176,45 @@ The exploration will launch in a new tab, where you will see the first card. As 
 
 ### Get started page
 
-The get started page provides information for people new to Oppia
+The get started page provides information for people new to Oppia.
 
-1. Navigate to http://localhost:8181/get-started
+1. Navigate to http://localhost:8181/get-started.
 
 ### Landing pages
 
 The landing pages are a series of pages that provide information for people who want to help contribute to Oppia.
 
-1. Navigate to http://localhost:8181/teachers
+1. Navigate to http://localhost:8181/teachers.
 
 ### Skill editor page
 
-The skill editor allows the creation of skills in Oppia
+The skill editor allows the creation of skills in Oppia.
 
-1. Log in as a super-admin and set role to "admin"
+1. Log in as a super-admin and set role to "admin."
 
-2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
+2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
    ![createtopic](images/Webpage-Guide/createTopicModal.png)
 
-3. Go to the topic editor and scroll down to the "Create Skill" button
+3. Go to the topic editor and scroll down to the "Create Skill" button.
 
-4. Create a skill, and wait for the skill editor tab to open
+4. Create a skill, and wait for the skill editor tab to open.
 
 ### Story editor page
 
-The story editor page allows users to create stories in Oppia
+The story editor page allows users to create stories in Oppia.
 
-1. Log in as a super-admin and set role to "admin"
+1. Log in as a super-admin and set role to "admin."
 
-2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
+2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
    ![createtopic](images/Webpage-Guide/createTopicModal.png)
 
-3. Go to the topic editor and click on the Add Story button
+3. Go to the topic editor and click on the Add Story button.
 
    ![createtopic](images/Webpage-Guide/addStoryButton.png)
 
-4. Complete create story modal, and wait for the story editor page to load
+4. Complete create story modal, and wait for the story editor page to load.
 
    ![createtopic](images/Webpage-Guide/addStoryModal.png)
 
@@ -222,21 +222,21 @@ The story editor page allows users to create stories in Oppia
 
 The story player allows people to play stories. To access it:
 
-1. Follow steps to access the story editor page
+1. Follow steps to access the story editor page.
 
-2. Add a chapter to the story
+2. Add a chapter to the story.
 
-3. Create an exploration and link it to the story
+3. Create an exploration and link it to the story.
 
-4. Go to the Preview tab of the Story player
+4. Go to the Preview tab of the Story player.
 
 ### Topic editor (including preview tab)
 
-The topic editor page allows users to create topics in Oppia
+The topic editor page allows users to create topics in Oppia.
 
-1. Log in as a super-admin and set role to "admin"
+1. Log in as a super-admin and set role to "admin."
 
-2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
+2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
    ![Create Button](https://user-images.githubusercontent.com/30312043/78745178-06cc0f00-7981-11ea-9eca-f4495e05b0e4.png)
 
@@ -248,31 +248,31 @@ The topic editor page allows users to create topics in Oppia
 
 4. Edit and publish the topic after adding subtopics (add some content for these), and a story with few chapters.
 
-5. Use the preview button to navigate to the topic player
+5. Use the preview button to navigate to the topic player.
 
 ### Preferences page
 
-The preferences page allows users to change their settings on oppia
+The preferences page allows users to change their settings on oppia.
 
-1. Log in
+1. Log in.
 
-2. Go to http://localhost:8181/preferences
+2. Go to http://localhost:8181/preferences.
 
 ### Profile page
 
-The profile page allows users to view and change their profile on Oppia
+The profile page allows users to view and change their profile on Oppia.
 
-1. Log in
+1. Log in.
 
-2. Click on the profile menu and click your username to go to the profile page
+2. Click on the profile menu and click your username to go to the profile page.
 
 ### Community library page
 
 The community library page allows users to view and search for explorations on Oppia. "Community" here refers to the Oppia community of teachers, learners, and contributors.
 
-1. Log in
+1. Log in.
 
-2. Go to http://localhost:8181/community-library
+2. Go to http://localhost:8181/community-library.
 
 The library page has a search bar that lets you search for explorations:
 
@@ -282,22 +282,22 @@ You can search the library, which consists of all of Oppia's explorations, by en
 
 ### Topics and skills dashboard page
 
-The topics and skills dashboard page allows users to view their created topics and skills
+The topics and skills dashboard page allows users to view their created topics and skills.
 
-1. Log in as a super-admin and set role to "admin"
+1. Log in as a super-admin and set role to "admin."
 
-2. Go to http://localhost:8181/topics-and-skills-dashboard or click the topic and skills dashboard link
+2. Go to http://localhost:8181/topics-and-skills-dashboard or click the topic and skills dashboard link.
 
    ![Create Topic Button](images/Webpage-Guide/topicAndSkillDashboardLink.png)
 
 ### Thanks page
 
-The Thanks page acknowledges people who support Oppia
+The Thanks page acknowledges people who support Oppia.
 
-1. Go to http://localhost:8181/thanks
+1. Go to http://localhost:8181/thanks.
 
 ### Terms page
 
-The Terms page addresses the terms and conditions of Oppia
+The Terms page addresses the terms and conditions of Oppia.
 
-1. Go to http://localhost:8181/terms
+1. Go to http://localhost:8181/terms.

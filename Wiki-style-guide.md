@@ -8,3 +8,6 @@
 ## Writing style
 
 * Use sentence case for headings instead of title case.
+* Write in complete sentences. This means putting punctuation at the end! However, this rule can be relaxed in lists. For example, this is okay even though "An interactive lesson on Oppia" isn't a sentence:
+
+  > * **Exploration:** An interactive lesson on Oppia.
