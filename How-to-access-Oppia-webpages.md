@@ -20,7 +20,7 @@ There are two ways to become a super-administrator: use an email address with im
 
 ### Using an email with implicit super-admin privileges
 
-1. Use the email address `testadmin@example.com`. As soon as you type it in, a message should appear saying `This email address has implicit super-admin privileges!`.
+1. Use the email address `testadmin@example.com`. As soon as you type it in, a message should appear saying "This email address has implicit super-admin privileges!".
 
    ![Sign-in page with implicit super-admin email address](images/Webpage-Guide/implicitSuperAdmin.png)
 
@@ -34,11 +34,11 @@ There are two ways to become a super-administrator: use an email address with im
 
    ![Firebase emulator UI](images/Webpage-Guide/firebaseEmulatorUI.png)
 
-3. Find the corresponding Firebase account, click on the **"3 dots"** button, then click on **Edit user**.
+3. Find the corresponding Firebase account, click on the "3 dots" button, then click on "Edit user".
 
    ![Finding the Edit user button](images/Webpage-Guide/firebaseEditUser.png)
 
-4. Set the Custom Claims value to `{"role":"super_admin"}`, then click on the **Save** button.
+4. Set the Custom Claims value to `{"role":"super_admin"}`, then click on the "Save" button.
 
    ![Setting custom claims](images/Webpage-Guide/firebaseCustomClaims.png)
 
@@ -52,9 +52,7 @@ The admin page is a page accessible only to super-administrators. It has many fu
 
 1. Log in as a super-admin
 
-   ![Sign-In page](https://user-images.githubusercontent.com/16653571/41500954-e88a0262-71b8-11e8-9cac-456fb46782c1.png)
-
-2. Go to the profile menu and click on the "Admin" link
+2. Go to the profile menu and click on the "Admin Page" link
 
    ![Admin Panel Link](https://user-images.githubusercontent.com/16653571/41501009-e04e9a76-71b9-11e8-958e-985f5bc7122a.png)
 
@@ -62,11 +60,11 @@ The admin page is a page accessible only to super-administrators. It has many fu
 
 1. Navigate to the Admin page
 
-2. Click the **ROLES** tab
+2. Click the "ROLES" tab
 
    ![Admin Role Tab](https://user-images.githubusercontent.com/16653571/41501684-a543b22e-71c6-11e8-883c-cec35e32535e.png)
 
-3. Change the role of your username to the desired role, in this example _COLLECTION_EDITOR_
+3. Change the role of your username to the desired role, in this example "collection editor"
 
    ![assignrole](https://user-images.githubusercontent.com/16653571/41503346-ff754c9e-71ee-11e8-9b72-9e16dae46418.png)
 
@@ -76,23 +74,23 @@ The About page provides a brief overview of Oppia. It details the goals of the O
 
 1. Click the About Menu button on the top right navigation bar
 
-2. Click on the “About Oppia” link
+2. Click on the "About Oppia" link
 
    ![AboutPageLink](images/Webpage-Guide/aboutPageLink.png)
 
 ### Collection editor page
 
-The Collection editor page allows users to create collections in Oppia. The collection editor page can only be accessed by users with the role _COLLECTION_EDITOR_
+The Collection editor page allows users to create collections in Oppia. The collection editor page can only be accessed by users with the role "collection editor"
 
-1. Log in as a super-admin and change your user's role to `COLLECTION_EDITOR`
+1. Log in as a super-admin and change your user's role to "collection editor"
 
 2. Navigate to the splash page (http://localhost:8181/splash) 
 
-3. Click on the “Create” button in the top navigation bar 
+3. Click on the "Create" button in the top navigation bar 
 
    ![Create Button](https://user-images.githubusercontent.com/16653571/41504441-a7f60512-720c-11e8-85c2-8fee5f55a42c.png)
 
-4. Select “Create Collection”
+4. Select "Create Collection"
 
    ![CREATE COLLECTION button](https://user-images.githubusercontent.com/16653571/41504483-d946fd3c-720d-11e8-997d-943cd8703e57.png)
 
@@ -102,15 +100,15 @@ The collection player page allows users to explore collections in Oppia.
 
 1. Log in as a super-admin
 
-2. Change role to `COLLECTION_EDITOR`
+2. Change role to "collection editor"
 
-3. Go to the admin activities tab and reload the collection “welcome_to_collections.yaml”
+3. Go to the admin activities tab and reload the collection "welcome_to_collections.yaml"
 
    ![Reload Collections](images/Webpage-Guide/reloadCollections.png)
 
-4. Navigate back to the community library page and type in the search bar “collections”
+4. Navigate back to the community library page and type in the search bar "collections"
 
-5. Click on the card titled `Introduction to collections in Oppia`
+5. Click on the card titled "Introduction to collections in Oppia"
 
 ### Contact Page
 
@@ -118,7 +116,7 @@ The contact page details the ways to communicate with the Oppia team and get inv
 
 1. Click on the About menu at the top navigation Bar
 
-2. Click on the “Contact Us” link
+2. Click on the "Contact Us" link
 
 ### Creator dashboard page
 
@@ -152,7 +150,7 @@ The donate page provides a way for people to donate to the Oppia organization
 
 ### Email dashboard page
 
-1. Log in as a super-admin and change role to `ADMIN`
+1. Log in as a super-admin and change role to "admin"
 
 2. Navigate to http://localhost:8181/emaildashboard
 
@@ -172,7 +170,7 @@ The exploration player page allows users to play explorations in Oppia.
 
 2. Enter fractions into the search bar
 
-3. Click on the exploration titled ‘Fractions 1 - What is the Fraction?’
+3. Click on the exploration titled "Fractions 1 - What is the Fraction?"
 
 ### Get started page
 
@@ -190,13 +188,13 @@ The landing pages are a series of pages that provide information for people who 
 
 The skill editor allows the creation of skills in Oppia
 
-1. Log in as a super-admin and set role to `ADMIN`
+1. Log in as a super-admin and set role to "admin"
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
 
    ![createtopic](images/Webpage-Guide/createTopicModal.png)
 
-3. Go to the topic editor and scroll down to the `Create Skill` button
+3. Go to the topic editor and scroll down to the "Create Skill" button
 
 4. Create a skill, and wait for the skill editor tab to open
 
@@ -204,7 +202,7 @@ The skill editor allows the creation of skills in Oppia
 
 The story editor page allows users to create stories in Oppia
 
-1. Log in as a super-admin and set role to `ADMIN`
+1. Log in as a super-admin and set role to "admin"
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
 
@@ -234,7 +232,7 @@ The story player allows people to play stories. To access it:
 
 The topic editor page allows users to create topics in Oppia
 
-1. Log in as a super-admin and set role to `ADMIN`
+1. Log in as a super-admin and set role to "admin"
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic
 
@@ -278,7 +276,7 @@ The community library page allows users to view and search for explorations on O
 
 The topics and skills dashboard page allows users to view their created topics and skills
 
-1. Log in as a super-admin and set role to `ADMIN`
+1. Log in as a super-admin and set role to "admin"
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard or click the topic and skills dashboard link
 
