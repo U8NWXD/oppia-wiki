@@ -72,7 +72,7 @@ The admin page is a page accessible only to super-administrators. It has many fu
 
 The About page provides a brief overview of Oppia. It details the goals of the Oppia organization, credits its contributors, and provides links to guides and tutorials on how to further explore Oppia
 
-1. Click the About Menu button on the top right navigation bar
+1. Click the "About Menu" button on the top right navigation bar
 
 2. Click on the "About Oppia" link
 
@@ -80,7 +80,7 @@ The About page provides a brief overview of Oppia. It details the goals of the O
 
 ### Collection editor page
 
-The Collection editor page allows users to create collections in Oppia. The collection editor page can only be accessed by users with the role "collection editor"
+The Collection editor page allows users to create collections, which group explorations together. The collection editor page can only be accessed by users with the "collection editor" role.
 
 1. Log in as a super-admin and change your user's role to "collection editor"
 
@@ -120,7 +120,7 @@ The contact page details the ways to communicate with the Oppia team and get inv
 
 ### Creator dashboard page
 
-The creator dashboard page allows users to view all explorations they have created, or are currently creating
+The creator dashboard page allows users to view all explorations they have created, or are currently creating.
 
 1. Log in
 
@@ -128,7 +128,7 @@ The creator dashboard page allows users to view all explorations they have creat
 
 ### Contributor dashboard page
 
-The contributor dashboard page allows users to translate existing explorations into a different language, or create questions for existing Oppia explorations
+The contributor dashboard page allows users to translate existing explorations into a different language, or create questions for existing Oppia explorations. This lets more people become "contributors" by helping create Oppia content.
 
 1. Log in
 
@@ -156,11 +156,11 @@ The donate page provides a way for people to donate to the Oppia organization
 
 ### Exploration editor page
 
-The exploration editor page allows users to create explorations in Oppia.
+The exploration editor page allows users to create explorations, or lessons, in Oppia.
 
 1. Log in
 
-2. Click the create button on the top right
+2. Click the "Create" button on the top right to open the exploration editor
 
 ### Exploration player page
 
@@ -168,9 +168,11 @@ The exploration player page allows users to play explorations in Oppia.
 
 1. Navigate to http://localhost:8181/community-library
 
-2. Enter fractions into the search bar
+2. Enter "fractions" into the search bar
 
 3. Click on the exploration titled "Fractions 1 - What is the Fraction?"
+
+The exploration will launch in a new tab, where you will see the first card. As you progress through the exploration, you will see subsequent cards, each of which has some content (text, images, videos, or other rich text components). Some will also have interactions like multiple choice questions. A user's answer to these interactions are called "responses."
 
 ### Get started page
 
@@ -266,11 +268,17 @@ The profile page allows users to view and change their profile on Oppia
 
 ### Community library page
 
-The community library page allows users to view and search for explorations on Oppia
+The community library page allows users to view and search for explorations on Oppia. "Community" here refers to the Oppia community of teachers, learners, and contributors.
 
 1. Log in
 
 2. Go to http://localhost:8181/community-library
+
+The library page has a search bar that lets you search for explorations:
+
+![Library page search bar](images/Webpage-Guide/librarySearch.png)
+
+You can search the library, which consists of all of Oppia's explorations, by entering text, and you can filter by category (also called subject) and language.
 
 ### Topics and skills dashboard page
 
