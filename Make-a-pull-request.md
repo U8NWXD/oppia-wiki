@@ -1,13 +1,13 @@
 ## Table of Contents
 
-* [Step 1: Before writing any code, choose a descriptive branch name](#step-1)
-* [Step 2: Make commit(s) locally to your feature branch](#step-2)
-* [Step 3: Push changes to your GitHub fork](#step-3)
-* [Step 4: When your feature is ready to merge, create a pull request](#step-4)
-* [Step 5: Address review comments until all reviewers approve](#step-5)
-* [Step 6: Make sure all continuous integration (CI) checks pass](#step-6)
-* [Step 7: Tidy up](#step-7)
-* [Step 8: Celebrate](#step-8)
+* [Step 1: Before writing any code, choose a descriptive branch name](#step-1-create-a-new-branch-with-a-descriptive-name)
+* [Step 2: Make commits locally to your feature branch](#step-2-make-commits-locally-to-your-feature-branch)
+* [Step 3: Push changes to your GitHub fork](#step-3-push-changes-to-your-github-fork)
+* [Step 4: Create a pull request](#step-4-create-a-pull-request)
+* [Step 5: Address review comments until all reviewers approve](#step-5-address-review-comments-until-all-reviewers-approve)
+* [Step 6: Make sure all continuous integration checks pass](#step-6-make-sure-all-continuous-integration-checks-pass)
+* [Step 7: Tidy up](#step-7-tidy-up)
+* [Step 8: Celebrate](#step-8-celebrate)
 
 **Working on your first pull request?** Pull requests can be tricky to understand at first, so if the instructions on this page don't make sense to you, check out the free series [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/series/how-to-contribute-to-an-open-source-project-on-github) or [Atlassian's tutorial to pull requests](https://www.atlassian.com/git/tutorials/making-a-pull-request).
 
@@ -15,7 +15,7 @@
 
 To make code changes, please follow the following instructions carefully! Otherwise, your code review may be delayed.
 
-## Step 1: Create a new branch with a descriptive name {: #step-1 }
+## Step 1: Create a new branch with a descriptive name
 
 The new branch should be based on the latest code in `develop`, so checkout the latest version of `develop` like this:
 
@@ -31,7 +31,7 @@ Then create a new branch. In this example the branch is named `your-branch-name`
 git checkout -b your-branch-name
 ```
 
-## Step 2: Make commit(s) locally to your feature branch {: #step-2 }
+## Step 2: Make commits locally to your feature branch
 
 Each commit should be self-contained and have a descriptive commit message that helps other developers understand why the changes were made.
 
@@ -68,7 +68,7 @@ You can change your most recent commit message using `git commit --amend`. **It 
 
 **Note**: There is no maximum or minimum number of commits required in a PR. Instead of aiming for a certain number, you should try to make each commit a logical "chunk" of work. There are many opinions about how big commits should be, but a useful rule of thumb is that you should be able to read the first lines of all your commit messages to get a good idea of what you changed. If you find yourself needing lots of clauses to capture what you changed, your commit is probably too big.
 
-## Step 3: Push changes to your GitHub fork {: #step-3 }
+## Step 3: Push changes to your GitHub fork
 
 * **Before pushing**, make sure to check the following things, otherwise you will incur delays with the review process or the automated checks:
 
@@ -88,7 +88,9 @@ You can change your most recent commit message using `git commit --amend`. **It 
 
   **Make sure to do this from the command line** (and not GitHub's Desktop client), since this also runs some important presubmit checks before your code gets uploaded to GitHub. If any of these checks fail, read the failure messages and fix the issues by making a new commit (see step 3), then **repeat the previous instructions** to retry the push. **Do not bypass these presubmit checks!** The checks get run on your PR too, so if you bypass failures on your local machine, you'll just have to fix them later when they fail on the PR.
 
-## Step 4: When your feature is ready to merge, create a pull request {: #step-4 }
+## Step 4: Create a pull request
+
+Once your feature is ready, you can open a pull request (PR)!
 
 * Go to your fork on GitHub, select your branch from the dropdown menu, and click "pull request". Ensure that the base repository is `oppia/oppia` and that the base branch is `develop`. The head repository should be your fork, and the head branch should be your branch. If you don't see the repository, click the link to `compare across forks`.
 
@@ -118,7 +120,7 @@ You can change your most recent commit message using `git commit --amend`. **It 
 
 * Then, wait for your code to get reviewed! While you're waiting, it's totally fine to start work on a new PR if you like. Just make sure to **checkout the develop branch** and pull in changes from upstream before you check out a new branch, so that each of your feature branches is based off of `develop`.
 
-## Step 5: Address review comments until all reviewers approve {: #step-5 }
+## Step 5: Address review comments until all reviewers approve
 
 Note that reviewers will often say "LGTM," which means "looks good to me".
 
@@ -160,9 +162,9 @@ When your reviewer has completed their review, they will reassign the pull reque
 
     **Important:** In the conversation thread, **write a top-level comment** explicitly asking the reviewer(s) to take another look ("@XXX PTAL"), and assign them to the PR. If however, you forget to assign the reviewer(s), Oppiabot will assign them for you.
 
-## Step 6: Make sure all continuous integration (CI) checks pass {: #step-6 }
+## Step 6: Make sure all continuous integration checks pass
 
-While waiting to get approval from reviewers, make sure that all the CI checks (GitHub Actions, CircleCI, etc.) pass, since otherwise you won't be able to merge your pull requests. CI checks are shown at the bottom of your pull request on GitHub.
+While waiting to get approval from reviewers, make sure that all the continuous integration (CI) checks (GitHub Actions, CircleCI, etc.) pass, since otherwise you won't be able to merge your pull requests. CI checks are shown at the bottom of your pull request on GitHub.
 
 ![CI results at the bottom of a PR](images/prCiResults.png)
 
@@ -170,7 +172,7 @@ While waiting to get approval from reviewers, make sure that all the CI checks (
 
 If all reviewers have approved but you're still waiting for the CI checks to pass, make sure you're assigned to the PR, so that you can merge it once the CI checks are complete.
 
-## Step 7: Tidy up {: #step-7 }
+## Step 7: Tidy up
 
 After the PR status has changed to "Merged", delete the feature branch from both your local clone and the GitHub repository:
 
@@ -179,7 +181,7 @@ git branch -D new-branch-name
 git push origin --delete new-branch-name
 ```
 
-## Step 8: Celebrate {: #step-8 }
+## Step 8: Celebrate
 
 Congratulations, you have contributed to Oppia!
 
