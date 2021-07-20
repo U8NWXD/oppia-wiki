@@ -1,5 +1,7 @@
 Before working through these instructions, you should read through our [[instructions for code contributors|Contributing-code-to-Oppia]]. Once you've done that, you're ready to start installing Oppia!
 
+If you are installing on Windows, skip to the [[Windows installation guide|Installing-Oppia-(Windows)]]. The following instructions do not apply to Windows installations.
+
 1. Create a new, empty folder. We'll call it `opensource/`.
 
 1. Navigate to the folder (`cd opensource/`). Next, we'll [fork and clone](https://help.github.com/articles/fork-a-repo/) the Oppia repository.
@@ -53,7 +55,5 @@ Before working through these instructions, you should read through our [[instruc
    * [[Linux|Installing-Oppia-(Linux)]]
 
    * [[Mac OS|Installing-Oppia-(Mac-OS)]]
-
-   * [[Windows|Installing-Oppia-(Windows)]]
 
 1. If you run into any problems during installation, please read [[these notes|Issues-with-installation?]] and the [[troubleshooting page|Troubleshooting]]. We're also [[here to help|Get-help]].
