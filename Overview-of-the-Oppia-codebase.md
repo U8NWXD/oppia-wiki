@@ -1,3 +1,23 @@
+## Table of Contents
+
+* [Web server anatomy: Explaining "frontend" and "backend"](#web-server-anatomy-explaining-frontend-and-backend)
+* [Backend](#backend)
+  * [Controller layer](#controller-layer)
+  * [Backend service layer](#backend-service-layer)
+  * [Backend models](#backend-models)
+  * [Domain layer](#domain-layer)
+  * [Storage layer](#storage-layer)
+  * [Backend tests](#backend-tests)
+* [Frontend](#frontend)
+  * [Component layer](#component-layer)
+  * [Frontend service layer](#frontend-service-layer)
+    * [Backend API services](#backend-api-services)
+  * [Frontend models](#frontend-models)
+  * [Other parts of the frontend](#other-parts-of-the-frontend)
+  * [Frontend tests](#frontend-tests)
+* [Extensions](#extensions)
+* [Other files and folders](#other-files-and-folders)
+
 Oppia is built with [Google App Engine](https://developers.google.com/appengine/docs/whatisgoogleappengine). Its backend is written in [Python](https://www.python.org/), and its frontend is written using [AngularJS](https://angularjs.org/) and [Angular](https://angular.io).
 
 ## Web server anatomy: Explaining "frontend" and "backend"
@@ -108,13 +128,13 @@ def handler(self, argument_1, argument_2):
 
 Controllers are stored in `core/controllers/`. `main.py` defines which controller should handle each request.
 
-### Service layer
+### Backend service layer
 
 Services get called by controller functions or other services to perform various computations. They often need to access Oppia's stored data, which they do by calling functions in the domain and storage layers.  We'll look at those next.
 
 Services are, confusingly, defined by files in the `core/domain/` folder. Services end in `_services.py`.
 
-### Models
+### Backend models
 
 Before we talk about the domain layer, we need to discuss models.
 
@@ -138,7 +158,7 @@ The storage models are defined in `core/storage`, while the code that handles in
 
 For example, we use different underlying file storage platforms in dev mode (when running locally on developer machines) versus in prod mode (when running in production). Switching between these platforms is handled by the code in `core/platform`, so the rest of the backend layers can ignore them.
 
-### Testing
+### Backend tests
 
 The backend codebase is heavily tested. Tests are contained in `*_test.py` files next to the Python module they test. This naming convention allows them to be automatically detected and compiled into a test suite by Python's `unittest` module. For more information, see [[Running Tests|Running-Tests]].
 
@@ -244,7 +264,7 @@ Components for pages are defined in `core/templates/pages`. Some components get 
 
 While components' `*.component.ts` files handle controller logic, they offload complex logic to the service layer.
 
-### Service layer
+### Frontend service layer
 
 Services are just TypeScript files that define Angular modules to handle more complex controller logic. These are defined in a `services/` folder alongside the rest of the component files we saw above.
 
@@ -256,7 +276,7 @@ Some service files end in `-backend-api.ts` (their module names end in `BackendA
 
 Ideally, all interaction with the backend would happen through these backend API services. However, there is unfortunately still some code that makes backend calls elsewhere.
 
-### Models
+### Frontend models
 
 Everything we've described so far lives in the "view" and "controller" realms of MVC. Now let's get to the "model" part.
 
@@ -295,7 +315,7 @@ Models are defined in `core/templates/domain/`.
 * **Expression services** help us parse mathematical expressions. We use [PEG.js](https://pegjs.org) to generate our parser, and the parser code lives in `core/templates/expressions`.
 * **Filters** are TypeScript classes that perform common filtering operations, like truncating a long string. These are stored in `core/templates/filters`.
 
-### Testing
+### Frontend tests
 
 The frontend isn't quite as heavily tested as the backend yet, but we're working on that! Any new code you write should be fully tested. For information on how, check out our [[guide to frontend testing|Frontend-unit-tests-guide]].
 
