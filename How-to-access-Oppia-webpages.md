@@ -1,3 +1,36 @@
+## Table of Contents
+
+* [Log in](#log-in)
+* [Log in as a super-administrator](#log-in-as-a-super-administrator)
+ * [Using an email with implicit super-admin privileges](#using-an-email-with-implicit-super-admin-privileges)
+ * [Grant super-admin privileges after account creation](#grant-super-admin-privileges-after-account-creation)
+* [Access pages](#access-pages)
+ * [Admin page](#admin-page)
+  * [Assign roles](#assign-roles)
+ * [About page](#about-page)
+ * [Collection editor page](#collection-editor-page)
+ * [Collection player page](#collection-player-page)
+ * [Contact Page](#contact-page)
+ * [Creator dashboard page](#creator-dashboard-page)
+ * [Contributor dashboard page](#contributor-dashboard-page)
+ * [Delete account page](#delete-account-page)
+ * [Donate page](#donate-page)
+ * [Email dashboard page](#email-dashboard-page)
+ * [Exploration editor page](#exploration-editor-page)
+ * [Exploration player page](#exploration-player-page)
+ * [Get started page](#get-started-page)
+ * [Landing pages](#landing-pages)
+ * [Skill editor page](#skill-editor-page)
+ * [Story editor page](#story-editor-page)
+ * [Story player page](#story-player-page)
+ * [Topic editor (including preview tab)](#topic-editor-including-preview-tab)
+ * [Preferences page](#preferences-page)
+ * [Profile page](#profile-page)
+ * [Community library page](#community-library-page)
+ * [Topics and skills dashboard page](#topics-and-skills-dashboard-page)
+ * [Thanks page](#thanks-page)
+ * [Terms page](#terms-page)
+
 Oppia has many webpages and this is a comprehensive guide on how to access all those pages. Before a contributor makes a PR, we expect that the contributor has thoroughly tested the changes made in the PR for functional correctness. Part of this process is manually testing any pages that are affected by their code.
 
 ## Log in
@@ -27,7 +60,7 @@ There are two ways to become a super-administrator: use an email address with im
 ### Grant super-admin privileges after account creation
 
 1. Sign in with any email address.
-   
+
    ![Signing in as a@a.com](images/Webpage-Guide/nonAdminSignUp.png)
 
 2. Go to the Firebase Emulator UI: http://localhost:4000/auth.
@@ -48,7 +81,7 @@ There are two ways to become a super-administrator: use an email address with im
 
 ### Admin page
 
-The admin page is a page accessible only to super-administrators. It has many functionalities including changing permissions, configuration values, and running jobs. Certain webpages cannot be accessed unless the current user has the required permissions. 
+The admin page is a page accessible only to super-administrators. It has many functionalities including changing permissions, configuration values, and running jobs. Certain webpages cannot be accessed unless the current user has the required permissions.
 
 1. Log in as a super-admin.
 
