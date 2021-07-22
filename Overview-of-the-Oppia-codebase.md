@@ -24,7 +24,7 @@ Oppia is built with [Google App Engine](https://developers.google.com/appengine/
 
 If you aren't too familiar with web servers, you might be wondering what terms like "frontend" and "backend" mean. Here's a quick primer.
 
-Suppose you want to view the profile page of the Oppia user `sean`, so you point your browser to https://www.oppia.org/profile/sean. This diagram illustrates what happens:
+Suppose you want to view the profile page of the Oppia user `oppialearner`, so you point your browser to `/profile/oppialearner`. If you start a local development server and create a user with username `oppialearner`, you can see this page at http://localhost:8181/profile/oppialearner. This diagram illustrates what happens:
 
 ![UML sequence diagram showing a website frontend and backend](images/overview/anatomy.png)
 
@@ -41,22 +41,22 @@ participant frontend
 participant web server as webserver
 participant backend
 
-client -> webserver: GET /profile/sean
+client -> webserver: GET /profile/oppialearner
 webserver -> backend: ProfilePage.get()
 backend -> webserver: web page with frontend
 webserver -> frontend: web page with frontend
 Note over frontend: frontend starts
-frontend -> webserver: GET /profilehandler/data/sean
-webserver -> backend: ProfileHandler.get("sean")
+frontend -> webserver: GET /profilehandler/data/oppialearner
+webserver -> backend: ProfileHandler.get("oppialearner")
 backend -> webserver: profile data as JSON
 webserver -> frontend: profile data as JSON
 frontend -> client: final web page
 ```
 </details>
 
-First, your browser (the client) sends a request to Oppia's web server for the path `/profile/sean`. The webserver passes this request to the appropriate handler function in the backend code. The backend code responds with a web page that contains the frontend code, which the web server passes along to your browser.
+First, your browser (the client) sends a request to Oppia's web server for the path `/profile/oppialearner`. The webserver passes this request to the appropriate handler function in the backend code. The backend code responds with a web page that contains the frontend code, which the web server passes along to your browser.
 
-Now the frontend code starts running in your browser and, in this example, requests additional data from the web server by issuing a request for the `/profilehandler/data/sean` path. Once again, the web server passes this request to the appropriate backend function, which responds. This time however, the response is [JSON-formatted data](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), not a web page. This JSON data is passed to the frontend. The JSON data is not very readable, but you can see it by navigating to https://www.oppia.org/profilehandler/data/sean.
+Now the frontend code starts running in your browser and, in this example, requests additional data from the web server by issuing a request for the `/profilehandler/data/oppialearner` path. Once again, the web server passes this request to the appropriate backend function, which responds. This time however, the response is [JSON-formatted data](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), not a web page. This JSON data is passed to the frontend. The JSON data is not very readable, but you can see it by navigating to http://localhost:8181/profilehandler/data/oppialearner.
 
 While all these operations have been running, your browser has been showing a loading page. Now, the frontend code uses the profile JSON data to create the final web page, which you then see.
 
