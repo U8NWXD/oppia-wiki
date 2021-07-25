@@ -2,7 +2,7 @@ Here we document Oppia's main communication channels and how to ask good questio
 
 ## Communication channels
 
-If you need help, there are a few communication channels you can use.  Developers usually respond within 24 hours, so long as you use a channel they actually check.
+If you need help, there are a few communication channels you can use. Developers usually respond within 24 hours so long as you use a channel they actually check.
 
 ### Email
 
@@ -11,9 +11,7 @@ We have several mailing lists in the form of Google Groups that you can join:
 * [oppia-announce](https://groups.google.com/forum/#!forum/oppia-announce) is for announcements of new releases or blog posts. It's not for asking questions though.
 * [oppia-dev](https://groups.google.com/forum/#!forum/oppia-dev) is the main mailing list for communication between developers and for technical questions. You can post to it even if you're not a member of the group. This is where you can ask questions, solicit feedback, or make developer-specific announcements (e.g. a temporary GitHub outage).
 
-You can also email developers directly! Developers usually check their email pretty frequently, but figuring out their email addresses can be tricky. Some developers have their email addresses in their GitHub profile. If you know the developer's name, you can also look them up in the [`CONTRIBUTORS` file](https://github.com/oppia/oppia/blob/develop/CONTRIBUTORS). The addresses in the `CONTRIBUTORS` file aren't kept up to date though, so they might not work.
-
-You can ask your mentor to put you in touch with a developer if you don't know their address.
+You can also email your mentor with any questions. If you don't have a mentor, complete the steps on the [[wiki page for contributing code to Oppia|Contributing-code-to-Oppia]].
 
 ### Gitter
 
@@ -33,15 +31,15 @@ You can even mention whole teams of people! For example, if you find an issue th
 
 ## How to Ask Good Questions
 
-At Oppia we don’t care how silly your question is! Just ensure your question is clear, and provide us enough information to help us resolve it faster. We've divided the questions into 2 categories - Setup related and General questions. You can start following the sections below to understand how you can ask each of them.
+At Oppia we don’t care how silly your question is! Just ensure your question is clear, and provide us enough information to help us resolve it faster. We've divided the questions into 2 categories - Setup-related and General questions. You can start following the sections below to understand how you can ask each of them.
 
-### Setup related questions
+### Setup-related questions
 
 **Helpful advice**: You can choose any OS you’re comfortable with. However, most contributors use Linux or MacOS. Getting Oppia up and running on Windows can be a challenge.
 
 #### Before you ask a question
 
-1. You can setup/install Oppia by visiting [[this|Installing-Oppia]] page.  Make sure you follow **all** the mentioned instructions from the beginning in a step by step manner.
+1. You can setup/install Oppia by visiting [[this|Installing-Oppia]] page.  Make sure you follow **all** the mentioned instructions from the beginning in a step-by-step manner.
 
 2. Make sure each step succeeds (verify it with the expected behavior if mentioned in wiki).
 
@@ -62,6 +60,10 @@ Please follow the template given below (mark x inside checkboxes to tick them) f
 **System Information**
 - OS: (Be specific Ex: Ubuntu 20.04 or Ubuntu 20.04 VM on MacOS 11.2.1)
 
+**Steps followed**
+
+// If you encountered this error while following instructions, provide a link to the instructions and specify which step failed. Otherwise, list what steps caused the error. These should be detailed enough for someone else to follow them.
+
 **Error log**
 
 //paste error log here
@@ -72,7 +74,7 @@ paste a screenshot
 
 **Approaches already used to resolve the issue**
 
-(eg: Link to a stackoverflow answer or any solution that you have tried)
+(eg: Link to a Stack Overflow answer or any solution that you have tried)
 - enter any additional description
 ```
 
@@ -82,7 +84,7 @@ paste a screenshot
 
 1. We expect that you have already **set up Oppia on your machine**, and it is successfully running. (If not, kindly do that first!)
 2. Prepare a debugging doc following [[the guidelines provided on the wiki page|Debugging-Docs]].
-3. If there are **failing e2e tests** on your PR, and you haven’t done any changes in that direction, kindly understand that sometimes they just fail due to flakiness. You should request for a re-run of those only when it’s preventing your PR from getting merged.
+3. If there are **failing e2e tests** on your PR, and you haven’t done any changes in that direction, kindly understand that sometimes they just fail due to [flakiness](https://github.com/oppia/oppia/wiki/End-to-End-Tests#flakiness). You should request for a re-run of those only when it’s preventing your PR from getting merged.
 
 ### How to ask a general question
 
@@ -96,7 +98,7 @@ Follow the template below for asking questions (fill in the values inside {{}} b
   [Oppia Contributor Survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3)
 - [ ] I have setup Oppia locally (verified by running `python -m
   scripts.start`)
-- [ ] I have followed through "Before you ask a question" section
+- [ ] I have worked through the "Before you ask a question" section
 
 **System Information**
 - OS: (Be specific Ex: Ubuntu 20.04)
@@ -111,14 +113,14 @@ Follow the template below for asking questions (fill in the values inside {{}} b
 
 **Approaches already used to resolve the issue**
 
-(eg: Link to a stackoverflow answer or any solution that you have tried)
+(eg: Link to a Stack Overflow answer or any solution that you have tried)
 - #{{Link to the debugging doc}}
 - enter any additional description
 ```
 
 ### Important points
 
-* If you are unable to push changes due to some reason, you can create a [patch file](https://docs.gitlab.com/omnibus/development/creating-patches.html) and share it with the persion you're asking for help.
+* If you are unable to push changes due to some reason, you can create a [patch file](https://docs.gitlab.com/omnibus/development/creating-patches.html) and share it with the person you're asking for help.
 
 * If you are facing issues in completing the assigned task, you can create a PR on your fork of the Oppia repository, troubleshoot your problem on that pull request with help from your mentor, and then create a new PR on the original Oppia repository.
 
