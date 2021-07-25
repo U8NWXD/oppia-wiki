@@ -1,39 +1,47 @@
 ## Table of Contents
 
-* [Log in](#log-in)
-* [Log in as a super-administrator](#log-in-as-a-super-administrator)
-  * [Using an email with implicit super-admin privileges](#using-an-email-with-implicit-super-admin-privileges)
-  * [Grant super-admin privileges after account creation](#grant-super-admin-privileges-after-account-creation)
-* [Access pages](#access-pages)
-  * [Admin page](#admin-page)
-    * [Assign roles](#assign-roles)
-  * [About page](#about-page)
-  * [Collection editor page](#collection-editor-page)
-  * [Collection player page](#collection-player-page)
-  * [Contact Page](#contact-page)
-  * [Creator dashboard page](#creator-dashboard-page)
-  * [Contributor dashboard page](#contributor-dashboard-page)
+* [User account pages](#user-account-pages)
+  * [Log in or create account](#log-in-or-create-account)
+  * [Log in as a super-administrator](#log-in-as-a-super-administrator)
+    * [Using an email with implicit super-admin privileges](#using-an-email-with-implicit-super-admin-privileges)
+    * [Grant super-admin privileges after account creation](#grant-super-admin-privileges-after-account-creation)
   * [Delete account page](#delete-account-page)
-  * [Donate page](#donate-page)
+  * [Preferences page](#preferences-page)
+  * [Profile page](#profile-page)
+* [Admin pages](#admin-pages)
+  * [Super admin page](#super-admin-page)
+    * [Assign roles](#assign-roles)
   * [Email dashboard page](#email-dashboard-page)
-  * [Exploration editor page](#exploration-editor-page)
-  * [Exploration player page](#exploration-player-page)
+* [Static pages](#static-pages)
+  * [About page](#about-page)
+  * [Donate page](#donate-page)
+  * [Contact Page](#contact-page)
   * [Get started page](#get-started-page)
   * [Landing pages](#landing-pages)
+  * [Thanks page](#thanks-page)
+  * [Terms page](#terms-page)
+* [Collection pages](#collection-pages)
+  * [Collection editor page](#collection-editor-page)
+  * [Collection player page](#collection-player-page)
+* [Exploration pages](#exploration-pages)
+  * [Community library page](#community-library-page)
+  * [Creator dashboard page](#creator-dashboard-page)
+  * [Exploration editor page](#exploration-editor-page)
+  * [Exploration player page](#exploration-player-page)
+* [Topics and skills pages](#topics-and-skills-pages)
   * [Skill editor page](#skill-editor-page)
   * [Story editor page](#story-editor-page)
   * [Story player page](#story-player-page)
   * [Topic editor (including preview tab)](#topic-editor-including-preview-tab)
-  * [Preferences page](#preferences-page)
-  * [Profile page](#profile-page)
-  * [Community library page](#community-library-page)
   * [Topics and skills dashboard page](#topics-and-skills-dashboard-page)
-  * [Thanks page](#thanks-page)
-  * [Terms page](#terms-page)
+* [Contributor pages](#contributor-pages)
+  * [Contributor dashboard page](#contributor-dashboard-page)
 
 Oppia has many webpages and this is a comprehensive guide on how to access all those pages. Before a contributor makes a PR, we expect that the contributor has thoroughly tested the changes made in the PR for functional correctness. Part of this process is manually testing any pages that are affected by their code.
 
-## Log in
+## User account pages
+
+### Log in or create account
 
 Many Oppia Pages require authentication to access. In order to sign in:
 
@@ -45,19 +53,19 @@ Many Oppia Pages require authentication to access. In order to sign in:
 
    ![Sign-in page](images/Webpage-Guide/nonAdminSignUp.png)
 
-## Log in as a super-administrator
+### Log in as a super-administrator
 
 There are two kinds of administrators in Oppia: super-administrators have access to the admin page, where they can set the role of any user. One of these roles is the administrator role, which gives the user access to all other privileged pages (like the topics and skills dashboard).
 
 There are two ways to become a super-administrator: use an email address with implicit super-admin privileges, or use the Firebase emulator interface to grant super-admin privileges after the account has been created.
 
-### Using an email with implicit super-admin privileges
+#### Using an email with implicit super-admin privileges
 
 1. Use the email address `testadmin@example.com`. As soon as you type it in, a message should appear saying "This email address has implicit super-admin privileges!".
 
    ![Sign-in page with implicit super-admin email address](images/Webpage-Guide/implicitSuperAdmin.png)
 
-### Grant super-admin privileges after account creation
+#### Grant super-admin privileges after account creation
 
 1. Sign in with any email address.
 
@@ -77,9 +85,33 @@ There are two ways to become a super-administrator: use an email address with im
 
 5. Log out and sign back in to refresh the session cookie.
 
-## Access pages
+### Delete account page
 
-### Admin page
+The delete account page allows users to delete their accounts. Currently, it is deactivated and certain code needs to be changed to access it.
+
+1. Go to constants.ts and change `ENABLE_ACCOUNT_DELETION` from `false` to `true`.
+
+2. Navigate to http://localhost:8181/delete-account.
+
+### Preferences page
+
+The preferences page allows users to change their settings on oppia.
+
+1. Log in.
+
+2. Go to http://localhost:8181/preferences.
+
+### Profile page
+
+The profile page allows users to view and change their profile on Oppia.
+
+1. Log in.
+
+2. Click on the profile menu and click your username to go to the profile page.
+
+## Admin pages
+
+### Super admin page
 
 The admin page is a page accessible only to super-administrators. It has many functionalities including changing permissions, configuration values, and running jobs. Certain webpages cannot be accessed unless the current user has the required permissions.
 
@@ -101,6 +133,14 @@ The admin page is a page accessible only to super-administrators. It has many fu
 
    ![assignrole](https://user-images.githubusercontent.com/16653571/41503346-ff754c9e-71ee-11e8-9b72-9e16dae46418.png)
 
+### Email dashboard page
+
+1. Log in as a super-admin and change role to "admin."
+
+2. Navigate to http://localhost:8181/emaildashboard.
+
+## Static pages
+
 ### About page
 
 The About page provides a brief overview of Oppia. It details the goals of the Oppia organization, credits its contributors, and provides links to guides and tutorials on how to further explore Oppia.
@@ -110,6 +150,46 @@ The About page provides a brief overview of Oppia. It details the goals of the O
 2. Click on the "About Oppia" link.
 
    ![AboutPageLink](images/Webpage-Guide/aboutPageLink.png)
+
+### Donate page
+
+The donate page provides a way for people to donate to the Oppia organization.
+
+1. Go to http://localhost:8181/donate or click on the donate button in the navigation bar.
+
+### Contact Page
+
+The contact page details the ways to communicate with the Oppia team and get involved.
+
+1. Click on the "About" menu at the top navigation bar.
+
+2. Click on the "Contact Us" link.
+
+### Get started page
+
+The get started page provides information for people new to Oppia.
+
+1. Navigate to http://localhost:8181/get-started.
+
+### Landing pages
+
+The landing pages are a series of pages that provide information for people who want to help contribute to Oppia.
+
+1. Navigate to http://localhost:8181/teachers.
+
+### Thanks page
+
+The Thanks page acknowledges people who support Oppia.
+
+1. Go to http://localhost:8181/thanks.
+
+### Terms page
+
+The Terms page addresses the terms and conditions of Oppia.
+
+1. Go to http://localhost:8181/terms.
+
+## Collection pages
 
 ### Collection editor page
 
@@ -143,13 +223,21 @@ The collection player page allows users to explore collections in Oppia.
 
 5. Click on the card titled "Introduction to collections in Oppia."
 
-### Contact Page
+## Exploration pages
 
-The contact page details the ways to communicate with the Oppia team and get involved.
+### Community library page
 
-1. Click on the "About" menu at the top navigation bar.
+The community library page allows users to view and search for explorations on Oppia. "Community" here refers to the Oppia community of teachers, learners, and contributors.
 
-2. Click on the "Contact Us" link.
+1. Log in.
+
+2. Go to http://localhost:8181/community-library.
+
+The library page has a search bar that lets you search for explorations:
+
+![Library page search bar](images/Webpage-Guide/librarySearch.png)
+
+You can search the library, which consists of all of Oppia's explorations, by entering text, and you can filter by category (also called subject) and language.
 
 ### Creator dashboard page
 
@@ -158,34 +246,6 @@ The creator dashboard page allows users to view all explorations they have creat
 1. Log in.
 
 2. Navigate to the creator dashboard page at http://localhost:8181/creator-dashboard.
-
-### Contributor dashboard page
-
-The contributor dashboard page allows users to translate existing explorations into a different language, or create questions for existing Oppia explorations. This lets more people become "contributors" by helping create Oppia content.
-
-1. Log in.
-
-2. Navigate to the contributor dashboard page at http://localhost:8181/contributor-dashboard.
-
-### Delete account page
-
-The delete account page allows users to delete their accounts. Currently, it is deactivated and certain code needs to be changed to access it.
-
-1. Go to constants.ts and change `ENABLE_ACCOUNT_DELETION` from `false` to `true`.
-
-2. Navigate to http://localhost:8181/delete-account.
-
-### Donate page
-
-The donate page provides a way for people to donate to the Oppia organization.
-
-1. Go to http://localhost:8181/donate or click on the donate button in the navigation bar.
-
-### Email dashboard page
-
-1. Log in as a super-admin and change role to "admin."
-
-2. Navigate to http://localhost:8181/emaildashboard.
 
 ### Exploration editor page
 
@@ -207,17 +267,7 @@ The exploration player page allows users to play explorations in Oppia.
 
 The exploration will launch in a new tab, where you will see the first card. As you progress through the exploration, you will see subsequent cards, each of which has some content (text, images, videos, or other rich text components). Some will also have interactions like multiple choice questions. A user's answer to these interactions are called "responses."
 
-### Get started page
-
-The get started page provides information for people new to Oppia.
-
-1. Navigate to http://localhost:8181/get-started.
-
-### Landing pages
-
-The landing pages are a series of pages that provide information for people who want to help contribute to Oppia.
-
-1. Navigate to http://localhost:8181/teachers.
+## Topics and skills pages
 
 ### Skill editor page
 
@@ -283,36 +333,6 @@ The topic editor page allows users to create topics in Oppia.
 
 5. Use the preview button to navigate to the topic player.
 
-### Preferences page
-
-The preferences page allows users to change their settings on oppia.
-
-1. Log in.
-
-2. Go to http://localhost:8181/preferences.
-
-### Profile page
-
-The profile page allows users to view and change their profile on Oppia.
-
-1. Log in.
-
-2. Click on the profile menu and click your username to go to the profile page.
-
-### Community library page
-
-The community library page allows users to view and search for explorations on Oppia. "Community" here refers to the Oppia community of teachers, learners, and contributors.
-
-1. Log in.
-
-2. Go to http://localhost:8181/community-library.
-
-The library page has a search bar that lets you search for explorations:
-
-![Library page search bar](images/Webpage-Guide/librarySearch.png)
-
-You can search the library, which consists of all of Oppia's explorations, by entering text, and you can filter by category (also called subject) and language.
-
 ### Topics and skills dashboard page
 
 The topics and skills dashboard page allows users to view their created topics and skills.
@@ -323,14 +343,12 @@ The topics and skills dashboard page allows users to view their created topics a
 
    ![Create Topic Button](images/Webpage-Guide/topicAndSkillDashboardLink.png)
 
-### Thanks page
+## Contributor pages
 
-The Thanks page acknowledges people who support Oppia.
+### Contributor dashboard page
 
-1. Go to http://localhost:8181/thanks.
+The contributor dashboard page allows users to translate existing explorations into a different language, or create questions for existing Oppia explorations. This lets more people become "contributors" by helping create Oppia content.
 
-### Terms page
+1. Log in.
 
-The Terms page addresses the terms and conditions of Oppia.
-
-1. Go to http://localhost:8181/terms.
+2. Navigate to the contributor dashboard page at http://localhost:8181/contributor-dashboard.
