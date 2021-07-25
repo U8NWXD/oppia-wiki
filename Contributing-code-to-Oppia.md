@@ -2,13 +2,13 @@ _These instructions are for developers who'd like to contribute code to improve 
 
 Thanks for your interest in improving the Oppia platform! This page explains how you can get involved.
 
-If you run into any problems along the way, we're here to help! Check out our [[wiki page on getting help|Get-help]] for the communication channels you can use. If you find any bugs, you can also file an issue on our [issue tracker](https://github.com/oppia/oppia/issues) There are also lots of helpful resources in the sidebar, check that out too! Also, if you'd like to get familiar with Oppia from a user's point of view, you can take a look at the [user documentation](http://oppia.github.io/).
+If you run into any problems along the way, we're here to help! Check out our [[wiki page on getting help|Get-help]] for the communication channels you can use. If you find any bugs, you can also file an issue on our [issue tracker](https://github.com/oppia/oppia/issues). There are also lots of helpful resources in the sidebar, check that out too! Also, if you'd like to get familiar with Oppia from a user's point of view, you can take a look at the [user documentation](http://oppia.github.io/).
 
 **Important! Please read this page in its entirety before making any code changes.** It contains lots of really important information. You should also read through our [[guide to making pull requests|Make-a-pull-request]]
 
 ## Setting things up
 
-1. Please sign the CLA so that we can accept your contributions. If you're contributing as an individual, use the [individual CLA](https://goo.gl/forms/AttNH80OV0). If your company owns the copyright to your contributions, a company representative should sign the [corporate CLA](https://goo.gl/forms/xDq9gK3Zcv).  **If you do not sign the CLA any PRs you open will be closed.**
+1. Please sign the CLA so that we can accept your contributions. If you're contributing as an individual, use the [individual CLA](https://goo.gl/forms/AttNH80OV0). If your company owns the copyright to your contributions, a company representative should sign the [corporate CLA](https://goo.gl/forms/xDq9gK3Zcv).  **If you do not sign the CLA, any PRs you open will be closed.**
 
 1. Fill in the [Oppia contributor survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3) to let us know what your interests are. (You can always change your responses later.) Filling out the survey will also get you assigned to a mentor at Oppia who will reach out to you over email to help you get started.
 
@@ -159,18 +159,18 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
 ## Tips for Success
 
-1. Make dependent (“stacked”) PRs to ensure smaller time between reviews and subsequent PRs. A large PR results in difficulty to review for the reviewer as well as difficulty in making changes according to a review for an author. So, it is better to create smaller PRs which deliver a single small goal. If you have any other code change dependent on a PR, it is better to stack it on the that PR and create a new PR instead of merging it in one PR.
+1. Make dependent (“stacked”) PRs to ensure smaller time between reviews and subsequent PRs. A large PR results in difficulty to review for the reviewer as well as difficulty in making changes according to a review for an author. So, it is better to create smaller PRs which deliver a single small goal. If you have code changes dependent on a PR, it is better to create a separate PR for those changes.
 
-1. Try and follow test-driven development. This is the easiest way to make sure the code you wrote is working fine. Writing tests for the expected behaviour, and then writing code that will pass the tests is the basic idea. Refer our guides for writing good tests:
+1. Try and follow test-driven development. This is the easiest way to make sure the code you wrote is working fine. The basic idea is to first write tests for the expected behaviour and then write code that will pass those tests. Refer to our guides for writing good tests:
 
    * [[Backend Tests|Writing-backend-tests]]
    * [[Frontend Tests|Frontend-unit-tests-guide]]
    * [[End to end tests|End-to-End-Tests]]
    * [Tests for pylint extensions|Writing-Tests-For-Pylint]]
 
-1. If you're stuck on something, ask for help instead of letting it block all your work.
+1. If you're stuck on something, ask for help instead of letting it block all your work. It can be difficult to know when to ask for help, so one rule of thumb is to ask whenever you've been unable to make progress for an hour.
 
-1. When asking questions, follow our guide to [[get help|Getting-help]] to make sure your question gets to the right people and has the information they need to help you.
+1. When asking questions, follow our guide to [[getting help|Get-help]] to make sure your question gets to the right people and has the information they need to help you.
 
 1. Remember that you're working with volunteers, nearly all of whom spend most of their time at school or a job. Don't be surprised if it takes a few hours for someone to get back to you (they might be in a different time zone!).
 
@@ -178,7 +178,7 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
 1. Take the time to understand what the code you are changing is doing.  Sometimes we see PRs for changes that don't do anything useful or that don't make sense given the context of the code. These won't get merged.
 
-1. If you are making a contribution which involves change in some user interface or introduces a new feature, it is good to start with a design doc to avoid wasting efforts later. Follow our [[guide for writing design docs|Writing-design-docs]].
+1. If you are making a contribution which involves changing some user interface or introducing a new feature, it is good to start with a design doc to avoid wasting efforts later. Follow our [[guide for writing design docs|Writing-design-docs]].
 
 ### Notes
 
