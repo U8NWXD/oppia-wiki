@@ -45,26 +45,19 @@ You can change your most recent commit message using `git commit --amend`. **It 
   * Start up a local instance of Oppia and do some manual testing in order to check that you haven't broken anything!
   * Run `git status` to check that your changes are what you expect.  To inspect the changes made to any particular file, use `git diff your-file-name`.
 
+  * Stage all your changes:
+
+    ```console
+    git add .
+    ```
+
+    (`.` refers to your current directory)
+
 * To actually make the commit, run:
-
-  ```console
-  git commit -a -m "{{YOUR COMMIT MESSAGE HERE}}"
-  ```
-
-  For example. `git commit -a -m "address nit changes"`. This will commit all the changes you've made since the last commit (shown by `git status`).
-
-  <details>
-  <summary>Committing only some changes</summary>
-
-  If you want to commit only some of those changes, you can use `git add` to select the changes to commit and then make a commit without the `-a` flag:
 
   ```console
   git commit -m "{{YOUR COMMIT MESSAGE HERE}}"
   ```
-
-  Before you push, you should have committed all your changes.
-
-  </details>
 
 **Note**: There is no maximum or minimum number of commits required in a PR. Instead of aiming for a certain number, you should try to make each commit a logical "chunk" of work. There are many opinions about how big commits should be, but a useful rule of thumb is that you should be able to read the first lines of all your commit messages to get a good idea of what you changed. If you find yourself needing lots of clauses to capture what you changed, your commit is probably too big.
 
@@ -118,7 +111,7 @@ Once your feature is ready, you can open a pull request (PR)!
 
 * After a while, check your pull request to see whether the CI checks have passed. If not, follow the instructions at [[If your build fails|If-your-build-fails]].
 
-* Then, wait for your code to get reviewed! While you're waiting, it's totally fine to start work on a new PR if you like. Just make sure to **checkout the develop branch** and pull in changes from upstream before you check out a new branch, so that each of your feature branches is based off of `develop`.
+* Then, wait for your code to get reviewed! While you're waiting, it's totally fine to start work on a new PR if you like. Just follow these instructions again from the beginning.
 
 ## Step 5: Address review comments until all reviewers approve
 
