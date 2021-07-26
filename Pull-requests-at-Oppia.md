@@ -5,7 +5,7 @@
 * [Labeling issues and pull requests](#labeling-issues-and-pull-requests)
 * [Juggling multiple pull requests](#juggling-multiple-pull-requests)
 
-## PR lifecycle
+## Pull request lifecycle
 
 ![Flowchart of PR lifecycle](images/prLifecycle.png)
 
@@ -41,7 +41,7 @@ While making a contribution, you may discover that your change is not complete a
 
 Learn more about skipping a [Travis CI build](https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build) and skipping a [Circle CI build](https://circleci.com/docs/2.0/skip-build/#skipping-a-build).
 
-## Labeling issues and pull requests
+## Labeling pull requests
 
 While contributing to Oppia, you will need to add different labels to issues or pull requests which you are working on. However, not all labels are allowed on issues and pull requests. Below are labels which can be applied to pull requests:
 
@@ -57,12 +57,8 @@ While contributing to Oppia, you will need to add different labels to issues or 
 * `PR: LGTM`: Indicates that a PR has all necessary approvals. The PR can be merged as soon as the CI checks pass.
 * Other labels starting with `PR`.
 
-All other labels are to be used on issues.
-
-It should be noted that the **good first issue** label should only be added by members of the onboarding team.
-
 A complete list of labels can be found [here](https://github.com/oppia/oppia/labels).
 
-## Juggling multiple pull requests
+## Working on multiple pull requests
 
 After you've submitted a PR, and are waiting for it to get reviewed, you might want to start working on a new issue in the meantime. Git allows you to do this seamlessly! Always prioritize following up on your existing PRs and getting them ready for the next round of review. In particular, only start working on new issues/PRs after **all** the other PRs you're working on are in the "waiting for review" stage. This helps avoids creating a logjam in the build queues.
