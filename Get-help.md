@@ -1,3 +1,19 @@
+## Table of Contents
+
+* [Communication channels](#communication-channels)
+  * [Email](#email)
+  * [Gitter](#gitter)
+  * [Google Chat or Hangouts](#google-chat-or-hangouts)
+  * [GitHub](#github)
+* [How to Ask Good Questions](#how-to-ask-good-questions)
+  * [Setup-related questions](#setup-related-questions)
+    * [Before you ask a setup question](#before-you-ask-a-setup-question)
+    * [How to ask a setup question](#how-to-ask-a-setup-question)
+* [General questions](#general-questions)
+  * [Before you ask a general question](#before-you-ask-a-general-question)
+  * [How to ask a general question](#how-to-ask-a-general-question)
+  * [Important points](#important-points)
+
 Here we document Oppia's main communication channels and how to ask good questions.
 
 ## Communication channels
@@ -19,7 +35,7 @@ We have a developer chat room [here](https://gitter.im/oppia/oppia-chat). Feel f
 
 You can also directly message developers over Gitter. However, some developers don't monitor their Gitter messages regularly, so you might not get a response very quickly (or at all).
 
-### Google Chat / Hangouts
+### Google Chat or Hangouts
 
 Most Oppia developers and teams use Google Chat or Google Hangouts as their primary means of communication, and they usually respond quickly.  However, invites often get lost in spam folders, and some developers use a non-public email address for Google Chat. You can ask your mentor to put you in touch with a developer if you don't know their address or if they haven't acted on your invite.
 
