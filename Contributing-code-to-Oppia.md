@@ -90,13 +90,13 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 
 * [#10306](https://github.com/oppia/oppia/issues/10306) (Refactoring frontend - Add "async" keyword to asynchronous functions that return a promise)
 
-* [#10616](https://github.com/oppia/oppia/issues/10616) (Introduce new @typesctript-eslint rules n the codebase)
+* [#10616](https://github.com/oppia/oppia/issues/10616) (Introduce new @typescript-eslint rules n the codebase)
 
 These issues are hand-picked to ensure that you don't run into unexpected roadblocks while working on them. For other issues, you may need to be more independent because often times, we don’t know how to solve them either.
 
 If you decide to pick one of these, please go ahead and leave a comment saying which part of the issue you're taking, and submit a follow-up PR by following the instructions to [[make a PR|Make-a-pull-request]]. You don't need to wait for approval to get started!
 
-If you need some help from someone with a more prominent UI/UX or design perspective, tag **@rachelwchen** and expect a response within 2-3 days, if not, ping in the Oppia Gitter channel.
+If you need some help from someone with a more prominent UI/UX or design perspective, tag **@mschanteltc** and expect a response within 2-3 days, if not, ping in the Oppia Gitter channel.
 
 **Important Note**: Please make sure to read and follow the [[PR instructions|Make-a-pull-request]] carefully, otherwise your PR review may be delayed or your PR may be closed.
 
@@ -186,7 +186,7 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
 * Sometimes, GitHub comments in the main conversation thread don't have a reply box. This seems to be a quirk with GitHub: apparently the reply box doesn't show up on outdated threads if you're currently in the middle of a review (or a reply to someone else's review) that you haven't submitted. After you submit the review, the reply field should show up again.
 
-* If you want to do a codebase change that is large and somewhat repetitive, do a small trial PR first for a limited subset of the change, and check with reviewers whether the approach makes sense.  Then, only do the full change after getting that trial PR merged (or at least approved by all reviewers).
+* If you want to do a codebase change that is large and somewhat repetitive, do a small trial PR first for a limited subset of the change, and check with reviewers whether the approach makes sense. Only after getting that trial PR merged (or at least approved by all reviewers) should you do the full change.
 
   This helps because, if you just did the full PR at the outset instead, then if a reviewer requests changes to the approach, you'd need to go back and modify all the files. On the other hand, with a trial PR, addressing an initial round of changes is less work, and by the time you get to the full PR, you'd already know what you need to do!
 
@@ -206,6 +206,8 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
   The output will then show lines 40 to 60 of the particular file.
 
-  For more `git blame` options, you can visit the [git blame documentation](https://git-scm.com/docs/git-blame).
+  For more `git blame` options, you can visit the [git blame documentation](https://git-scm.com/docs/git-blame). You can also view this information on GitHub. Just navigate to the file you are interested and click the "Blame" button:
+
+  ![Screenshot showing the blame button on GitHub](images/githubBlame.png)
 
 * **Important** PRs marked with the “critical” label need to be tested in the backup server before being merged. For this, one of the release coordinators (with access to deploy) should checkout a new branch from develop, merge the branch from the PR into the new branch, and initiate deployment to the backup server from this branch. The PR author should give specific testing instructions for the changes (like which job to run, what the expected output is, etc) and the coordinator should verify the same. Once successfully tested, the PR should be merged into develop. This is to prevent cases like exploration migrations which can result in data corruption (as it will auto-migrate) if the migration isn’t safe. The "critical" label needs to be applied on PRs that change data validation checks, and other possibly critical changes which could affect production data.
