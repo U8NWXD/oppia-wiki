@@ -76,8 +76,6 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 
 * [#10798](https://github.com/oppia/oppia/issues/10798) (Fixing end-to-end tests, which are written with protractor)
 
-* [#4057](https://github.com/oppia/oppia/issues/4057) (frontend; Karma tests)
-
 * [#8668](https://github.com/oppia/oppia/issues/8668) (frontend; documenting the services)
 
 * [#8015](https://github.com/oppia/oppia/issues/8015) (Refactoring frontend - Services should return domain objects instead of dicts)
