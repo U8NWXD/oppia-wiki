@@ -11,7 +11,7 @@ We have several mailing lists in the form of Google Groups that you can join:
 * [oppia-announce](https://groups.google.com/forum/#!forum/oppia-announce) is for announcements of new releases or blog posts. It's not for asking questions though.
 * [oppia-dev](https://groups.google.com/forum/#!forum/oppia-dev) is the main mailing list for communication between developers and for technical questions. You can post to it even if you're not a member of the group. This is where you can ask questions, solicit feedback, or make developer-specific announcements (e.g. a temporary GitHub outage).
 
-You can also email your mentor with any questions. If you don't have a mentor, complete the steps on the [[wiki page for contributing code to Oppia|Contributing-code-to-Oppia]].
+You can also email your mentor with any questions. If you don't have a mentor, complete the steps on the [[wiki page for contributing code to Oppia|Contributing-code-to-Oppia]] and you'll be assigned one.
 
 ### Gitter
 
@@ -31,17 +31,15 @@ You can even mention whole teams of people! For example, if you find an issue th
 
 ## How to Ask Good Questions
 
-At Oppia we don’t care how silly your question is! Just ensure your question is clear, and provide us enough information to help us resolve it faster. We've divided the questions into 2 categories - Setup-related and General questions. You can start following the sections below to understand how you can ask each of them.
+At Oppia we don’t care how silly your question is! Just ensure your question is clear, and provide us with enough information to help us resolve it faster. We've divided the questions into 2 categories - Setup-related and General questions. You can start following the sections below to understand how you can ask each of them.
 
 ### Setup-related questions
 
-**Helpful advice**: You can choose any OS you’re comfortable with. However, most contributors use Linux or MacOS. Getting Oppia up and running on Windows can be a challenge.
+#### Before you ask a setup question
 
-#### Before you ask a question
+1. You can setup/install Oppia by visiting [[this page|Installing-Oppia]].  Make sure you follow **all** the mentioned instructions from the beginning in a step-by-step manner.
 
-1. You can setup/install Oppia by visiting [[this|Installing-Oppia]] page.  Make sure you follow **all** the mentioned instructions from the beginning in a step-by-step manner.
-
-2. Make sure each step succeeds (verify it with the expected behavior if mentioned in wiki).
+2. Make sure each step succeeds (verify it with the expected behavior if mentioned in the wiki).
 
 3. In case of any unexpected behavior/errors at any step, make sure you check out our wiki on [how to troubleshoot when you are facing installation errors](https://github.com/oppia/oppia/wiki/Issues-with-installation%3F#when-you-encounter-an-installation-error).
 
@@ -55,14 +53,14 @@ Please follow the template given below (mark x inside checkboxes to tick them) f
 
 ```md
 **Checklist**
-- [ ]  I have followed the “Before you ask a question” section
+- [ ]  I have followed the [Before you ask a setup question](https://github.com/oppia/oppia/wiki/Get-help#before-you-ask-a-setup-question) section of the wiki.
 
 **System Information**
 - OS: (Be specific Ex: Ubuntu 20.04 or Ubuntu 20.04 VM on MacOS 11.2.1)
 
 **Steps followed**
 
-// If you encountered this error while following instructions, provide a link to the instructions and specify which step failed. Otherwise, list what steps caused the error. These should be detailed enough for someone else to follow them.
+// If you encountered this error while following a wiki page, provide a link to the page and specify which step failed. Otherwise, list what steps caused the error. These should be detailed enough for someone else to follow them.
 
 **Error log**
 
@@ -80,11 +78,11 @@ paste a screenshot
 
 ## General questions
 
-### Before you ask a question
+### Before you ask a general question
 
-1. We expect that you have already **set up Oppia on your machine**, and it is successfully running. (If not, kindly do that first!)
-2. Prepare a debugging doc following [[the guidelines provided on the wiki page|Debugging-Docs]].
-3. If there are **failing e2e tests** on your PR, and you haven’t done any changes in that direction, kindly understand that sometimes they just fail due to [flakiness](https://github.com/oppia/oppia/wiki/End-to-End-Tests#flakiness). You should request for a re-run of those only when it’s preventing your PR from getting merged.
+* We expect that you have already **set up Oppia on your machine**, and it is successfully running. (If not, kindly do that first!)
+* Prepare a debugging doc following [[the guidelines provided on the wiki page|Debugging-Docs]].
+* If there are **failing e2e tests** on your PR, and you haven’t done any changes in that direction, kindly understand that sometimes they just fail due to [flakiness](https://github.com/oppia/oppia/wiki/End-to-End-Tests#flakiness). You should request for a re-run of those only when it’s preventing your PR from getting merged.
 
 ### How to ask a general question
 
@@ -94,19 +92,15 @@ Follow the template below for asking questions (fill in the values inside {{}} b
 @{{PR reviewer or Mentor username}} PTAL!
 
 **Checklist**
-- [ ] I have filled the [CLA](https://goo.gl/forms/AttNH80OV0) and the
-  [Oppia Contributor Survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3)
-- [ ] I have setup Oppia locally (verified by running `python -m
-  scripts.start`)
-- [ ] I have worked through the "Before you ask a question" section
+- [ ] I have filled the [CLA](https://goo.gl/forms/AttNH80OV0) and the [Oppia Contributor Survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3)
+- [ ] I have setup Oppia locally (verified by running `python -m scripts.start`)
+- [ ]  I have worked through the [Before you ask a setup question](https://github.com/oppia/oppia/wiki/Get-help#before-you-ask-a-setup-question) section of the wiki.
 
 **System Information**
 - OS: (Be specific Ex: Ubuntu 20.04)
 - [ ] Virtual machine
 
 **About the issue**
-- #{{Issue_No}}
-- #{{PR_No}}
 - {{Describe the issue}} (eg. Failing e2e tests: "The test has been
   failing repeatedly since {{x}} previous runs, and I haven’t done any
   changes related to it. Requesting a re-run.")
@@ -136,6 +130,6 @@ Follow the template below for asking questions (fill in the values inside {{}} b
 
 * **Avoid asking for help from people via emails or direct messaging.** We encourage everyone to ask for help on a common channel so that whoever sees your query first can help you or guide you how to take your query forward. Note that directing questions to your mentor is fine.
 
-  * Comment on the issue page or the PR if it’s very specific,
+  * Comment on the issue page or the PR if your question is very specific.
 
   * Use the [gitter chat](https://gitter.im/oppia/oppia-chat#) if your question is not issue-specific.
