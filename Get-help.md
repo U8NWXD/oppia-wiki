@@ -117,7 +117,7 @@ Follow the template below for asking questions (fill in the values inside {{}} b
 - [ ] Virtual machine
 
 **About the issue**
-- {{Describe the issue}} (eg. Failing e2e tests: "The test has been
+- {{Describe the problem}} (eg. Failing e2e tests: "The test has been
   failing repeatedly since {{x}} previous runs, and I haven’t done any
   changes related to it. Requesting a re-run.")
 
