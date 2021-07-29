@@ -12,6 +12,7 @@
   * [Super admin page](#super-admin-page)
     * [Assign roles](#assign-roles)
   * [Email dashboard page](#email-dashboard-page)
+  * [Release coordinator page](#release-coordinator-page)
 * [Static pages](#static-pages)
   * [About page](#about-page)
   * [Donate page](#donate-page)
@@ -36,6 +37,7 @@
   * [Topics and skills dashboard page](#topics-and-skills-dashboard-page)
 * [Contributor pages](#contributor-pages)
   * [Contributor dashboard page](#contributor-dashboard-page)
+  * [Contributor dashboard admin page](#contributor-dashboard-admin-page)
 
 Oppia has many webpages and this is a comprehensive guide on how to access all those pages. Before a contributor makes a PR, we expect that the contributor has thoroughly tested the changes made in the PR for functional correctness. Part of this process is manually testing any pages that are affected by their code.
 
@@ -138,6 +140,12 @@ The admin page is a page accessible only to super-administrators. It has many fu
 1. Log in as a super-admin and change role to "admin."
 
 2. Navigate to http://localhost:8181/emaildashboard.
+
+### Release coordinator page
+
+1. Log in as a super-admin and assign to your user the "release-coordinator" role.
+
+2. Navigate to http://localhost:8181/release-coordinator.
 
 ## Static pages
 
@@ -352,3 +360,9 @@ The contributor dashboard page allows users to translate existing explorations i
 1. Log in.
 
 2. Navigate to the contributor dashboard page at http://localhost:8181/contributor-dashboard.
+
+### Contributor dashboard admin page
+
+1. Log in as a super-admin and assign to your user the "Question admin" role.
+
+2. Navigate to http://localhost:8181/contributor-dashboard-admin.
