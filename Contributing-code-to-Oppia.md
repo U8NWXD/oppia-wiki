@@ -6,6 +6,19 @@ If you run into any problems along the way, we're here to help! Check out our [[
 
 **Important! Please read this page in its entirety before making any code changes.** It contains lots of really important information. You should also read through our [[guide to making pull requests|Make-a-pull-request]]
 
+## Table of Contents
+
+* [Setting things up](#setting-things-up)
+* [Developing your skills](#developing-your-skills)
+* [Finding something to do](#finding-something-to-do)
+  * [Starter projects for new contributors](#starter-projects-for-new-contributors)
+    * [Backend](#backend)
+    * [Frontend](#frontend)
+  * [Contributor Roles](#contributor-roles)
+  * [Tasks for Existing Contributors](#tasks-for-existing-contributors)
+* [Tips for Success](#tips-for-success)
+* [Notes](#notes)
+
 ## Setting things up
 
 1. Please sign the CLA so that we can accept your contributions. If you're contributing as an individual, use the [individual CLA](https://goo.gl/forms/AttNH80OV0). If your company owns the copyright to your contributions, a company representative should sign the [corporate CLA](https://goo.gl/forms/xDq9gK3Zcv).  **If you do not sign the CLA, any PRs you open will be closed.**
@@ -178,7 +191,7 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
 8. If you are making a contribution which involves changing some user interface or introducing a new feature, it is good to start with a design doc to avoid wasting efforts later. Follow our [[guide for writing design docs|Writing-design-docs]].
 
-### Notes
+## Notes
 
 * Our central development branch is `develop`, which should be clean and ready for release at any time. All changes should be done in feature branches based off of `develop`.
 
