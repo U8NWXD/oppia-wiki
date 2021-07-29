@@ -103,7 +103,7 @@ Once your feature is ready, you can open a pull request (PR)!
 
 * If you have already completed 2 pull requests and been added as a collaborator to the project, you should also add a changelog label.  If you are a new contributor, you don't have permission to do this.  Don't worry! Oppiabot will automatically ask someone to do it for you.
 
-* Oppiabot will check that you filled out the PR description correctly. If you didn't, it will leave a comment explaining what you need to do to fix it.
+* Oppiabot will check that you filled out the PR description correctly. If you didn't, it will leave a comment explaining what you need to do to fix it. More details on the kinds of comments Oppiabot leaves are coming soon.
 
 * GitHub will automatically assign reviewers, and Oppiabot will assign the issue's "owner" (from the changelog label) to do the first review.
 
