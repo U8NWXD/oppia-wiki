@@ -57,7 +57,7 @@ Many Oppia Pages require authentication to access. In order to sign in:
 
 ### Log in as a super-administrator
 
-There are two kinds of administrators in Oppia: super-administrators have access to the admin page, where they can set the role of any user. One of these roles is the administrator role, which gives the user access to all other privileged pages (like the topics and skills dashboard).
+Super-administrators have access to the admin page, where they can set the role of any user. Some of these roles (e.g. "Topic admin") give the user access to privileged pages (e.g. the topics and skills dashboard).
 
 There are two ways to become a super-administrator: use an email address with implicit super-admin privileges, or use the Firebase emulator interface to grant super-admin privileges after the account has been created.
 
@@ -127,17 +127,18 @@ The admin page is a page accessible only to super-administrators. It has many fu
 
 1. Navigate to the Admin page.
 
-2. Click the "ROLES" tab.
+2. Click the "ROLES" tab and enter the username of the user whose roles
+   you want to edit.
 
-   ![Admin Role Tab](https://user-images.githubusercontent.com/16653571/41501684-a543b22e-71c6-11e8-883c-cec35e32535e.png)
+   ![Admin Role Tab](images/Webpage-Guide/assignRolesEnterUsername.png)
 
-3. Change the role of your username to the desired role, "collection editor" in this example.
+3. Assign the desired role, "Question Admin" in this screenshot:
 
-   ![assignrole](https://user-images.githubusercontent.com/16653571/41503346-ff754c9e-71ee-11e8-9b72-9e16dae46418.png)
+   ![Assigning role](images/Webpage-Guide/assignRolesAddRole.png)
 
 ### Email dashboard page
 
-1. Log in as a super-admin and change role to "admin."
+1. Log in as a super-admin.
 
 2. Navigate to http://localhost:8181/emaildashboard.
 
@@ -203,7 +204,7 @@ The Terms page addresses the terms and conditions of Oppia.
 
 The Collection editor page allows users to create collections, which group explorations together. The collection editor page can only be accessed by users with the "collection editor" role.
 
-1. Log in as a super-admin and change your user's role to "collection editor."
+1. Log in as a super-admin and assign yourself the "collection editor" role.
 
 2. Navigate to the splash page (http://localhost:8181/splash).
 
@@ -219,17 +220,15 @@ The Collection editor page allows users to create collections, which group explo
 
 The collection player page allows users to explore collections in Oppia.
 
-1. Log in as a super-admin.
+1. Log in as a super-admin and assign yourself the "collection editor" role.
 
-2. Change role to "collection editor."
-
-3. Go to the admin activities tab and reload the collection "welcome_to_collections.yaml"
+2. Go to the admin activities tab and reload the collection "welcome_to_collections.yaml"
 
    ![Reload Collections](images/Webpage-Guide/reloadCollections.png)
 
-4. Navigate back to the community library page and type in the search bar "collections."
+3. Navigate back to the community library page and type in the search bar "collections."
 
-5. Click on the card titled "Introduction to collections in Oppia."
+4. Click on the card titled "Introduction to collections in Oppia."
 
 ## Exploration pages
 
@@ -281,7 +280,7 @@ The exploration will launch in a new tab, where you will see the first card. As 
 
 The skill editor allows the creation of skills in Oppia.
 
-1. Log in as a super-admin and set role to "admin."
+1. Log in as a super-admin and assign yourself the "Topic manager" role.
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
@@ -295,7 +294,7 @@ The skill editor allows the creation of skills in Oppia.
 
 The story editor page allows users to create stories in Oppia.
 
-1. Log in as a super-admin and set role to "admin."
+1. Log in as a super-admin and assign yourself the "Topic manager" role.
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
@@ -325,7 +324,7 @@ The story player allows people to play stories. To access it:
 
 The topic editor page allows users to create topics in Oppia.
 
-1. Log in as a super-admin and set role to "admin."
+1. Log in as a super-admin and assign yourself the "Topic manager" role.
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard and create a topic.
 
@@ -345,7 +344,7 @@ The topic editor page allows users to create topics in Oppia.
 
 The topics and skills dashboard page allows users to view their created topics and skills.
 
-1. Log in as a super-admin and set role to "admin."
+1. Log in as a super-admin and assign yourself the "Topic manager" role.
 
 2. Go to http://localhost:8181/topics-and-skills-dashboard or click the topic and skills dashboard link.
 
