@@ -22,7 +22,7 @@ To set up Oppia:
 
 3. You can navigate the files of the Oppia repository using the file tree on the left. Click on folders to show their contents, and click on files to open them in the editor that takes up the center of the window. On the far right is the minimap, which shows the file contents in small font so you can see more of the file at once.
 
-   ![Screenshot of the user interface with a file open for editing](images/vscodeEditor)
+   ![Screenshot of the user interface with a file open for editing](images/commonEditors/vscodeEditor.png)
 
 4. To edit the file, just start typing!
 
@@ -109,6 +109,10 @@ Tips:
         }
     }
     ```
+
+* To find where a function is defined and used, just hover over the function call or declaration:
+
+  ![Finding a function's definition and usages in Sublime](images/commonEditors/sublimeFunctionDefinitionAndUsage.png)
 
 To learn more, check out the [official](https://www.sublimetext.com/docs/index.html) and [unofficial](https://docs.sublimetext.io/) documentation.
 
