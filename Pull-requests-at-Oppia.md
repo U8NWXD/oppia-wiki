@@ -47,14 +47,14 @@ While contributing to Oppia, you will need to add different labels to issues or 
 
 * Added by PR author:
 
-  * `dependencies`: Should be added to pull requests that updates one or more dependencies.
-  * `PR: Affects datastore layer`: Indicates that a PR changes the datastore layer. Adding this label notifies the developers in charge of datastore stability so they can review the PR. This can also be added automatically.
+  * `dependencies`: Should be added to pull requests that update one or more dependencies.
+  * `PR: Affects datastore layer`: Indicates that a PR changes the datastore layer. Adding this label notifies the developers in charge of datastore stability so they can review the PR. Sometimes this label gets added automatically by Oppiabot, but if you open a PR that changes the datastore layer and the label isn't added automatically, you should add it manually. You can also add the label without waiting for Oppiabot.
   * Changelog (labels containing `PR CHANGELOG`): Each PR should have one of these labels added to indicate what project this PR applies to. The developer mentioned in the label will be assigned to review the PR first.
-* `PR: require post-merge sync to HEAD`: Should only be applied to pull requests which when merged will require all other open pull requests to be updated with the develop branch.
+* `PR: require post-merge sync to HEAD`: Should only be applied to pull requests which, when merged, will require all other open pull requests to be updated with the develop branch.
 
 * Added automatically:
 
-  * Labels starting with `PR: don't merge`: Indicate that some problem with the PR needs to be addressed before merging. For example, one of these labels gets added if the PR author hasn't signed the CLA yet.
+  * Labels starting with `PR: don't merge`: Indicates that some problem with the PR needs to be addressed before merging. For example, one of these labels gets added if the PR author hasn't signed the CLA yet.
 * `REVIEWERS: Please add changelog label`: When a new contributor opens a PR, they don't have permission to add labels. In that case, Oppiabot adds this label to tell reviewers to assign the appropriate changelog label.
 * `stale`: This label gets added by oppiabot to PRs that have been inactive for a week. They will be automatically closed after 4 more days of inactivity.
 * `PR: LGTM`: Indicates that a PR has all necessary approvals. The PR can be merged as soon as the CI checks pass.
