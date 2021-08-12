@@ -98,7 +98,7 @@ To add a new interaction to Oppia, here is what you need to do:
 
    Each component should implement `OnInit`. Parameters from the Python file are accessible as `parameterWithValue` where the Python variable is `parameter`. The `WithValue` is a legacy hold-over. Note that the parameters in $attrs are JSON-stringified, so you will need to use `oppiaHtmlEscaper.escapedJsonToObj()` to convert them back. (Do not use `JSON.parse()`, since it does not handle the necessary escaping.)
 
-7. Create a `MyInput/MyInput.ts` file that uses `require()` statements to import all the `*.ts` files in `MyInput/directives`. If you have CSS files in your `static/` folder, import those here too.
+7. Create a `MyInput/MyInput.ts` file that uses `require()` or `import` statements to import all the `*.ts` files in `MyInput/directives`. If you have CSS files in your `static/` folder, import those here too.
 
 8. Create a `MyInput/my-interaction-interactions.module.ts` file that imports the interaction, response, and short response components from `MyInput/directives`. It should also import any dependencies and export a module like this:
 
@@ -121,7 +121,7 @@ To add a new interaction to Oppia, here is what you need to do:
    export class MyInputInteractionModule { }
    ```
 
-9. Activate your interaction in Oppia by editing the `ALLOWED_INTERACTION_CATEGORIES` variable in `assets/constants.py` (you'll need to specify its name). Interactions are classified under different categories, add yours to a suitable category. Your interaction should then be available in the interaction repository, and can be used in explorations.
+9. Activate your interaction in Oppia by editing the `ALLOWED_INTERACTION_CATEGORIES` variable in `assets/constants.ts` (you'll need to specify its name). Interactions are classified under different categories, add yours to a suitable category. Your interaction should then be available in the interaction repository, and can be used in explorations.
 
 ### Testing
 
