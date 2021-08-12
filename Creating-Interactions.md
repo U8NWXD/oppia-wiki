@@ -1,3 +1,15 @@
+## Table of Contents
+
+* [Introduction](#introduction)
+* [Directory structure](#directory-structure)
+* [The `directives` folder](#the-directives-folder)
+  * [Components](#components)
+  * [Services](#services)
+* [Add a new Interaction](#add-a-new-interaction)
+  * [Testing](#testing)
+
+## Introduction
+
 Interactions provide a way for learners to submit answers to Oppia. They are implemented using custom HTML tags built with Angular Components. Here's an example of such a tag:
 
 ```html
@@ -19,7 +31,7 @@ In the Oppia codebase, interactions live in the `extensions/interactions` direct
   folder.
 * A `*.module.ts` file that defines the interaction as a module.
 
-## The `directives` folder
+## The directives folder
 
 ### Components
 
@@ -36,7 +48,7 @@ Inside the `directives` folder, each interaction will also have the following se
 * Rules service: [[Rules|Creating-Rules]] that allow a user's response to be evaluated for correctness. For example, the `MultipleChoiceInputRulesService` provides an `Equals` method that checks whether an answer matches a creator-configured correct answer.
 * Validation service: A service that checks a configured interaction for correctness. For example, the validator for the Multiple Choice Input interaction checks that none of the answer choices are empty.
 
-## Add a new Interaction
+## Add a new interaction
 
 To add a new interaction to Oppia, here is what you need to do:
 
