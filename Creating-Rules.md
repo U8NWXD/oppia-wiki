@@ -1,5 +1,3 @@
-This page is an introduction to creating new Oppia rules. An Oppia rule takes a reader's response, normalizes it, and evaluates it against a predicate. A card's interaction will correspond to a set of rules, and the first rule that is triggered by the response determines what Oppia will display to the reader next.
-
 ## Table of contents
 
 * [How rules work](#how-rules-work)
@@ -7,6 +5,8 @@ This page is an introduction to creating new Oppia rules. An Oppia rule takes a 
   * [Rule descriptions](#rule-descriptions)
   * [Evaluation functions](#evaluation-functions)
 * [Adding a New Rule](#adding-a-new-rule)
+
+This page is an introduction to creating new Oppia rules. An Oppia rule takes a reader's response, normalizes it, and evaluates it against a predicate. A card's interaction will correspond to a set of rules, and the first rule that is triggered by the response determines what Oppia will display to the reader next.
 
 ## How rules work
 
