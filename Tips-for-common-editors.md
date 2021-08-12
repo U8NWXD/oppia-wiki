@@ -34,7 +34,7 @@ Tips:
 
     ![GitLens annotation](images/commonEditors/vscodeGitLens.png)
 
-  * `Python` provides improved language support for Python. JavaScript and TypeScript support are built-in to Code. To configure the extension, we need to:
+  * `Python` provides improved language support for Python. To configure the extension, we need to:
 
     * Set the `PYTHONPATH` environment variable. In a `.env` file at the root of the `oppia/` repository, add these lines:
 
@@ -54,6 +54,10 @@ Tips:
     * Choose the correct Python interpreter from the blue bar at the bottom:
 
       ![Changing the Python interpreter](images/commonEditors/vscodePythonInterpreter.png)
+
+  * JavaScript and TypeScript support are built-in to Code, but we can add the `dbaeumer.vscode-eslint` extension to add ESLint support. Then whenever there is a lint error in your code, you'll see a red squiggly line. If you hover over that line, you'll see a pop-up describing the problem:
+
+    ![ESLint error](images.commonEditors/vscodeEslint.png)
 
 * You can right-click on code elements (e.g. functions or variables) to find where they are defined and used.
 
