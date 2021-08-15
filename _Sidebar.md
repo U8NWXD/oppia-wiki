@@ -17,7 +17,8 @@
   * [[Installing Oppia|https://github.com/oppia/oppia/wiki/Installing-Oppia]]
   * [[Firebase authentication|Firebase-authentication]]
     * [[Creating an Administrator account|https://github.com/oppia/oppia/wiki/Firebase-authentication#creating-an-administrator-account]]
-  * [[How to Ask Questions|Guide-on-How-to-Ask-Questions]]
+  * [[Pull requests at Oppia|Pull-requests-at-Oppia]]
+  * [[How to get help|Get-help]]
   * [[Git cheat sheet|Git-cheat-sheet]]
   * [[Codebase Overview|Overview-of-the-Oppia-codebase]]
     * [[Glossary of terms|Glossary-of-terms]]
@@ -47,6 +48,7 @@
     * [[Privacy aware programming|Privacy-aware-programming]]
     * [[Debugging Docs|Debugging-Docs]]
     * [[Backend Type Annotations|Backend-Type-Annotations]]
+    * [[Bytes and string handling in Python 3|Bytes-and-string-handling-in-Python-3]]
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
   * Testing Guidelines
     * [[Running tests|Running-Tests]]
