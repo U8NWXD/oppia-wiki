@@ -18,7 +18,7 @@
 
 1. Create a new, empty folder that will hold your Oppia work. Here, we call the folder `opensource`.
 
-2. Navigate to the folder (`cd opensource/`). Next, we'll [fork and clone](https://help.github.com/articles/fork-a-repo/) the Oppia repository.
+2. Navigate to the folder (`cd opensource/`).
 
 3. Navigate to https://github.com/oppia/oppia and click on the `fork` button. It is placed on the right corner opposite the repository name `oppia/oppia`.
 
@@ -27,6 +27,8 @@
    You should now see Oppia under your repositories. It will be marked as forked from `oppia/oppia`.
 
    ![Screenshot of repository list with Oppia](images/install/repositoryList.png)
+
+   For more information on forking, see [GitHub's documentation](https://help.github.com/articles/fork-a-repo/).
 
 4. Clone the repository to your local computer (replacing the values in `{{}}`):
 
@@ -71,7 +73,7 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
 1. Ensure that you have [Python 2.7](http://www.python.org/download/releases/2.7/) installed (Note: you can check this by running `python --version`). If Python 2.7 is not installed, download and run the latest Python 2.7 installer from https://www.python.org/downloads/mac-osx/. Make sure you download an installer for Python 2 and not Python 3!
 
 
-1. Check if you have git installed:
+2. Check if you have git installed:
 
    ```console
    $ git --version
@@ -80,40 +82,57 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
 
    If you get a `command not found` error, then you need to install git. Download [git](http://git-scm.com/download/mac), then run the package and follow instructions. This allows you to store the source in version control.
 
-1. Set up a virtual environment (virtualenv) for your Oppia dependencies. This ensures that conflicting versions of Python, pip, or any Python modules on your machine do not result in installation issues.
+## Setup a virtual environment
 
-    In the `opensource/` folder (**note**: this is the **parent directory** of oppia/) run:
+A virtual environment ensures that conflicting versions of Python, pip, or any Python modules on your machine do not result in installation issues.
 
-    ```
-    pip2 install virtualenv
-    python2 -m virtualenv env
-    ```
+1. In the `opensource/` folder (**note**: this is the **parent directory** of oppia/) run:
 
-    This creates a Python 2 virtual environment named "env" in your `opensource/` directory. Now, anytime you need to work with the Oppia code base, you should activate the virtualenv in `opensource/` by running
+   ```
+   pip2 install virtualenv
+   python2 -m virtualenv env
+   ```
 
-    ```
-    source env/bin/activate
-    ```
+   This creates a Python 2 virtual environment named "env" in your `opensource/` directory.
 
-    If this is successful, the usual `YOURMACBOOK-NAME:directory$` at the start of the terminal line will be replaced with `(env) YOURMACBOOK-NAME:directory$`
+2. Now, anytime you need to work with the Oppia code base, you should activate the virtualenv in `opensource/` by running
 
-    The following steps of installation and running the development server should all be done within this virtual environment to ensure compatibility.
+   ```
+   source env/bin/activate
+   ```
 
-    **Troubleshooting**: If, after running the `pip2 install virtualenv` command, you encounter a **'pip2 not found error'**, then do the following ([reference](https://pip.pypa.io/en/stable/installing/)):
+   If this is successful, the usual `YOURMACBOOK-NAME:directory$` at the start of the terminal line will be replaced with `(env) YOURMACBOOK-NAME:directory$`
 
-    * Run the following command in the terminal: `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`. This command downloads the get-pip.py file.
+   The following steps of installation and running the development server should all be done within this virtual environment to ensure compatibility.
 
-    * In the same folder where you ran the above command, run: `python get-pip.py`.
-
-    * If, after running the above command you get a warning about the directory not being added to PATH, you can add the suggested directory to the PATH by running: `sudo nano /etc/paths` and adding the suggested path at the bottom of the /etc/paths file (e.g. /Users/{{SYSTEM USERNAME}}/Library/Python/2.7/bin).
-
-    **Note**: If you get errors while setting up virtual environment and running a development server works fine without a virtual environment (there are no conflicts with versions of python, pip or other python modules), you can safely skip the virtual environment setup. Also, if you use another tool to manage your Python environments like pipenv or pyenv, those should work too.
-
-1. After activating the virtual environment, install setuptools (which is needed to install coverage, which checks test coverage for the Python code) and pyyaml (which is needed to parse YAML files).
+3. After activating the virtual environment, install setuptools (which is needed to install coverage, which checks test coverage for the Python code) and pyyaml (which is needed to parse YAML files).
 
    ```console
-   pip install setuptools pyyaml
+   $ pip install pyyaml setuptools
+   Requirement already satisfied: setuptools in /home/user/.pyenv/versions/3.7.18/envs/oppia-tmp/lib/python2.7/site-packages (44.1.1)
+   Collecting pyyaml
+     Downloading PyYAML-5.4.1-cp27-cp27mu-manylinux1_x86_64.whl (574 kB)
+        |████████████████████████████████| 574 kB 2.3 MB/s
+   Installing collected packages: pyyaml
+   Successfully installed pyyaml-5.4.1
    ```
+
+4. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
+
+   ```console
+   pip install coverage configparser
+   ```
+
+**Troubleshooting**: If, after running the `pip2 install virtualenv` command, you encounter a **'pip2 not found error'**, then do the following ([reference](https://pip.pypa.io/en/stable/installing/)):
+
+* Run the following command in the terminal: `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`. This command downloads the get-pip.py file.
+
+* In the same folder where you ran the above command, run: `python get-pip.py`.
+
+* If, after running the above command you get a warning about the directory not being added to PATH, you can add the suggested directory to the PATH by running: `sudo nano /etc/paths` and adding the suggested path at the bottom of the /etc/paths file (e.g. /Users/{{SYSTEM USERNAME}}/Library/Python/2.7/bin).
+
+**Note**: If you get errors while setting up virtual environment and running a development server works fine without a virtual environment (there are no conflicts with versions of python, pip or other python modules), you can safely skip the virtual environment setup. Also, if you use another tool to manage your Python environments like pipenv or pyenv, those should work too.
+
 
 ## Running Oppia on a development server
 
@@ -123,32 +142,22 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
    python -m scripts.start
    ```
 
-  The first time you run this script, it will take a while (about 5 - 10 minutes when we last tested it in Dec 2018, though this depends on your Internet connection). Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
+   The first time you run this script, it will take a while (about 5 - 10 minutes when we last tested it in Dec 2018, though this depends on your Internet connection). Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
 
-  **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [[these notes|Issues-with-installation?]]
+   **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [[these notes|Issues-with-installation?]]
 
-  **Note**: The script will create a number of files and folders that are siblings of the `oppia/` root directory (e.g. `oppia_tools`). This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
+   **Note**: The script will create a number of files and folders that are siblings of the `oppia/` root directory (e.g. `oppia_tools`). This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
 
-  **Note**: If you run into errors while installing Oppia, please try deleting the directories
+   **Note**: If you run into errors while installing Oppia, please try running `python -m scripts.clean` and then running `start.py` again.
 
-  ```text
-  ../oppia_tools/
-  node_modules/
-  third_party/
-  core/templates/prod/
-  local_compiled_js/
-  ```
+   **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
 
-  and running `start.py` again.
+   ```console
+   sudo chown -R {{YOUR_USERNAME}} ~/tmp
+   sudo chown -R {{YOUR_USERNAME}} ~/.npm
+   ```
 
-  **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
-
-  ```
-  sudo chown -R {{YOUR_USERNAME}} ~/tmp
-  sudo chown -R {{YOUR_USERNAME}} ~/.npm
-  ```
-
-  where `{{YOUR_USERNAME}}` should be replaced by your username.
+   where `{{YOUR_USERNAME}}` should be replaced by your username.
 
 2. The `start.py` script will start a development server at http://localhost:8181. (If this doesn't happen automatically, try navigating directly to http://localhost:8181 in a browser once stuff stops being printed to the terminal.) It should look something like this:
 
@@ -156,13 +165,13 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
 
    You can also view the App Engine admin console at http://localhost:8000.
 
-   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with “INFO”) and you’re able to navigate to the page.
-
+   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with "INFO") and you’re able to navigate to the page.
 
 3. When you're done, you can shut down the development server by typing Ctrl+C into the terminal. **Then wait for a command prompt to appear.** Oppia has to shut down all the services it's started, and if you abort the graceful shutdown steps (e.g. by typing Ctrl+C many times), you may have trouble re-starting the server.
 
    <details>
    <summary>Example of shutdown output</summary>
+
    ```text
    ^CINFO     2021-07-17 21:50:08,043 shutdown.py:50] Shutting down.
    INFO     2021-07-17 21:50:08,043 stub_util.py:377] Applying all pending transactions and saving the datastore
@@ -220,20 +229,15 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
        retpid, status = os.waitpid(pid, flags)
    KeyboardInterrupt
    ```
+
    </details>
-
-4. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
-
-   ```
-   pip install coverage configparser
-   ```
 
 ## Tips and tricks
 
 * To preserve the contents of the local datastore between consecutive runs, use the `--save_datastore` argument when starting up the dev server:
 
-```
+  ```console
   python -m scripts.start --save_datastore
-```
+  ```
 
 * The default Oppia installation comes with a set of [demo explorations](https://github.com/oppia/oppia/tree/61f19354098669bcb408ef7b65fa50d92c076488/data/explorations). On startup, none of these are loaded. To load them, log in to your server as an admin, then click your username in the top-right corner and choose 'Admin Page'. This will open the admin page, from which you can load the demo explorations.

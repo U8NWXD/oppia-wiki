@@ -2,6 +2,24 @@
 
 *These installation instructions were last tested on 24 July 2021. For more information on issues that may occasionally arise with the installation process, please contact _vojtech.jelinek@hey.com_ or see the [Troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.*
 
+## Install prerequisites
+
+Oppia relies on a number of programs and third-party libraries. Many of these libraries are downloaded automatically for you when you first run the `start.py` script provided with Oppia (see step 1 in the next section). However, there are some things that you will need to do beforehand:
+
+1. Make sure you have curl (used to download third-party libraries), setuptools (needed for installing coverage, which checks test coverage for the Python code), git (which allows you to store the source in version control), python-dev (which is used for the numpy installation), python-pip (which is also used for the numpy installation) and pyyaml (which is used to parse YAML files):
+
+```
+sudo apt-get install curl openjdk-8-jre python3-setuptools git python3-dev python3-pip python3-yaml unzip python-matplotlib python3-matplotlib
+```
+
+Alternatively, if you are on Debian/Ubuntu, you can use the `install_prerequisites.sh` script to install these. From the oppia directory:
+
+```
+bash scripts/install_prerequisites.sh
+```
+
+2. Install Chrome from [Google's website](https://www.google.com/chrome). You'll need this to run tests.
+
 ## Clone Oppia
 
 1. Create a new, empty folder that will hold your Oppia work. Here, we call the folder `opensource`.
@@ -51,24 +69,6 @@
    ![Diagram of the fork-and-clone workflow](images/install/forkCloneWorkflow.png)
 
    For making any changes to original repository, we first sync our cloned repository with original repository. We merge develop with `upstream/develop` to do this. Now we make a new branch, do the changes on the branch, push the branch to forked repository, and make a PR from Github interface. We use a different branch to make changes so that we can work on multiple issues while still having a clean version in develop branch.
-
-## Install prerequisites
-
-Oppia relies on a number of programs and third-party libraries. Many of these libraries are downloaded automatically for you when you first run the `start.py` script provided with Oppia (see step 1 in the next section). However, there are some things that you will need to do beforehand:
-
-1. Make sure you have curl (used to download third-party libraries), setuptools (needed for installing coverage, which checks test coverage for the Python code), git (which allows you to store the source in version control), python-dev (which is used for the numpy installation), python-pip (which is also used for the numpy installation) and pyyaml (which is used to parse YAML files):
-
-```
-sudo apt-get install curl openjdk-8-jre python3-setuptools git python3-dev python3-pip python3-yaml unzip python-matplotlib python3-matplotlib
-```
-
-Alternatively, if you are on Debian/Ubuntu, you can use the `install_prerequisites.sh` script to install these. From the oppia directory:
-
-```
-bash scripts/install_prerequisites.sh
-```
-
-2. Install Chrome from [Google's website](https://www.google.com/chrome). You'll need this to run tests.
 
 ## Setup a virtual environment
 
@@ -141,6 +141,8 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
    Successfully installed pyyaml-5.4.1
    ```
 
+   Note that you don't need to install pyyaml if you were able to install python-yaml with your package manager earlier.
+
 6. If you want to run backend tests and check coverage, please install these 2 pip libraries:
 
    ```console
@@ -151,39 +153,40 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
 
 1. In a terminal, navigate to `oppia/` and run:
 
-  ```
-     python -m scripts.start
-  ```
+   ```console
+   python -m scripts.start
+   ```
 
-  The first time you run this script, it will take a while -- about 5 - 10 minutes when we last tested it in Sep 2020, though this depends on your Internet connection. (It might also hang after "Checking if pip is installed on the local machine" due to the grpcio build being slow -- just give it some time, and it should finish.) Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
+   The first time you run this script, it will take a while -- about 5 - 10 minutes when we last tested it in Sep 2020, though this depends on your Internet connection. (It might also hang after "Checking if pip is installed on the local machine" due to the grpcio build being slow -- just give it some time, and it should finish.) Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
 
-  **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [these notes](https://github.com/oppia/oppia/wiki/Issues-with-installation%3F).
+   **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [these notes](https://github.com/oppia/oppia/wiki/Issues-with-installation%3F).
 
-  **Note**: The script will create two folders that are siblings of the `oppia/` root directory: `oppia_tools` and `node_modules`. This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
+   **Note**: The script will create two folders that are siblings of the `oppia/` root directory: `oppia_tools` and `node_modules`. This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
 
-  **Note**: If you run into errors while installing Oppia, please try running `python -m scripts.clean` and running `start.py` again.
+   **Note**: If you run into errors while installing Oppia, please try running `python -m scripts.clean` and running `start.py` again.
 
-  **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
+   **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
 
-  ```
-    sudo chown -R {{YOUR_USERNAME}} ~/tmp
-    sudo chown -R {{YOUR_USERNAME}} ~/.npm
-  ```
+   ```console
+   sudo chown -R {{YOUR_USERNAME}} ~/tmp
+   sudo chown -R {{YOUR_USERNAME}} ~/.npm
+   ```
 
-  where `{{YOUR_USERNAME}}` should be replaced by your username.
+   where `{{YOUR_USERNAME}}` should be replaced by your username.
 
 2. The `start.py` script will start a development server at http://localhost:8181. It should look something like this:
 
-  ![Image showing the default splash page.](https://res.cloudinary.com/dozmja9ir/image/upload/v1538254601/home_page.png)
+   ![Image showing the default splash page.](https://res.cloudinary.com/dozmja9ir/image/upload/v1538254601/home_page.png)
 
-  You can also view the App Engine admin console at http://localhost:8000.
+   You can also view the App Engine admin console at http://localhost:8000.
 
-  **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page above once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with “INFO”) and you’re able to navigate to the page.
+   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page above once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with "INFO") and you’re able to navigate to the page.
 
 3. When you're done, you can shut down the development server by typing Ctrl+C into the terminal. **Then wait for a command prompt to appear.** Oppia has to shut down all the services it's started, and if you abort the graceful shutdown steps (e.g. by typing Ctrl+C many times), you may have trouble re-starting the server.
 
    <details>
    <summary>Example shutdown output</summary>
+
    ```text
    ^CINFO     2021-07-19 00:31:32,627 shutdown.py:50] Shutting down.
    INFO     2021-07-19 00:31:32,627 stub_util.py:377] Applying all pending transactions and saving the datastore
@@ -241,6 +244,7 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
        retpid, status = os.waitpid(pid, flags)
    KeyboardInterrupt
    ```
+
    </details>
 
 ## Tips and tricks

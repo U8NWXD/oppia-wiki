@@ -24,7 +24,7 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
 
 1. Create a new, empty folder that will hold your Oppia work. Here, we call the folder `opensource`.
 
-2. Navigate to the folder (`cd opensource/`). Next, we'll [fork and clone](https://help.github.com/articles/fork-a-repo/) the Oppia repository.
+2. Navigate to the folder (`cd opensource/`).
 
 3. Navigate to https://github.com/oppia/oppia and click on the `fork` button. It is placed on the right corner opposite the repository name `oppia/oppia`.
 
@@ -33,6 +33,8 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
    You should now see Oppia under your repositories. It will be marked as forked from `oppia/oppia`.
 
    ![Screenshot of repository list with Oppia](images/install/repositoryList.png)
+
+   For more information on forking, see [GitHub's documentation](https://help.github.com/articles/fork-a-repo/).
 
 4. Clone the repository to your local computer (replacing the values in `{{}}`):
 
@@ -133,12 +135,18 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
 
    ```console
    $ pip install pyyaml setuptools
-   Requirement already satisfied: setuptools in /home/user/.pyenv/versions/2.7.18/envs/oppia-tmp/lib/python2.7/site-packages (44.1.1)
+   Requirement already satisfied: setuptools in /home/user/.pyenv/versions/3.7.18/envs/oppia-tmp/lib/python2.7/site-packages (44.1.1)
    Collecting pyyaml
      Downloading PyYAML-5.4.1-cp27-cp27mu-manylinux1_x86_64.whl (574 kB)
         |████████████████████████████████| 574 kB 2.3 MB/s
    Installing collected packages: pyyaml
    Successfully installed pyyaml-5.4.1
+   ```
+
+6. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
+
+   ```console
+   pip install coverage configparser
    ```
 
 ## Running Oppia on a development server
@@ -149,32 +157,22 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
    python -m scripts.start
    ```
 
-  The first time you run this script, it will take a while (about 5 - 10 minutes when we last tested it in Dec 2018, though this depends on your Internet connection). Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
+   The first time you run this script, it will take a while (about 5 - 10 minutes when we last tested it in Dec 2018, though this depends on your Internet connection). Subsequent runs should be much faster. The `start.py` script downloads and installs the required dependencies (such as Google App Engine) if they are not already present, and sets up a development server for you to play with. The development server logs are then output to this terminal, so you will not be able to enter further commands in it until you disconnect the server.
 
-  **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [[these notes|Issues-with-installation?]]
+   **Note**: **Please don't use `sudo` while installing.** It's not required, and using it may cause problems later. If you face permissions issues, ensure that you have the necessary permissions for the directory in which you're trying to set up Oppia. If you run into any other installation problems, please read [[these notes|Issues-with-installation?]]
 
-  **Note**: The script will create a number of files and folders that are siblings of the `oppia/` root directory (e.g. `oppia_tools`). This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
+   **Note**: The script will create a number of files and folders that are siblings of the `oppia/` root directory (e.g. `oppia_tools`). This is done so that these two folders will not be uploaded to App Engine when the application is deployed to the web.
 
-  **Note**: If you run into errors while installing Oppia, please try deleting the directories
+   **Note**: If you run into errors while installing Oppia, please try running `python -m scripts.clean` and then running `start.py` again.
 
-  ```text
-  ../oppia_tools/
-  node_modules/
-  third_party/
-  core/templates/prod/
-  local_compiled_js/
-  ```
+   **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
 
-  and running `start.py` again.
+   ```console
+   sudo chown -R {{YOUR_USERNAME}} ~/tmp
+   sudo chown -R {{YOUR_USERNAME}} ~/.npm
+   ```
 
-  **Note**: Oppia uses the npm tool to install some packages. This tool accesses both ~/tmp and ~/.npm, and has been known to occasionally encounter permissions issues with those directories. You may need to either delete these directories and all their contents (if they do not contain anything else that needs to be preserved), or change their permissions so that they are owned by you, which you can do by running
-
-  ```
-  sudo chown -R {{YOUR_USERNAME}} ~/tmp
-  sudo chown -R {{YOUR_USERNAME}} ~/.npm
-  ```
-
-  where `{{YOUR_USERNAME}}` should be replaced by your username.
+   where `{{YOUR_USERNAME}}` should be replaced by your username.
 
 2. The `start.py` script will start a development server at http://localhost:8181. (If this doesn't happen automatically, try navigating directly to http://localhost:8181 in a browser once stuff stops being printed to the terminal.) It should look something like this:
 
@@ -182,13 +180,13 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
 
    You can also view the App Engine admin console at http://localhost:8000.
 
-   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with “INFO”) and you’re able to navigate to the page.
-
+   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with "INFO") and you’re able to navigate to the page.
 
 3. When you're done, you can shut down the development server by typing Ctrl+C into the terminal. **Then wait for a command prompt to appear.** Oppia has to shut down all the services it's started, and if you abort the graceful shutdown steps (e.g. by typing Ctrl+C many times), you may have trouble re-starting the server.
 
    <details>
    <summary>Example of shutdown output</summary>
+
    ```text
    ^CINFO     2021-07-17 21:50:08,043 shutdown.py:50] Shutting down.
    INFO     2021-07-17 21:50:08,043 stub_util.py:377] Applying all pending transactions and saving the datastore
@@ -246,13 +244,8 @@ For your vitual environment, we recommend you use [pyenv](https://github.com/pye
        retpid, status = os.waitpid(pid, flags)
    KeyboardInterrupt
    ```
+
    </details>
-
-4. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
-
-   ```
-   pip install coverage configparser
-   ```
 
 ## Tips and tricks
 

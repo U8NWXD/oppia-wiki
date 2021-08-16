@@ -1,58 +1,8 @@
 **Note:** If you just want to create and share explorations, you may be able to use the hosted server at https://www.oppia.org (in which case you don't need to install anything).
 
-*These installation instructions were last tested on 22 Feb 2016. For more information on issues that may occasionally arise with the installation process, please see the [Troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.*
+*These installation instructions were last tested on 15 Aug 2021. For more information on issues that may occasionally arise with the installation process, please see the [Troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.*
 
-## Clone Oppia
-
-1. Create a new, empty folder that will hold your Oppia work. Here, we call the folder `opensource`.
-
-2. Navigate to the folder (`cd opensource/`). Next, we'll [fork and clone](https://help.github.com/articles/fork-a-repo/) the Oppia repository.
-
-3. Navigate to https://github.com/oppia/oppia and click on the `fork` button. It is placed on the right corner opposite the repository name `oppia/oppia`.
-
-   ![Screenshot with the fork button](images/install/fork.png)
-
-   You should now see Oppia under your repositories. It will be marked as forked from `oppia/oppia`.
-
-   ![Screenshot of repository list with Oppia](images/install/repositoryList.png)
-
-4. Clone the repository to your local computer (replacing the values in `{{}}`):
-
-   ```console
-   $ git clone https://github.com/{{GITHUB USERNAME}}/oppia.git
-   Cloning into 'oppia'...
-   remote: Enumerating objects: 203313, done.
-   remote: Total 203313 (delta 0), reused 0 (delta 0), pack-reused 203313
-   Receiving objects: 100% (203313/203313), 179.26 MiB | 3.12 MiB/s, done.
-   Resolving deltas: 100% (155851/155851), done.
-   Updating files: 100% (4199/4199), done.
-   ```
-
-   Note that you will see slightly different output because the numbers change as Oppia grows.
-
-5. Now your `origin` remote is pointing to your fork (`{{GITHUB USERNAME}}/oppia`). To stay up to date with the main `oppia/oppia` repository, add it as a remote called `upstream`. You'll first need to move into the `oppia` directory that was created by the clone operation.
-
-   ```console
-   $ cd oppia
-   $ git remote add upstream https://github.com/oppia/oppia.git
-   $ git remote -v
-   origin     https://github.com/{{GITHUB USERNAME}}/oppia.git (fetch)
-   origin     https://github.com/{{GITHUB USERNAME}}/oppia.git (push)
-   upstream   https://github.com/oppia/oppia.git (fetch)
-   upstream   https://github.com/oppia/oppia.git (push)
-   ```
-
-   The `git remote -v` command at the end shows all your current remotes.
-
-   Now you can pull in changes from `oppia/oppia` by running `git pull upstream {{branch}}` and push your changes to your fork by running `git push origin {{branch}}`.
-
-   We have established a clean setup now. We can make any changes we like and push it to this forked repository, and then make a pull request for getting the changes merged into the original repository. Here's a nice picture explaining the process ([image source](https://github.com/Rafase282/My-FreeCodeCamp-Code/wiki/Lesson-Save-your-Code-Revisions-Forever-with-Git)).
-
-   ![Diagram of the fork-and-clone workflow](images/install/forkCloneWorkflow.png)
-
-   For making any changes to original repository, we first sync our cloned repository with original repository. We merge develop with `upstream/develop` to do this. Now we make a new branch, do the changes on the branch, push the branch to forked repository, and make a PR from Github interface. We use a different branch to make changes so that we can work on multiple issues while still having a clean version in develop branch.
-
-## Install Dependencies
+## Install prerequisites
 
 Oppia relies on a number of programs and third-party libraries. Many of these libraries are downloaded automatically for you when you first run the `start.py` script provided with Oppia (see step 1 in the next section). However, there are some things that you will need to do beforehand:
 
@@ -106,7 +56,66 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
    Installed Python-2.7.18 to /home/user/.pyenv/versions/2.7.18
    ```
 
-   Create a virtual environment for oppia:
+3. Install Chrome from [Google's website](https://www.google.com/chrome). You'll need this to run tests.
+
+## Clone Oppia
+
+1. Create a new, empty folder that will hold your Oppia work. Here, we call the folder `opensource`.
+
+2. Navigate to the folder (`cd opensource/`).
+
+
+3. Navigate to https://github.com/oppia/oppia and click on the `fork` button. It is placed on the right corner opposite the repository name `oppia/oppia`.
+
+   ![Screenshot with the fork button](images/install/fork.png)
+
+   You should now see Oppia under your repositories. It will be marked as forked from `oppia/oppia`.
+
+   ![Screenshot of repository list with Oppia](images/install/repositoryList.png)
+
+   You can find more information on forking in [GitHub's documentation](https://help.github.com/articles/fork-a-repo/).
+
+4. Clone the repository to your local computer (replacing the values in `{{}}`):
+
+   ```console
+   $ git clone https://github.com/{{GITHUB USERNAME}}/oppia.git
+   Cloning into 'oppia'...
+   remote: Enumerating objects: 203313, done.
+   remote: Total 203313 (delta 0), reused 0 (delta 0), pack-reused 203313
+   Receiving objects: 100% (203313/203313), 179.26 MiB | 3.12 MiB/s, done.
+   Resolving deltas: 100% (155851/155851), done.
+   Updating files: 100% (4199/4199), done.
+   ```
+
+   Note that you will see slightly different output because the numbers change as Oppia grows.
+
+5. Now your `origin` remote is pointing to your fork (`{{GITHUB USERNAME}}/oppia`). To stay up to date with the main `oppia/oppia` repository, add it as a remote called `upstream`. You'll first need to move into the `oppia` directory that was created by the clone operation.
+
+   ```console
+   $ cd oppia
+   $ git remote add upstream https://github.com/oppia/oppia.git
+   $ git remote -v
+   origin     https://github.com/{{GITHUB USERNAME}}/oppia.git (fetch)
+   origin     https://github.com/{{GITHUB USERNAME}}/oppia.git (push)
+   upstream   https://github.com/oppia/oppia.git (fetch)
+   upstream   https://github.com/oppia/oppia.git (push)
+   ```
+
+   The `git remote -v` command at the end shows all your current remotes.
+
+   Now you can pull in changes from `oppia/oppia` by running `git pull upstream {{branch}}` and push your changes to your fork by running `git push origin {{branch}}`.
+
+   We have established a clean setup now. We can make any changes we like and push it to this forked repository, and then make a pull request for getting the changes merged into the original repository. Here's a nice picture explaining the process ([image source](https://github.com/Rafase282/My-FreeCodeCamp-Code/wiki/Lesson-Save-your-Code-Revisions-Forever-with-Git)).
+
+   ![Diagram of the fork-and-clone workflow](images/install/forkCloneWorkflow.png)
+
+   For making any changes to original repository, we first sync our cloned repository with original repository. We merge develop with `upstream/develop` to do this. Now we make a new branch, do the changes on the branch, push the branch to forked repository, and make a PR from Github interface. We use a different branch to make changes so that we can work on multiple issues while still having a clean version in develop branch.
+
+## Create a virtual environment
+
+These instructions assume that you manage your virtual environments using `pyenv`, but you can use another tool if you wish:
+
+1. Create the virtual environment:
 
    ```console
    $ pyenv virtualenv 2.7.18 oppia
@@ -117,13 +126,15 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
    ...
    ```
 
-   In the cloned `oppia` folder, run
+2. Configure the virtual environment to be activated automatically whenever you enter the `oppi` folder by moving into the cloned `oppia` folder and running:
 
    ```console
    pyenv local oppia
    ```
 
-   Now whenever you are within the `oppia` folder, the virtual environment will be active. You can install the Python dependencies here:
+   Now whenever you are within the `oppia` folder, the virtual environment will be active.
+
+3. Install the Python dependencies:
 
    ```console
    $ pip install pyyaml setuptools
@@ -135,15 +146,13 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
    Successfully installed pyyaml-5.4.1
    ```
 
-   Note that you'll probably see lots of warnings that Python 2 is deprecated. Those are expected.
+   Note that you'll probably see lots of warnings that Python 2 is deprecated. Those are expected. Also, you don't need to install pyyaml here if you were able to install `python-yaml` above.
 
-3. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
+4. If you want to run backend tests and check coverage, please install these 2 pip libraries globally (or in your venv).
 
    ```console
    pip install coverage configparser
    ```
-
-4. Install Chrome from [Google's website](https://www.google.com/chrome). You'll need this to run tests.
 
 ## Running Oppia on a development server
 
@@ -182,16 +191,17 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
 
 2. The `start.py` script will start a development server at http://localhost:8181. It should look something like this:
 
-  ![Image showing the default splash page.](https://res.cloudinary.com/dozmja9ir/image/upload/v1538254601/home_page.png)
+   ![Image showing the default splash page.](https://res.cloudinary.com/dozmja9ir/image/upload/v1538254601/home_page.png)
 
-  You can also view the App Engine admin console at http://localhost:8000.
+   You can also view the App Engine admin console at http://localhost:8000.
 
-  **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page above once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with “INFO”) and you’re able to navigate to the page.
+   **Note:** There may be a few warnings that appear after running `start.py`. Don’t worry about these so long as you see the page above once you go to http://localhost:8181. The script should continue to run so long as the development server is on (you’ll see a lot of lines that start with "INFO") and you’re able to navigate to the page.
 
 3. When you're done, you can shut down the development server by typing Ctrl+C into the terminal. **Then wait for a command prompt to appear.** Oppia has to shut down all the services it's started, and if you abort the graceful shutdown steps (e.g. by typing Ctrl+C many times), you may have trouble re-starting the server.
 
    <details>
    <summary>Example shutdown output</summary>
+
    ```text
    ^CINFO     2021-07-19 00:31:32,627 shutdown.py:50] Shutting down.
    INFO     2021-07-19 00:31:32,627 stub_util.py:377] Applying all pending transactions and saving the datastore
@@ -249,6 +259,7 @@ Oppia relies on a number of programs and third-party libraries. Many of these li
        retpid, status = os.waitpid(pid, flags)
    KeyboardInterrupt
    ```
+
    </details>
 
 ## Tips and tricks
