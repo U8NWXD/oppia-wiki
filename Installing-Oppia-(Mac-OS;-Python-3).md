@@ -1,3 +1,12 @@
+## Table of Contents
+
+* [Macs with M1 chips](#macs-with-m1-chips)
+* [Install prerequisites](#install-prerequisites)
+* [Clone Oppia](#clone-oppia)
+* [Setup a virtual environment](#setup-a-virtual-environment)
+* [Running Oppia on a development server](#running-oppia-on-a-development-server)
+* [Tips and tricks](#tips-and-tricks)
+
 **Note:** If you just want to create and share explorations, you may be able to use the hosted server at https://www.oppia.org (in which case you don't need to install anything).
 
 *These installation instructions were last tested on 24 July 2021. For more information on issues that may occasionally arise with the installation process, please see the [Troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.*

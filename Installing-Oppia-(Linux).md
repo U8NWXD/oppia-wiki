@@ -1,3 +1,16 @@
+## Table of Contents
+
+* [Install prerequisites](#install-prerequisites)
+* [Clone Oppia](#clone-oppia)
+* [Create a virtual environment](#create-a-virtual-environment)
+* [Running Oppia on a development server](#running-oppia-on-a-development-server)
+* [Tips and tricks](#tips-and-tricks)
+* [Notes on installation on Arch Linux systems](#notes-on-installation-on-arch-linux-systems)
+  * [Installation prerequisites](#installation-prerequisites)
+  * [Install 3rd party libraries](#install-3rd-party-libraries)
+  * [Fixing Python](#fixing-python)
+  * [Fix Google App Engine](#fix-google-app-engine)
+
 **Note:** If you just want to create and share explorations, you may be able to use the hosted server at https://www.oppia.org (in which case you don't need to install anything).
 
 *These installation instructions were last tested on 15 Aug 2021. For more information on issues that may occasionally arise with the installation process, please see the [Troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.*

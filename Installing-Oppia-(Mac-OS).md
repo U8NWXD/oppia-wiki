@@ -1,6 +1,15 @@
+## Table of Contents
+
+* [Note: Mac with M1 chips](#note-mac-with-m1-chips)
+* [Clone Oppia](#clone-oppia)
+* [Install prerequisites](#install-prerequisites)
+* [Setup a virtual environment](#setup-a-virtual-environment)
+* [Running Oppia on a development server](#running-oppia-on-a-development-server)
+* [Tips and tricks](#tips-and-tricks)
+
 **Note:** If you just want to create and share explorations, you may be able to use the hosted server at https://www.oppia.org (in which case you don't need to install anything).
 
-*These installation instructions were last tested on 3 Dec 2018. For more information on issues that may occasionally arise with the installation process, please see the [[Troubleshooting|Troubleshooting]] page. Thanks to Varun Tandon for updating these instructions!*
+*These installation instructions were last tested on 15 Aug 2021. For more information on issues that may occasionally arise with the installation process, please see the [[Troubleshooting|Troubleshooting]] page. Thanks to Varun Tandon for updating these instructions!*
 
 **These instructions are for Python 2, but Oppia now uses Python 3. Unless you need to work with the old Python 2 code, you should follow the [[Python 3 instructions|Installling-Oppia-(Mac-OS;-Python-3)]] instead.**
 
