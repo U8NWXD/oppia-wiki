@@ -110,6 +110,12 @@ To add a new interaction to Oppia, here is what you need to do:
 
    Each component should implement `OnInit`. Parameters from the Python file are accessible as `parameterWithValue` where the Python variable is `parameter`. The `WithValue` is a legacy hold-over. Note that the parameters in $attrs are JSON-stringified, so you will need to use `oppiaHtmlEscaper.escapedJsonToObj()` to convert them back. (Do not use `JSON.parse()`, since it does not handle the necessary escaping.)
 
+   You might be wondering what the difference is between the response component and the short response component. If you submit an incorrect answer to an interaction, you can click on "Previous responses" to see your incorrect answers. These are shown using the short response component. Then if you click on a previous answer, a pop-up appears with the response component. Here's an example from the graph input interaction:
+
+   ![An interaction's short response and response components](images/interactionResponseAndShortResponse.png)
+
+   The graph is the response component, while the text "4 edges and 4 vertices" is the short response component.
+
 7. Create a `MyInput/MyInput.ts` file that uses `require()` or `import` statements to import all the `*.ts` files in `MyInput/directives`. If you have CSS files in your `static/` folder, import those here too.
 
 8. Create a `MyInput/my-interaction-interactions.module.ts` file that imports the interaction, response, and short response components from `MyInput/directives`. It should also import any dependencies and export a module like this:
@@ -133,7 +139,7 @@ To add a new interaction to Oppia, here is what you need to do:
    export class MyInputInteractionModule { }
    ```
 
-9. Activate your interaction in Oppia by editing the `ALLOWED_INTERACTION_CATEGORIES` variable in `assets/constants.ts` (you'll need to specify its name). Interactions are classified under different categories, add yours to a suitable category. Your interaction should then be available in the interaction repository, and can be used in explorations.
+9. Activate your interaction in Oppia by editing the `ALLOWED_INTERACTION_CATEGORIES` variable in `assets/constants.ts` (you'll need to specify its name). Interactions are classified under different categories; add yours to a suitable category. Your interaction should then be available in the interaction repository, and can be used in explorations.
 
 ### Testing
 
