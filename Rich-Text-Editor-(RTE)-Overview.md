@@ -48,6 +48,7 @@ As described above, the core of our RTE is the 3rd party library CKEditor. If yo
 * Input a single Rich Text Component (such as the Math component) and then save. Make sure it is saved properly.
 * Try using backspace to delete the Rich Text Component. Make sure it is actually deleted.
 * Try copying-and-pasting a Rich Text Component. Hit save and make sure that the component is copied properly.
+* Try editing the Rich Text Component and make sure your changes are shown correctly.
 * Try dragging-and-dropping a Rich Text Component from one place in the content to another, then saving. Make sure the component is moved properly.
 * Input text with multiple paragraphs. Make sure the paragraphs are correctly spaced apart.
 * Insert an Image component with a large image, and save. Make sure the image does not overflow the content boundaries.
