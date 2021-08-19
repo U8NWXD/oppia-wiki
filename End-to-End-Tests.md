@@ -14,7 +14,8 @@
   * [Utilities](#utilities)
     * [`core/tests/protractor_utils`](#coretestsprotractor_utils)
     * [`extensions/**/protractor.js`](#extensionsprotractorjs)
-* [Writing E2E tests](#writing-e2e-tests)
+* [Run E2E tests](#run-e2e-tests)
+* [Write E2E tests](#write-e2e-tests)
   * [Where to add the tests](#where-to-add-the-tests)
     * [Interactions](#interactions)
     * [Existing suite](#existing-suite)
@@ -52,7 +53,7 @@ At Oppia, we highly regard the end user, so we have end-to-end (E2E) tests to te
 
 ### What is a flake
 
-Unfortunately, E2E tests are also much less deterministic than our other tests. The tests operate on a web browser that is accessing a local Oppia server, so the non-determinism of web browsers makes the tests less deterministic as well. For example, suppose that you write a test that clicks a button to open a modal and then clicks a button inside the modal to close it. Sometimes, the modal will open before the test tries to click the close button, so the test will pass. Other times, the test will try to click before the modal has opened, and the test will fail. We can see this schematically:
+Unfortunately, E2E tests are much less deterministic than our other tests. The tests operate on a web browser that accesses a local Oppia server, so the non-determinism of web browsers makes the tests less deterministic as well. For example, suppose that you write a test that clicks a button to open a modal and then clicks a button inside the modal to close it. Sometimes, the modal will open before the test tries to click the close button, so the test will pass. Other times, the test will try to click before the modal has opened, and the test will fail. We can see this schematically:
 
 ```text
                <---A--->
@@ -106,7 +107,7 @@ Conceptually, preventing flakes is easy. We can use `waitFor` statements to make
                         +----------------+    | close modal |
                                               +-------------+
 
-               <---B--->                 <-C->
+               <---B---><-------C-------->
 
 
 --------------------- time -------------------------------------------->
@@ -114,7 +115,7 @@ Conceptually, preventing flakes is easy. We can use `waitFor` statements to make
 
 Now, we know that the test code won't move past `waitForModal()` until after the modal opens. In other words, we know that `B + C > A`. This assures us that the test won't try to close the modal until after the modal has opened.
 
-The challenge in writing robust E2E tests is making sure to always include a waitFor statement like `waitForModal()`. It's common for people to write E2E tests, forget to include a waitFor somewhere, but run the tests and see them pass. Their tests might even pass consistently if their race condition only causes the test to fail very rarely. However, months later, an apparently unrelated change might change the runtimes enough that one of the test starts flaking frequently.
+The challenge in writing robust E2E tests is making sure to always include a waitFor statement like `waitForModal()`. It's common for people to write E2E tests and forget to include a waitFor somewhere, but when they run the tests, they pass. Their tests might even pass consistently if their race condition only causes the test to fail very rarely. However, months later, an apparently unrelated change might change the runtimes enough that one of the test starts flaking frequently.
 
 [Below](#writing-e2e-tests), we'll discuss specific techniques you should use to prevent flakes in new tests that you write.
 
@@ -134,7 +135,7 @@ Note that "suite files" are also known as "test files."
 
 #### `core/tests/protractor`
 
-This directory contains test suites which were common for both desktop and mobile interfaces. However, we don't run the mobile tests anymore. Certain operations were possible only on one or the other interface. To distinguish between the interfaces, we use the boolean, `browser.isMobile` defined in `onPrepare` of the protractor configuration file. Even though we don't run the mobile tests anymore, you might see some legacy code that uses this boolean.
+This directory contains test suites which were applicable to both desktop and mobile interfaces. However, we don't run the mobile tests anymore. Certain operations were possible only on one or the other interface. To distinguish between the interfaces, we use the boolean, `browser.isMobile` defined in `onPrepare` of the protractor configuration file. Even though we don't run the mobile tests anymore, you might see some legacy code that uses this boolean.
 
 #### `core/tests/protractor_desktop`
 
@@ -160,19 +161,29 @@ The core protractor utilities consist of the following files:
 * `workflow.js`: Functions for common tasks like creating explorations and assigning roles.
 * `action.js`: Functions for common interactions with elements, such as clicking or sending keys. All new tests should use these functions instead of interacting with elements directly because these functions include appropriate waitFor statements. For example, use `action.click('Element name', elem)` instead of `elem.click()`.
 
-The protractor tests use the above functions to simulate a user interacting with Oppia. They should not engage in direct interactions with the page (e.g. using `element`) but instead make use of the `protractor_utils`. If new functionality is needed for a test then it should be added in the utilities directory, so that is available for future tests to use and easy to maintain. A minor exception to this are the `embedding.js` tests which interact with a page constructed specifically to demonstrate embedding, and which is thus not of any wider interest.
+The protractor tests use the above functions to simulate a user interacting with Oppia. They should not interact with the page directly (e.g. using `element()`) but instead make use of the utilities in `protractor_utils/`. If new functionality is needed for a test then it should be added in the utilities directory, so that is available for future tests to use and easy to maintain.
 
 #### `extensions/**/protractor.js`
 
 Extensions provide `protractor.js` files to make them easier to test. The E2E test files call the utilities provided by these files to interact with an extension. For example, interactions include a `protractor.js` file that provides functions for customizing an interaction and checking that the created interaction matches expected criteria.
 
-## Writing E2E tests
+## Run E2E tests
+
+If you don't know the name of the suite you want to run, you can find it in `core/tests/protractor.conf.js`. Then you can run your test like this:
+
+```console
+$ python -m scripts.run_e2e_tests --suite="suiteName"
+```
+
+Chrome will open and start running your tests.
+
+## Write E2E tests
 
 ### Where to add the tests
 
 #### Interactions
 
-If you are just creating a new interaction and want to add end-to-end tests for it then you can follow the guidance given at [[Creating Interactions|Creating-Interactions]], though the "forms and objects" section of this page may also be helpful.
+If you are just creating a new interaction and want to add end-to-end tests for it then you can follow the guidance given at [[Creating Interactions|Creating-Interactions]], though the [forms and objects](#forms-and-objects) section of this page may also be helpful.
 
 If you are adding functionality to an existing interaction, you can probably just add test cases to its `protractor.js` file. For example, the `AlgebraicExpressionInput` interaction's file is at [`oppia/extensions/interactions/AlgebraicExpressionInput/protractor.js`](https://github.com/oppia/oppia/blob/develop/extensions/interactions/AlgebraicExpressionInput/protractor.js).
 
@@ -184,7 +195,7 @@ First, take a look at the existing test suites in [`core/tests/protractor`](http
 
 If you need to, you can add a new test suite to [`core/tests/protractor_desktop`](https://github.com/oppia/oppia/tree/develop/core/tests/protractor_desktop) like this:
 
-1. Create the new suite file under `core/tests/protractor_desktop`
+1. Create the new suite file under `core/tests/protractor_desktop`.
 2. Add the suite to [`core/tests/protractor.conf.js`](https://github.com/oppia/oppia/blob/develop/core/tests/protractor.conf.js).
 3. Add your new suite to GitHub Actions, whose workflow files are in [`.github/workflows`](https://github.com/oppia/oppia/tree/develop/.github/workflows). If there is an existing workflow that your suite would fit well with, add your suite there. Otherwise, create a new workflow. Note that we want all CI workflows to finish in less than 30 minutes, so check the workflow runtimes after your change!
 
@@ -204,7 +215,7 @@ If you need to, you can add a new test suite to [`core/tests/protractor_desktop`
 
       * Test exploration creation and deletion by creating an exploration and then deleting it.
 
-2. Write the [utilities](#writing-utilities) you will need. Your test file should never interact with the page directly. All interactions should go through utilities. A good way to check that you're doing all page interactions through the utilities is to ensure that you have no element selectors (e.g. `element(by.css(...))`) in your suite files.
+2. Write the [utilities](#writing-utilities) you will need. Your test file should never interact with the page directly. Use utilities instead. A good way to check that you're doing all page interactions through the utilities is to ensure that you have no element selectors (e.g. `element(by.css(...))`) in your suite files.
 
 3. Write the tests! Each test should step through one of your user journeys, asserting that the page is in the expected state along the way.
 
@@ -218,11 +229,11 @@ Much of the difficulty of writing protractor code lies in specifying the element
 
 1. Adding a `protractor-test-some-name` class to the element in question, and then referencing it by `by.css('.protractor-test-some-name')`. We do not use `by.id` for this purpose because Oppia frequently displays multiple copies of a DOM element on the same page, and if an `id` is repeated then references to it will not work properly. This is the preferred method, since it makes clear to those editing production code exactly what the dependence on protractor is, thus minimising the likelihood of confusing errors when they make changes. Sometimes this may not work, though (e.g. for embedded pages, third-party libraries and generated HTML), in which case you may instead need to use one of the options below.
 
-2. Existing element ids, for example `explorationLanguageCode`. We avoid using existing classes for this purpose as they are generally style specifications such as `big-button` that may be changed in the future.
+2. Using existing element ids. We avoid using existing classes for this purpose as they are generally style specifications such as `big-button` that may be changed in the future.
 
-3. You can use `by.tagName` if you are sure you are in a context where only one element will have (or is likely to have in future) the given name. The `<input>` and `<button>` tags often fall under this category. Try to avoid `by.buttonText` and `by.linkText` since they are sensitive to the choice of user-facing text.
+3. You can use `by.tagName` if you are sure you are in a context where only one element will have (and is likely to have in future) the given name. The `<input>` and `<button>` tags often fall under this category. Try to avoid `by.buttonText` and `by.linkText` since they are sensitive to the choice of user-facing text.
 
-4. Finally, you can use `by.xpath` to specify an exact path from the starting element to the one you get to. This is not ideal since it renders the tests fragile to changes in the DOM. However sometimes it is necessary, for example to send elements to `expectRichText` in `forms.js` which requires it receive an exact element that cannot be directly specified.
+4. Finally, you can use `by.xpath` to specify an exact path from the starting element to the one you get to. This is not ideal since it renders the tests fragile to changes in the DOM.
 
 If you use one of options 2-4, you should create a chain of element selectors where the top of the chain uses option 1. Suppose we have a DOM like this:
 
@@ -232,9 +243,9 @@ If you use one of options 2-4, you should create a chain of element selectors wh
        /  \
       /   ...
      /      \
-         Element A: class="protractor-test-elem-a"
+   ...   Element A: class="protractor-test-elem-a"
              \
-    ...      ...
+             ...
             /  \
            ...  \
                  \
@@ -272,7 +283,7 @@ var openTopic = async function(topicName) {
 }
 ```
 
-It might be tempting to use the `.first()`, `.last()`, and `.get(n)` functions directly when you know what order the elements will come in. However, this makes the tests fragile to changes in the page, and it makes the code hard to read. You should also avoid accessing page elements by index since that's not how most users will find elements. They will be relying on the text identifying those elements, and your test should too.
+It might be tempting to use the `.first()`, `.last()`, and `.get(n)` functions directly when you know what order the elements will come in. However, this makes the tests fragile to changes in the page, and it makes the code hard to read. You should also avoid accessing page elements by index because that's not how most users will find elements. They will be relying on the text identifying those elements, and your test should too.
 
 Except for cases where an element selector is crafted dynamically, all element selectors should be at the top of a utility file. There should be no element selectors in suite files.
 
@@ -288,17 +299,17 @@ It is easy to accidentally write _flaky_ end-to-end tests, which means that the 
 
 * HTML tags should be unique if possible. When they are not unique, for instance when multiple copies of the same HTML are created dynamically, we should not find one with indexing, `.first()`, or `.last()`. A great example of how to do this correctly is in `this.playTutorial` in `ExplorationEditorMainTab.js`.
 
-  * There is really only one case where it is acceptable to identify HTML elements by index, which is when the following conditions all hold:
+  There is really only one case where it is acceptable to identify HTML elements by index, which is when the following conditions all hold:
 
-    1. The elements you want to choose among are siblings, meaning that they share the same parent element. If they aren't siblings, then you can add use the parent elements to distinguish between them, for example by adding HTML classes to the parents.
-    2. The elements you want to choose among are identical. In particular, if the elements contain different text, then you can use that text to distinguish them.
-    3. The elements you want to choose among are generated dynamically, so you can't modify them to add HTML classes.
+  1. The elements you want to choose among are siblings, meaning that they share the same parent element. If they aren't siblings, then you can add use the parent elements to distinguish between them, for example by adding HTML classes to the parents.
+  2. The elements you want to choose among are identical. In particular, if the elements contain different text, then you can use that text to distinguish them.
+  3. The elements you want to choose among are generated dynamically, so you can't modify them to add HTML classes.
 
 * Avoid for loops where the loop index is used in asynchronous calls. `this.expectHintsTabContentsToMatch` in `ExplorationEditorTranslationTab.js` is a better way because it puts the index in the CSS selector, so the index is used before the asynchronous part kicks in.
 
 * Do not use URLs to navigate to a page, for example opening the about page by navigating to `/about` instead of clicking the appropriate buttons
 
-* Do not use `browser.sleep(` calls. This is great for debugging, but in the final test you should use `waitFor` instead.
+* Do not use `browser.sleep()` calls. They are fine for debugging, but in the final test you should use `waitFor` instead.
 
 * In page objects, each function should use `waitFor.js` to wait for the elements it acts on to appear or be clickable. Alternatively, you can use a function from `action.js` that has the waitFor calls built-in. If the function effects a change, it should also wait for the change to complete (e.g. the next page to finish loading if the function clicks a link).
 
@@ -366,7 +377,7 @@ Whenever you're debugging tests, you should create a debugging doc to document y
    ...
    ```
 
-2. Run the e2e script with the flag --debug_mode. For example,
+2. Run the e2e script with the flag `--debug_mode`. For example,
 
    ```console
    python -m scripts.run_e2e_tests --debug_mode --suite="topicAndStoryEditor"
@@ -391,15 +402,15 @@ Whenever you're debugging tests, you should create a debugging doc to document y
 
 ### Rerunning with SSH
 
-Circle CI allows debugging using SSH. For details, please read [this](https://circleci.com/docs/2.0/ssh-access-jobs/#steps). Debugging with SSH only reruns that particular job, so it is a great way to rerun a passing test to see if it flakes without rerunning all the tests.
+CircleCI allows debugging using SSH. For details, please read [this](https://circleci.com/docs/2.0/ssh-access-jobs/#steps). Debugging with SSH only reruns that particular job, so it is a great way to rerun a passing test to see if it flakes without rerunning all the tests.
 
 ### Downloading screenshots
 
-We capture screenshots of failing tests. On Circle CI, these are available under the `Artifacts` tab of the failure log page. You may also want to reference the [Circle CI artifacts documentation](https://circleci.com/docs/2.0/artifacts/). On GitHub Actions, look for an `Artifacts` link in the upper right where you can download a zip file of the screenshots.
+We capture screenshots of failing tests. On CircleCI, these are available under the `Artifacts` tab of the failure log page. You may also want to reference the [CircleCI artifacts documentation](https://circleci.com/docs/2.0/artifacts/). On GitHub Actions, look for an `Artifacts` link in the upper right where you can download a zip file of the screenshots.
 
-Here's an example of what artifacts on Circle CI look like:
+Here's an example of what artifacts on CircleCI look like:
 
-![Circle CI artifacts page with hyperlinks to screenshots and reports](https://user-images.githubusercontent.com/19878639/111242142-f1ba2000-85d4-11eb-8bf1-66cfbbf71975.png)
+![CircleCI artifacts page with hyperlinks to screenshots and reports](https://user-images.githubusercontent.com/19878639/111242142-f1ba2000-85d4-11eb-8bf1-66cfbbf71975.png)
 
 There are two kinds of artifacts:
 
@@ -425,7 +436,7 @@ Each individual test within each suite gets its own video. The video of each tes
 
 ![Name of video for test gets printed out above test](https://user-images.githubusercontent.com/52176783/118647333-486cf180-b7f2-11eb-999b-9edbbb89b5a7.png)
 
-Note that no videos will be generated on Circle CI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`.
+Note that no videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`.
 
 Only videos of failing tests will be saved. You can have videos of all tests be saved by enabling `ALL_VIDEOS` in `protractor.conf.js`.
 
@@ -445,7 +456,7 @@ We track passes, known flakes, and failures that aren't known to be flakes (call
 
 ## Reference
 
-### Forms and Objects
+### Forms and objects
 
 There are certain types of input that are used so commonly throughout Oppia that they are defined in `core/templates/forms/` and reused across many pages. There are corresponding protractor functions to manipulate the forms, and these functions are located in `core/tests/protractor_utils/forms.js`.
 
@@ -553,26 +564,31 @@ This works for both editors and checkers.
     await elem.click();
   }));
   ```
-    * This is the advice we see online, but we've also encountered cases where removing the `Promise.all` seems to fix bugs, so this guidance might not be right. Try both.
-    * If you are mapping over an element.all selector, we've encountered cases where ```element.all(selector).map(function)``` does not properly await for async functions. Instead of this:
-        ```
-        let mappedElements = element.all(selector)
-        await Promise.all(await mappedElements.map(async(x) => {
-            return await functionThatIsAsync(x);
-        }));
-        ```
-        Try:
-        ```
-        let mappedElements = element.all(selector)
-        for (let x of (await mappedElements)) {
-          await functionThatIsAsync(x);
-        }
-        ```
-        The above should properly await for each functionThatIsAsync to resolve.
+  * This is the advice we see online, but we've also encountered cases where removing the `Promise.all` seems to fix bugs, so this guidance might not be right. Try both.
+  * If you are mapping over an element.all selector, we've encountered cases where ```element.all(selector).map(function)``` does not properly await for async functions. Instead of this:
+
+    ```js
+    let mappedElements = element.all(selector)
+    await Promise.all(await mappedElements.map(async(x) => {
+        return await functionThatIsAsync(x);
+    }));
+    ```
+
+    Try:
+
+    ```js
+    let mappedElements = element.all(selector)
+    for (let x of (await mappedElements)) {
+      await functionThatIsAsync(x);
+    }
+    ```
+
+    The above should properly await for each functionThatIsAsync to resolve.
 
 * When multiple elements might match a locator, we often use `element.all` to get an [`ElementArrayFinder`](https://www.protractortest.org/#/api?view=ElementArrayFinder). This object can usually be used just like a list, but it appears that with async-await, we can only use the functions it defines. In particular:
-    * Use `elems.count()` instead of `elems.length` to get the length. This is asynchronous!
-    * Use `elems.get(i)` instead of `elems[i]`. `elems.first(i)` and `elems.last(i)` work too.
+
+  * Use `elems.count()` instead of `elems.length` to get the length. This is asynchronous!
+  * Use `elems.get(i)` instead of `elems[i]`. `elems.first()` and `elems.last()` work too.
 
   You do *not* need to `await` the `element.all` call itself. Also note that a `.map()` or `.filter()` operation on an `ElementArrayFinder` yields a normal array, so you *need* to use `.length` instead of `.count()`.
 * Chained Function Calls
