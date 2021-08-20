@@ -1,4 +1,4 @@
-**A word of warning: Many code editors let you perform git actions from their graphical interfaces instead of through the command line. We strongly recomment that you use the command line instead. Many new contributors run into trouble because their editor's git interface is incorrectly configured.**
+**A word of warning: Many code editors let you perform git actions from their graphical interfaces instead of through the command line. We strongly recommend that you use the command line instead. Many new contributors run into trouble because their editor's git interface is incorrectly configured.**
 
 ## Table of Contents
 
