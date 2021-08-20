@@ -76,7 +76,7 @@ Unfortunately, E2E tests are much less deterministic than our other tests. The t
 
 The durations of steps `A` and `B` are non-deterministic because `A` depends on how quickly the browser executes the frontend code to open the modal, and `B` depends on how fast the test code runs. Since these operations are happening on separate processes, the operating system makes no guarantees about which will complete first. In other words, we have a race condition.
 
-This race condition means that the test can fail randomly even when there's nothing wrong with Oppia's code. These failures are called _flakes_.
+This race condition means that the test can fail randomly even when there's nothing wrong with the code of the Oppia application (excluding tests). These failures are called _flakes_.
 
 ### Why flakes are problematic
 
@@ -129,6 +129,10 @@ If you are _absolutely certain_ that the failure was not caused by your changes,
 
 ## Layout of the E2E test files
 
+E2E test logic is divided between two kinds of files: suite files and utility files. Utility files provide functions for interacting with pages, for example by clicking buttons or checking that the expected text is visible. Suite files define the E2E tests using calls to the utility files.
+
+Suppose you wanted to write an E2E test that changes a user's profile picture and then checks that the change was successful. Your utility file might define `setProfilePicture()` and `checkProfilePicture` functions. Then your suite file would first call `setProfilePicture()` and then call `checkProfilePicture()`.
+
 ### Suite files
 
 Note that "suite files" are also known as "test files."
@@ -153,7 +157,7 @@ This directory contains utilities for performing actions using elements from the
 
 The core protractor utilities consist of the following files:
 
-* Page utilities, for example `AdminPage.js`. These utilities provide functions for interacting with a particular page.
+* Page objects, for example `AdminPage` in `AdminPage.js`. These objects provide functions for interacting with a particular page.
 * `forms.js`: Utilities for interacting with forms.
 * `general.js`: Various utilities that are useful for many different pages.
 * `users.js`: Utilities for creating users, logging in, and logging out.
@@ -436,7 +440,7 @@ Each individual test within each suite gets its own video. The video of each tes
 
 ![Name of video for test gets printed out above test](https://user-images.githubusercontent.com/52176783/118647333-486cf180-b7f2-11eb-999b-9edbbb89b5a7.png)
 
-Note that no videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`.
+Note that while recordings are enabled by default, no videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`.
 
 Only videos of failing tests will be saved. You can have videos of all tests be saved by enabling `ALL_VIDEOS` in `protractor.conf.js`.
 
@@ -452,7 +456,7 @@ Note for macOS: Quicktime doesn’t seem to like the videos we generate, so you 
 
 ## Metrics
 
-We track passes, known flakes, and failures that aren't known to be flakes (called "failures") using a logging server. You can view these metrics at https://oppia-e2e-test-results-logger.herokuapp.com. The code for this server is in the (private) [`oppia/oppia-e2e-test-results-logger`](https://github.com/oppia/oppia-e2e-test-restuls-logger) repository.
+We track passes, known flakes, and failures that aren't known to be flakes (called "failures") using a logging server. You can view these metrics at https://oppia-e2e-test-results-logger.herokuapp.com.
 
 ## Reference
 
