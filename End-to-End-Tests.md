@@ -440,7 +440,7 @@ Each individual test within each suite gets its own video. The video of each tes
 
 ![Name of video for test gets printed out above test](https://user-images.githubusercontent.com/52176783/118647333-486cf180-b7f2-11eb-999b-9edbbb89b5a7.png)
 
-Note that while recordings are enabled by default, no videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`.
+No videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are disabled on GitHub Actions where the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `0`. Otherwise, videos will be recorded on GitHub Actions.
 
 Only videos of failing tests will be saved. You can have videos of all tests be saved by enabling `ALL_VIDEOS` in `protractor.conf.js`.
 
