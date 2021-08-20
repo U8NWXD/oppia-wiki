@@ -12,7 +12,7 @@ If you are brand-new to Visual Studio Code, you can watch some [introductory vid
 
 To set up Oppia:
 
-1. Open the root `oppia/` folder in Code.
+1. Open the root `oppia/` folder in Code (often called "VSCode").
 
 2. You may be asked whether you trust the Oppia developers.
 
@@ -22,7 +22,7 @@ To set up Oppia:
 
 3. You can navigate the files of the Oppia repository using the file tree on the left. Click on folders to show their contents, and click on files to open them in the editor that takes up the center of the window. On the far right is the minimap, which shows the file contents in small font so you can see more of the file at once.
 
-   ![Screenshot of the user interface with a file open for editing](images/commonEditors/vscodeEditor.png)
+   ![Code with a file open for editing](images/commonEditors/vscodeEditor.png)
 
 4. To edit the file, just start typing!
 
@@ -32,9 +32,9 @@ Tips:
 
   * `GitLens` gives you easy access to git information about your files. One particularly helpful feature shows the last commit to modify the line your cursor is on. If you hover over the annotation, GitLens shows more information about the commit.
 
-    ![GitLens annotation](images/commonEditors/vscodeGitLens.png)
+    ![GitLens annotation showing git blame information](images/commonEditors/vscodeGitLens.png)
 
-  * `Python` provides improved language support for Python. To configure the extension, we need to:
+  * `Python` provides improved language support for Python. To configure the extension, you need to:
 
     * Set the `PYTHONPATH` environment variable. In a `.env` file at the root of the `oppia/` repository, add these lines:
 
@@ -55,21 +55,21 @@ Tips:
 
       ![Changing the Python interpreter](images/commonEditors/vscodePythonInterpreter.png)
 
-  * JavaScript and TypeScript support are built-in to Code, but we can add the `dbaeumer.vscode-eslint` extension to add ESLint support. Then whenever there is a lint error in your code, you'll see a red squiggly line. If you hover over that line, you'll see a pop-up describing the problem:
+  * JavaScript and TypeScript support are built-in to Code, but you can add the `dbaeumer.vscode-eslint` extension to add ESLint support. Then whenever there is a lint error in your code, you'll see a red squiggly line. If you hover over that line, you'll see a pop-up describing the problem:
 
-    ![ESLint error](images.commonEditors/vscodeEslint.png)
+    ![ESLint error in Code](images.commonEditors/vscodeEslint.png)
 
 * You can right-click on code elements (e.g. functions or variables) to find where they are defined and used.
 
-  ![Options from right-clicking code](images/commonEditors/vscodeRightClick.png)
+  ![Options to find usages and definitions of code elements that appear after right-clicking code](images/commonEditors/vscodeRightClick.png)
 
 * To filter the file tree, first click on the file tree window. Then start typing. Your text will appear in the upper right corner, and matches will be highlighted.
 
-  ![Filtering file tree](images/commonEditors/vscodeFilterHighlight.png)
+  ![The file tree being filtered](images/commonEditors/vscodeFilterHighlight.png)
 
   If you hover over the text that appears and click the icon with three horizontal lines, only matching files will be shown.
 
-  ![Hiding non-matches when filtering file tree](images/commonEditors/vscodeFilterHide.png)
+  ![The file tree being filtered with non-matches hidden](images/commonEditors/vscodeFilterHide.png)
 
 To learn more, check out the [Code documentation](https://code.visualstudio.com/docs).
 
@@ -95,19 +95,19 @@ Tips:
 
     * [`SublimeLinter-pylint`](https://packagecontrol.io/packages/SublimeLinter-pylint)
 
-    To configure them, open the SublimeLinter settings from the menu: Preferences > Package Settings > SublimeLinter > Settings. Add these lines to the file that opens (should be mostly blank to start), replacing `PARDIR` with the absolute path to the folder containing both the `oppia_tools` and `oppia` directories:
+    To configure them, open the SublimeLinter settings from the menu: Preferences > Package Settings > SublimeLinter > Settings. Add these lines to the file that opens (should be mostly blank to start), replacing `{{PARENT_DIRECTORY}}` with the absolute path to the folder containing both the `oppia_tools` and `oppia` directories:
 
     ```json
     {
         "linters": {
             "pylint": {
-                "executable": "PARDIR/oppia_tools/pylint-1.9.5/bin/pylint",
+                "executable": "{{PARENT_DIRECTORY}}/oppia_tools/pylint-1.9.5/bin/pylint",
                 "env": {
-                    "PYTHONPATH": "PARDIR/oppia_tools/pylint-1.9.5/:PARDIR/oppia_tools/pylint-quotes-0.1.8/"
+                    "PYTHONPATH": "{{PARENT_DIRECTORY}}/oppia_tools/pylint-1.9.5/:{{PARENT_DIRECTORY}}/oppia_tools/pylint-quotes-0.1.8/"
                 }
             },
             "eslint": {
-                "executable": "PARDIR/oppia/node_modules/eslint/bin/eslint.js",
+                "executable": "{{PARENT_DIRECTORY}}/oppia/node_modules/eslint/bin/eslint.js",
                 "selector": "source.ts, source.js - meta.attribute-with-value"
             }
         }
@@ -116,7 +116,7 @@ Tips:
 
 * To find where a function is defined and used, just hover over the function call or declaration:
 
-  ![Finding a function's definition and usages in Sublime](images/commonEditors/sublimeFunctionDefinitionAndUsage.png)
+  ![Pop-up showing a function's definition and usages in Sublime](images/commonEditors/sublimeFunctionDefinitionAndUsage.png)
 
 To learn more, check out the [official](https://www.sublimetext.com/docs/index.html) and [unofficial](https://docs.sublimetext.io/) documentation.
 
@@ -136,6 +136,6 @@ To start editing Oppia code:
 
 Tips:
 
-* Out of the box, Atom is quite a minimal editor that only provides basic functionality. To get more features, install packages. Be warned though that we found the packages of the canonical Atom linting framework, [AtomLinter](https://atomlinter.github.io), to be unmaintained, and we were unable to get them working. We recommend running lint checks from the command line instead.
+* Out of the box, Atom is quite a minimal editor that only provides basic functionality. To get more features, install packages. Be warned though that we found the packages of the canonical Atom linting framework, [AtomLinter](https://atomlinter.github.io), to be unmaintained, and we were unable to get them working (as of August 2021). We recommend running lint checks from the command line instead.
 
 To learn more, take a look at the [documentation](https://flight-manual.atom.io/).
