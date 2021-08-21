@@ -368,6 +368,20 @@ When the Automated QA Team does a codeowner review on your PR that changes the e
 
 Whenever you're debugging tests, you should create a debugging doc to document your work. This helps future contributors if they run into a similar bug in the future. If other people come in later to help you, they can also use the debugging doc to get up to speed on what you've already figured out. You can make a copy of [this template debugging doc](https://docs.google.com/document/d/1qRbvKjJ0A7NPVK8g6XJNISMx_6BuepoCL7F2eIfrGqM/edit?usp=sharing) to get started. Also check out the [[debugging docs wiki page|debugging-docs]].
 
+There are many ways to go about debugging an E2E test, but here's one approach:
+
+1. Create a [[debugging doc|debugging-docs]].
+2. Look through the logs from the failed test to try and understand what went wrong. In particular:
+
+   * Look for a line that says just `Killed`. This line indicates that some process was killed by the operating system for consuming too much memory. It's fairly safe to assume that the test failure was because of that process being killed.
+   * Look for the stack trace and error message of the _first_ error. The trace might point you to where the error was thrown in the test code, and the message may help explain what went wrong.
+
+3. If you don't understand what the error message means, search for it online. Also look through the test code and `core/test/protractor_utils/action.js` to see if the error message (or something like it) is in our test code.
+
+4. Enable [video recordings](#downloading-screen-recordings) and rerun the test until you reproduce the error. Then watch the video recordings and follow along in the test code. Try and understand why the error was thrown.
+
+5. Try and reproduce the error locally. If you succeed, you can use your [local debugger](#using-the-debugger) to investigate.
+
 ### Using the debugger
 
 1. Add a break-point in the code you want the control to stop at by adding the line `debugger;`. For example:
@@ -436,13 +450,14 @@ Sometimes you'll get screenshots that just aren't very helpful. For example, a l
 
 When screen recordings are enabled, we capture video of the test running on GitHub Actions. This helps developers solve problems in E2E tests that only occur on CI or are difficult to replicate locally.
 
+To enable screen recordings, you need to set the `VIDEO_RECORDING_IS_ENABLED` environment variable to `1` in your GitHub Actions workflow file. Note that screen recordings are still not saved under the following circumstances:
+
+* The test is running on CircleCI. CircleCI runners have too little memory to support video recording.
+* The test passed. Videos of tests that pass are deleted before being made available for download. You can change this behavior by setting `ALL_VIDEOS` to `true` in `protractor.conf.js`.
+
 Each individual test within each suite gets its own video. The video of each test gets a randomly assigned name, and this gets printed out above the suite, like this:
 
 ![Name of video for test gets printed out above test](https://user-images.githubusercontent.com/52176783/118647333-486cf180-b7f2-11eb-999b-9edbbb89b5a7.png)
-
-No videos will be generated on CircleCI due to memory issues when running the video recorder. Further, videos are only enabled on GitHub Actions when the `VIDEO_RECORDING_IS_ENABLED` environment variable is set to `1`.
-
-Only videos of failing tests will be saved. You can have videos of all tests be saved by enabling `ALL_VIDEOS` in `protractor.conf.js`.
 
 To download a zip file of the videos, look for the `Artifacts` link in the top-right of your test run.
 
