@@ -85,7 +85,7 @@ bash scripts/install_prerequisites.sh
 
 ## Setup a virtual environment
 
-For your vitual environment, we recommend you use [pyenv](https://github.com/pyenv/pyenv). Here are some instructions for doing so, but you can use another virtual environment tool if you wish:
+For your virtual environment, we recommend you use [pyenv](https://github.com/pyenv/pyenv). Here are some instructions for doing so, but you can use another virtual environment tool if you wish:
 
 1. First, make sure you install the Python build dependencies for your operating system. These are specified [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment). Next, install pyenv:
 
