@@ -37,7 +37,7 @@
   * [Downloading screen recordings](#downloading-screen-recordings)
 * [Metrics](#metrics)
 * [Reference](#reference)
-  * [Forms and Objects](#forms-and-objects)
+  * [Forms and objects](#forms-and-objects)
     * [Rich Text](#rich-text)
   * [Async-Await Tips](#async-await-tips)
     * [Good Patterns](#good-patterns)
