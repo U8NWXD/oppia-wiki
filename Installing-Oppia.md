@@ -13,4 +13,4 @@ Following is the list of installation instructions for various platforms:
 4. If you run into any problems during installation, please read [these notes](https://github.com/oppia/oppia/wiki/Issues-with-installation%3F) and the [troubleshooting](https://github.com/oppia/oppia/wiki/Troubleshooting) page.
 5. Take a look at our [[guide for getting started with some common code editors|Tips-for-common-IDEs]].
 
-   **Warning:** You should always edit Oppia code on your local machine. Do not use web-based editors like github.dev or the editor on github.com. These web-based editors won't run the automated checks that run on your loacl machine. Pushing without these checks just means that the tests will fail on your PR.
+   **Warning:** You should always edit Oppia code on your local machine. Do not use web-based editors like github.dev or the editor on github.com. These web-based editors won't run the automated checks that run on your local machine. Pushing without these checks just means that the tests will fail on your PR.
