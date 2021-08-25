@@ -63,13 +63,13 @@ Object classes all meet the following criteria:
 * Inherit from either `BaseObject` or another object class.
 * Set the class variable `description` to a string describing the object.
 * Set the class variable `default_value` to the value that should be the default whenever this type is used in a rule. Note that this variable is technically not required if the object will never be used in a [[rule|Creating-rules]].
-* Provide a `normalize` class method that accepts a raw Python object. The method should first validate the raw object to check whether it is malformed. If the validation checks pass, then the method should return a normalized form of the object. Note that in this context, "normalized" means primitive Python types optionally combined with lists and dicts.
+* Provide a `normalize` class method that accepts a raw Python object. The method should first validate the raw object to check whether it is malformed. If the validation checks pass, then the method should return a normalized form of the object. Note that in this context, "normalized" means a primitive Python type or multiple primitive types combined with lists and/or dicts.
 
   * The `BaseObject` class provides a `normalize` class method that can handle normalization for you so long as your object class provides a `get_schema` class method that returns a schema describing the object. `BaseObject.normalize` passes your schema to `schema_utils.normalize_against_schema`, so make sure that `normalize_against_schema` won't try to normalize your object to your schema using your object class. Otherwise, you'll get an endless loop between `normalize_against_schema` and `BaseObject.normalize`.
 
 ### Angular components
 
-Every object is accompanied by a component defined in `extensions/objects/templates` and imported in `extensions/objects/object-components.module.ts`. Each component provides the HTML and frontend code needed to create a form for the user to provide input in the form of the object. These components rely heavily on [schema-based forms](https://github.com/oppia/oppia/wiki/Schemas#schema-based-forms). For example, the `int-editor` component is just this:
+Every object is accompanied by a component defined in `extensions/objects/templates` and imported in `extensions/objects/object-components.module.ts`. Each component provides the HTML and frontend code needed to create a form for the user to provide input in the form of the object. These components rely heavily on [schema-based forms](https://github.com/oppia/oppia/wiki/Schemas#schema-based-forms). For example, the `int-editor` component's HTML is just this:
 
 ```html
 <schema-based-editor [schema]="getSchema.bind(this)"
@@ -82,21 +82,21 @@ The `getSchema` function is defined in `int-editor.component.ts` and returns thi
 
 ```json
 {
-  type: 'int',
+  type: "int",
   validators: [{
-    id: 'is_integer'
+    id: "is_integer"
   }]
 }
 ```
 
-Then the `schema-based-editor` component already knows how to construct a form for this schema.
+The `schema-based-editor` component already knows how to construct a form for this schema.
 
 ## Create a new object
 
 Let's suppose you're creating a new object called `MyObject` (in practice you should use a more descriptive name). You'll need to follow these steps:
 
 1. Create a new [object class](#python-classes) named `MyObject`.
-2. Add tests for your class in `extensions/objects/models/objects_test.py`. You should add normalization tests to the `ObjectNormalizationunitTests` class. You can also create a new test class to add more tests.
+2. Add tests for your class in `extensions/objects/models/objects_test.py`. You should add normalization tests to the `ObjectNormalizationUnitTests` class. You can also create a new test class to hold additional test cases.
 3. Add a new [Angular component](#angular-components) to accept input in the form of your object. Your component files should be named `my-object-editor.component.*`, and your component class should be named `MyObjectEditorComponent`.
 4. Import your component in `extensions/objects/object-components.module.ts` and add it to the module there.
 
