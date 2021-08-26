@@ -1,5 +1,5 @@
 ## Type Annotations
-Type Annotations are a new feature added in [PEP 484](https://www.python.org/dev/peps/pep-0484/) that allow for adding type hints to variables. They give information about types of variables to someone who is reading the code. This brings a sense of statically-typed control to the dynamically typed Python. Though Python ignores these type hints during code execution, third-party libraries can be used to statically type-check the codebase. 
+Type Annotations are a new feature added in [PEP 484](https://www.python.org/dev/peps/pep-0484/) that allow for adding type hints to variables. They give information about types of variables to someone who is reading the code. This brings a sense of statically-typed control to the dynamically typed Python. Though Python ignores these type hints during code execution, third-party libraries can be used to statically type-check the codebase.
 
 ## Where to add type annotations
 1. If a new file is added, it must have type annotations.
@@ -26,7 +26,7 @@ The method to write type annotations is to figure out types of the variables and
 
 ### Steps to add type annotation to a file:
 **Note**: Type annotation to a main code file and its test file will be added together.
-1. Run mypy type checks on the main code file you are trying to annotate. This will give the errors. 
+1. Run mypy type checks on the main code file you are trying to annotate. This will give the errors.
 2. Start solving these one by one.
 3. Let’s say a function is not type annotated, you should first look at the function arguments and the return value. Try to get information of the types from the function docstring, test file, function code and function usage. Let’s say in the example given below, where we have a function to take two integers and convert them to string and return the concatenated string, you can figure out from the function code that the return type will be a string. The type of the arguments can be figured out by taking a look at the docstring, tests and usage of the functions.
    - The original example code:
@@ -42,7 +42,7 @@ The method to write type annotations is to figure out types of the variables and
 		```
 
 
-4. You may also get errors when Mypy is not able to infer the type of a variable, then you must specify the type of the variable. 
+4. You may also get errors when Mypy is not able to infer the type of a variable, then you must specify the type of the variable.
    - The original code example:
 		```
 		d = {
@@ -61,9 +61,9 @@ The method to write type annotations is to figure out types of the variables and
 		```
 
 
-5. To understand what different error codes mean take a look at different [Error Codes](https://mypy.readthedocs.io/en/latest/error_code_list.html) in MyPy docs.  
-   - First try to find the reason behind that error. If that error can be resolved by some improvements in the codebase, then make the necessary changes. 
-   - If there are no options left to resolve that error, then only go for ignoring the error. Let’s say code in a line throws [no-return-any] error and you have no other way than to suppress it, add a comment `# type: ignore[no-return-any]` to that line. 
+5. To understand what different error codes mean take a look at different [Error Codes](https://mypy.readthedocs.io/en/latest/error_code_list.html) in MyPy docs.
+   - First try to find the reason behind that error. If that error can be resolved by some improvements in the codebase, then make the necessary changes.
+   - If there are no options left to resolve that error, then only go for ignoring the error. Let’s say code in a line throws [no-return-any] error and you have no other way than to suppress it, add a comment `# type: ignore[no-return-any]` to that line.
    - Some ignored errors can be fixed in future, so make a TODO issue for them like [this](https://github.com/oppia/oppia/issues/13059) and write a todo in the file with the issue number of the issue created.
 
     **Note**: While adding `# type: ignore[code]` statements, the line length can increase beyond 80(this is our max line length limit) and this will throw lint errors. So try to split the code in multiple lines so that we don't cross the limit. If it is not possible, ignore the line-too-long error by using the pylint pragma after the type annotation like`# type: ignore[code] # pylint: disable=line-too-long`.
@@ -97,7 +97,7 @@ For more information on adding types, refer to [Mypy Cheat Sheet(Python 2)](http
 ## Important Tips
 ### 1. Use `typing.Text` instead of `str` and `unicode`
 **Reason**: `typing.Text` means `str` in python3 and `unicode` in python2. In python2, `str` is a subclass of `unicode`. So `typing.Text` won’t make it difficult to migrate to python3.
-Note: Some errors like `Argument 1 to "<method-name>" has incompatible type "unicode"; expected "str"  [arg-type]` can arise due to this. 
+Note: Some errors like `Argument 1 to "<method-name>" has incompatible type "unicode"; expected "str"  [arg-type]` can arise due to this.
 This is because we accept `str` as `Text` in the methods and may give this value as an argument assumed to be of type `Text`(unicode or sub-class of unicode, i.e. str). So these errors should be silenced for smoother py3 migration along with types.
 
 ## Special Cases while adding Type Annotations
@@ -106,7 +106,7 @@ There are certain special cases that were encountered while adding type checks t
 **Error explained**: If you access the attribute of a value with a union type, mypy checks that the attribute is defined for every type in that union. Otherwise the operation can fail at runtime. This also applies to optional types.
 MyPy docs [link](https://mypy.readthedocs.io/en/stable/error_code_list.html#check-that-attribute-exists-in-each-union-item-union-attr) for this error.
 
-#### a. 
+#### a.
 ##### Violation:
 Dict.get(key) returns the value of the key in the dictionary or None. Thus MyPy assumes it to be Optional[<type>]
 
@@ -180,7 +180,7 @@ class _Gae(Platform):
 
 
 
-### 3. Incompatible types in assignment (expression has type "\<type1\>", variable has type "\<type2\>") 
+### 3. Incompatible types in assignment (expression has type "\<type1\>", variable has type "\<type2\>")
 Error explained: Mypy checks whether the assigned expression is compatible with the assignment target (or targets) or not.
 Mypy docs [link](https://mypy.readthedocs.io/en/stable/error_code_list.html#check-types-in-assignment-statement-assignment) for this error.
 
@@ -218,13 +218,13 @@ def test_recursively_remove_key(self):
 	self.assertEqual(d, ['a', 'b', {}])
 ```
 
-  
+
 
 ##### Solution:
 
-The solution here is to break down the test into multiple smaller tests. For this, refer to point 1 [here](https://github.com/oppia/oppia/wiki/Writing-backend-tests#common-testing-scenarios). It states that if a function tests more than one behaviour, split the test into multiple parts.
+The solution here is to break down the test into multiple smaller tests. For this, refer to point 1 [here](https://github.com/oppia/oppia/wiki/Backend-tests#common-testing-scenarios). It states that if a function tests more than one behaviour, split the test into multiple parts.
 
-  
+
 
 ```
 
@@ -262,13 +262,13 @@ The solution here is to break down the test into multiple smaller tests. For thi
 
 ## Some additional work due to python2 to python3 migration
 Since we are currently using Python2, there may be some third party packages which don’t have stubs in the typeshed repository (i.e., the stubs repository which comes bundled with mypy). So there may be type check errors like:
-no-untyped-call: 
-Reason: Calling an untyped function is not allowed by default as per our configurations. 
+no-untyped-call:
+Reason: Calling an untyped function is not allowed by default as per our configurations.
 Solution: We will need to ignore these errors by writing `# type: ignore[no-untyped-call]` at every place this error is thrown.
-no-return-any: 
-Reason: Returning a variable which mypy assumes to be of type ‘Any’ is not allowed by default as per our configurations. 
+no-return-any:
+Reason: Returning a variable which mypy assumes to be of type ‘Any’ is not allowed by default as per our configurations.
 Solution: We will need to ignore these errors by writing `# type: ignore[no-return-any]` at every place this error is thrown.
 
-We are in the process of python3 migration, and after it is complete, we won’t be using our old python2 third party libraries and with this, some of the ignores will be useless while some may still be required. Some would still be required because we won’t be having stubs for every third party library from the start. To identify type ignores that can be removed, we can leverage one peculiar functionality of  mypy - it throws errors when an ignore statement is not used and this will help us in removing extra ignore statements after python3 migration. 
+We are in the process of python3 migration, and after it is complete, we won’t be using our old python2 third party libraries and with this, some of the ignores will be useless while some may still be required. Some would still be required because we won’t be having stubs for every third party library from the start. To identify type ignores that can be removed, we can leverage one peculiar functionality of  mypy - it throws errors when an ignore statement is not used and this will help us in removing extra ignore statements after python3 migration.
 Note: During the python3 migration phase, if we start seeing unused ignore errors then they would either have to be all fixed or they can be suppressed setting [warn_unused_ignores](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-warn-unused-ignores) as False in the mypy.ini file if needed.
 
