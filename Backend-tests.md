@@ -28,25 +28,26 @@
 
 All code in Oppia's backend must be thoroughly tested because tests help catch bugs, help new contributors understand our backend code, and ensure that our code doesn't get broken by other developers in the future.
 
-This guide covers Oppia’s backend tests. We also have separate pages for [frontend tests](https://github.com/oppia/oppia/wiki/Frontend-unit-tests-guide) and [end-to-end tests](https://github.com/oppia/oppia/wiki/End-to-End-Tests).
+This guide covers Oppia’s backend tests. We also have separate pages for [[frontend tests|Frontend-unit-tests-guide]] and [[end-to-end tests|End-to-End-Tests]].
 
 ## Testing philosophy
 
-Let's begin by explaining some testing philosophy. Don't worry yet about how to actually implement tests--just think about how to design your tests. There are two main kinds of tests that we use in the backend: unit tests and integration tests.
+Let's begin by explaining some testing philosophy. Don't worry yet about how to actually implement tests--just think about how to design them. There are two main kinds of tests that we use in the backend: unit tests and integration tests.
 
 ### Unit tests
 
-These tests check that a small unit of code, usually a function or a class, works correctly. By testing only a small piece of code at a time, we can write very thorough tests. For example, it would be a lot harder to write comprehensive test cases for all of Oppia than it is to write comprehensive test cases for a small utility function that checks whether a username is valid.
+Unit tests check that a small unit of code, usually a function or a class, works correctly. By testing only a small piece of code at a time, we can write very thorough tests. For example, it would be a lot harder to write comprehensive test cases for all of Oppia than it would be to write comprehensive test cases for a small utility function that checks whether a username is valid.
 
 #### Writing comprehensive tests
 
-Let's consider what test cases we might write for such a utility. Suppose we only want to allow usernames that are between 1 and 16 characters (inclusive), and that include only English letters and Arabic numerals. These test cases would not be comprehensive:
+Let's consider what test cases we might write for such a utility. Suppose we only want to allow usernames that are between 1 and 7 characters (inclusive), and that include only English letters and Arabic numerals. These test cases would not be comprehensive:
 
 * `''`: Invalid
 * `'abc123'`: Valid
 * `'aBc'`: Valid
 * `'1'`: Valid
 * `'abc_123'`: Invalid
+* `abc123de`: Invalid
 
 Take a moment to think about what test cases are missing.
 
@@ -60,7 +61,7 @@ ALLOWED_USERNAME_CHARACTERS = [
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 ]
-USERNAME_LENGTH_RANGE = [1, 20]
+USERNAME_LENGTH_RANGE = [1, 7]
 
 def check_is_username_valid(username):
     if not USERNAME_LENGTH_RANGE[0] <= len(username) <= USERNAME_LENGTH_RANGE[1]:
@@ -168,7 +169,7 @@ At Oppia, we don't distinguish clearly between unit and integration tests. Many 
 
 We just saw how the difference between unit and integration tests largely comes down to how much mocking we do, but that raises a question: "When should you mock?" There is no hard rule, but we generally encourage developers to mock only when doing so makes the tests easier to write. Don't bother mocking every function call your unit of code makes.
 
-In fact, too many mocks can be a problem too because when someone changes the code you've mocked, they have to remember to change your mock too. This introduces opportunities for errors that cause the mock code to diverge from the code being mocked, which can let bugs slip past the tests undetected.
+In fact, too many mocks can be a problem because when someone changes the code you've mocked, they have to remember to change your mock too. This introduces opportunities for errors that cause the mock code to diverge from the code being mocked, which can let bugs slip past the tests undetected.
 
 ## Run backend tests
 
@@ -201,7 +202,7 @@ For more information about `--test_target` and other flags, run:
 python -m scripts.run_backend_tests --help
 ```
 
-(Note: While the tests are running, you may see the word `ERROR` show up in the test logs. This does not necessarily mean that an error has occurred; it happens because some tests explicitly expect an error to be raised under particular circumstances.)
+Note that while the tests are running, you may see the word `ERROR` show up in the test logs. This does not necessarily mean that an error has occurred; it happens because some tests actually expect an error to be raised.
 
 ### Identifying whether the tests passed
 
@@ -224,7 +225,7 @@ You can find more information about the exact errors by scrolling up and looking
 
 ### Coverage reports
 
-We use a simple tool, called *code coverage*, to check that all of Oppia’s backend code is fully covered by at least one test. Coverage reports specify which lines of each file have not been used in any test, and the overall coverage percentage of each file. Currently, Oppia has achieved **100% backend coverage**. We require that all changes maintain this full coverage.
+We use a simple tool, called *code coverage*, to check that all of Oppia’s backend code is fully covered by at least one test. Coverage reports specify which lines of each file have not been used in any test, and they report what percentage of each file is covered by the tests. Currently, Oppia has achieved **100% backend coverage**. We require that all changes maintain this full coverage.
 
 When writing a test for a function or class, you can generate a coverage report to verify that all the lines of the function/class have been included in the tests. To do this, simply add the `--generate_coverage_report` flag to the `run_backend_tests` command:
 
@@ -232,7 +233,7 @@ When writing a test for a function or class, you can generate a coverage report 
 python -m scripts.run_backend_tests --generate_coverage_report
 ```
 
-If there are **any** backend test errors, no coverage report will be produced. Please fix those errors and then re-run the above command. If the tests all pass, a coverage report will be printed that lists each backend file, along with the lines in it which are not covered by tests (as in the example below). Use this info to add new tests that cover those lines.
+If there are **any** backend test errors, no coverage report will be produced. Please fix those errors and then re-run the above command. If the tests all pass, a coverage report will be printed that lists each backend file, along with the lines not covered by tests. Here is an example of a coverage report:
 
 ```text
 Name                                                                             Stmts   Miss  Cover   Missing
@@ -293,7 +294,7 @@ class HelperFunctionTests(test_utils.GenericTestBase):
                 base.load_template('oppia-root.mainpage.html'))
 ```
 
-Notice that the test class inherits from `test_utils.GenericTestBase`. All our test classes inherit from `GenericTestBase`, though some may inherit indirectly (e.g. inherit from a class that inherits from `GenericTestBase`). The `GenericTestBase` class provides a few functions you may want to use:
+Notice that the test class inherits from `test_utils.GenericTestBase`, which provides a few functions you may want to use:
 
 * `GenericTestBase` inherits from `unittest.TestCase`, so all the normal unittest functions are available. In particular, we use the unittest assertion functions.
 
@@ -305,7 +306,9 @@ Notice that the test class inherits from `test_utils.GenericTestBase`. All our t
 
     `expected_args` takes a list of tuples, where each tuple contains a group of expected positional arguments. The test will assert that the function is called once with each group of expected arguments, in the order in which you specify the groups. Note that the order of the arguments within each group must match the order in which the arguments are passed to the function.
 
-    `expected_kwargs` accepts a list of dictionaries. Each dictionary specifies keyword arguments as key-value pairs, and the test will assert that your function is called once with each group of keyword arguments you specify, in same order as the dictionaries appear in the list. If `expected_args` is `None`, then no assertions are made about the positional arguments that the mock function receives. The same is true of `expected_kwargs`.
+    `expected_kwargs` accepts a list of dictionaries. Each dictionary specifies keyword arguments as key-value pairs, and the test will assert that your function is called once with each group of keyword arguments you specify, in same order as the dictionaries appear in the list.
+
+    If `expected_args` is `None`, then no assertions are made about the positional arguments that the mock function receives. The same is true of `expected_kwargs`.
 
     Lastly, `called` specifies whether we expect the mock function to have been called. The test will fail if this assertion is not met.
 
@@ -321,8 +324,8 @@ Notice that the test class inherits from `test_utils.GenericTestBase`. All our t
     This code will assert that `mock_popen` receives the following calls in order:
 
     ```python
-    mock_popen(['python'] shell=True)
-    mock_popen(['python2'] shell=False)
+    mock_popen(['python'], shell=True)
+    mock_popen(['python2'], shell=False)
     ```
 
   These swap functions each return a context where the mocking has been performed. You'll see this called a `swap` in the code. You use it using the `with` statement like this:
@@ -334,7 +337,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`. All our t
       func_being_tested()
   ```
 
-  If you have a lot of swaps, the `with` statements can get pretty burdensome. You can use `GenericTestBase.exit_stack.enter_context` instead like this
+  If you have a lot of swaps, the `with` statements can get pretty burdensome. You can use `GenericTestBase.exit_stack.enter_context` instead like this:
 
   ```python
   my_func_swap = self.swap(module, 'my_func', mock_my_func)
@@ -355,15 +358,15 @@ Notice that the test class inherits from `test_utils.GenericTestBase`. All our t
    * We recommend that test names follow the format:
 
      ```text
-     test_{{action}}_with_{{with_condition}}_{{has_expected_outcome}}`
+     test_{{action}}_with_{{with_condition}}_{{has_expected_outcome}}
      ```
 
-     where `{{action}}`, `{{with_condition}}`, and `{{has_expected_outcome}}` are replaced with appropriate descriptions. Put the outcome at the end, so that it's easy to compare consecutive tests that have slightly different conditions with divergent outcomes. Here are some examples that follow this format:
+     where `{{action}}`, `{{with_condition}}`, and `{{has_expected_outcome}}` are replaced with appropriate descriptions. Put the outcome at the end, so that it's easy to compare consecutive tests that have slightly different conditions and divergent outcomes. Here are some examples that follow this format:
 
      * `test_get_by_auth_id_with_invalid_auth_method_name_is_none`
      * `test_get_by_auth_id_for_unregistered_auth_id_is_empty_list`
 
-     These names are good because it's easy to see the differences between the tests: one tests an invalid auth, and the other tests an unregistered auth. Correspondingly, these conditions lead to different outcomes (`name_is_none' vs. 'id_is_empty_list').
+     These names are good because it's easy to see the differences between the tests: one tests an invalid auth method, and the other tests an unregistered auth. Correspondingly, these conditions lead to different outcomes (`name_is_none' vs. 'id_is_empty_list').
 
 2. Tests should use the following general structure:
 
@@ -423,9 +426,9 @@ We shard the backend tests into many smaller jobs that run in parallel on GitHub
 
 ![Display of backend test jobs on a pull request](https://user-images.githubusercontent.com/19878639/109242853-ddd78700-77a9-11eb-9cae-da5cece9ab26.png)
 
-The jobs named like `Run backend tests (ubuntu-18.04, i)` are running the sharded jobs, each with its own number `i`. The last job, `Check combined backend test coverage`. All these jobs are defined in [`.github/workflows/backend_tests.yml`](https://github.com/oppia/oppia/blob/develop/.github/workflows/backend_tests.yml).
+The jobs named like `Run backend tests (ubuntu-18.04, i)` are running the sharded jobs, each with its own number `i`. The last job, `Check combined backend test coverage`, checks that the code coverage is 100%. All these jobs are defined in [`.github/workflows/backend_tests.yml`](https://github.com/oppia/oppia/blob/develop/.github/workflows/backend_tests.yml).
 
-The shards are defined in [`scripts/backend_test_shards.json`](https://github.com/oppia/oppia/blob/develop/scripts/backend_test_shards.json). Here's what that top of file looks like:
+The shards are defined in [`scripts/backend_test_shards.json`](https://github.com/oppia/oppia/blob/develop/scripts/backend_test_shards.json). Here's what the top of that file looks like:
 
 ```json
 {
@@ -438,7 +441,7 @@ Each shard is identified by a name, in this case `1`. You could run this shard w
 
 #### Common errors
 
-Whenever you run a shard of backend tests, the `run_backend_tests.py` script checks to make sure the test modules on the filesystem and the modules in the shards file are exactly the same. If you add a module to a shard that isn't in the filesystem, you'll get a `Modules ... in shards not found` error. This often happens if the module name is incorrect. On the other hand, if there is a module on the filesystem that's not in the shards, you'll get a `Modules ... not in shards` error. This often happens because you forgot to add a new test to the shards.
+Whenever you run a shard of backend tests, the `run_backend_tests.py` script checks to make sure the test modules on the filesystem and the modules in the shards file are exactly the same. If a shard has a module that isn't in the filesystem, you'll get a `Modules ... in shards not found` error. This often happens if the module name is incorrect. On the other hand, if there is a module on the filesystem that's not in the shards, you'll get a `Modules ... not in shards` error. This often happens because you forgot to add a new test to the shards.
 
 #### Adding new tests to shards
 
@@ -446,7 +449,7 @@ The point of sharding the backend tests is to speed up test runs on PRs. When th
 
 ### Common testing scenarios
 
-1. If a function tests **more than one behaviour**, split the test into multiple parts. E.g. if you have a single test that looks like this:
+1. If a function tests **more than one behaviour**, split the test into multiple parts. For example, if you have a single test that looks like this:
 
    * Test:
 
