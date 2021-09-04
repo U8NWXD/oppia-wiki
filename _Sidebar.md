@@ -42,9 +42,9 @@
       * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
-    * [[Lint Checks|Lint-Checks#how-to-run-the-linter]]
-       * [[How to run lint checks?|Lint-Checks#how-to-run-the-linter]]
-       * [[How to write lintchecks?|Lint-Checks#directory-structure]]
+    * [[Lint Checks|Lint-Checks]]
+      * [[Custom Pylint checks|Custom-Pylint-checks]]
+      * [[Custom ESLint checks|Custom-ESLint-checks]]
     * [[Oppia's code owners and checks to be carried out by developers|Oppia's-code-owners-and-checks-to-be-carried-out-by-developers]]
     * [[Privacy aware programming|Privacy-aware-programming]]
     * [[Debugging Docs|Debugging-Docs]]
@@ -56,7 +56,6 @@
     * Writing Tests
       * [[Writing backend tests]]
       * [[Writing frontend unit tests|Frontend-unit-tests-guide]]
-      * [[Writing tests for custom Pylint Checkers|Writing-Tests-For-Pylint]]
       * [[End-to-end tests|End-to-End-Tests]]
       * [[Lighthouse Tests|Lighthouse-Tests]]
     * [[Testing for Accessibility|Testing-for-Accessibility]]
