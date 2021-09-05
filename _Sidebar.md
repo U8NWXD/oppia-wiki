@@ -99,7 +99,7 @@
     * [[Objects|Creating-Objects]]
     * [[Dependencies|Creating-Dependencies]]
     * [[Value generators|Creating-Value-Generators]]
-    * [[Actions and isues|Actions-and-issues]]
+    * [[Actions and issues|Actions-and-issues]]
   * [[Advice on creating explorations|Advice-on-Creating-Explorations]]
   * [[Oppia-ml Extension|Oppia-ml-Extension]]
   * [[Mobile development|Mobile-development]]

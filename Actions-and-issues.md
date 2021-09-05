@@ -9,7 +9,7 @@
 
 As a user plays through an exploration, we want to track their progress to identify any problems. If we do find problems with the exploration, we can raise those to the exploration creator. For example, if a user gets stuck in a cycle of cards or submits many incorrect answers to an interaction, the exploration could probably be improved.
 
-We use store the steps a user takes through an exploration as _actions_, and we create _issues_ to keep track of problems like many incorrect answers. Both actions and issues are defined as [[schemas|Schemas]].
+We store the steps a user takes through an exploration as _actions_, and we create _issues_ to keep track of the problems that these actions indicate. Both actions and issues are defined as [[schemas|Schemas]].
 
 ## Actions
 
@@ -29,7 +29,7 @@ When a learner's journey through an exploration goes smoothly, we don't store th
 
 We define three different issues at [`extensions/issues/`](https://github.com/oppia/oppia/tree/develop/extensions/issues):
 
-* `MultipleIncorrectSubmissions`: This issue is recorded when a user submits 3 or more incorrect answers to an interaction. It stores the name of the state where the user provided incorrect answers and the number of incorrect answers that were submitted.
+* `MultipleIncorrectSubmissions`: This issue is recorded when a user submits 3 or more incorrect answers to an interaction. It stores the name of the state where the user provided incorrect answers and the number of incorrect answers that they submitted.
 
   The logic determining whether to file this issue lives in the `MultipleIncorrectAnswersTracker` class in the [playthrough service](https://github.com/oppia/oppia/tree/develop/core/templates/services/playthrough.service.ts).
 
