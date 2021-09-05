@@ -1,5 +1,6 @@
 ## Table of contents
 
+* [Table of contents](#table-of-contents)
 * [Introduction](#introduction)
 * [Write checkers](#write-checkers)
   * [Types of checkers](#types-of-checkers)
@@ -19,6 +20,13 @@
     * [Register the checker](#register-the-checker)
   * [Beyond hello world](#beyond-hello-world)
 * [Test custom Pylint checks](#test-custom-pylint-checks)
+  * [Design tests](#design-tests)
+  * [Pylint testing utilities](#pylint-testing-utilities)
+  * [Use testing utilities for hello world checkers](#use-testing-utilities-for-hello-world-checkers)
+    * [Tests for hello world AST checker](#tests-for-hello-world-ast-checker)
+    * [Tests for hello world token checker](#tests-for-hello-world-token-checker)
+    * [Tests for hello world raw checker](#tests-for-hello-world-raw-checker)
+  * [Run tests](#run-tests)
 
 ## Introduction
 
@@ -434,12 +442,154 @@ Note that we have to use a stack to track function nodes to handle nested functi
 
 ## Test custom Pylint checks
 
-We test our checkers with [[backend tests|Writing-backend-tests]] in `pylint_extensions_test.py`. You should write test cases to cover the following situations:
+We test our checkers with [[backend tests|Writing-backend-tests]] in `pylint_extensions_test.py`.
+
+### Design tests
+
+You should write test cases to cover the following situations:
 
 * True positives: Bad code that you expect to result in lint errors.
 * True negatives: Good code that you don't expect to result in lint errors.
 * False positives: Good code that you expect to result in lint errors because you can't write a perfect linter.
 * False negatives: Bad code that you don't expect to result in lint errors because the linter is imperfect.
+
+### Pylint testing utilities
+
+While tests for the checkers are just normal backend tests, Pylint provides some helpful testing utilities that you can use, particularly [`pylint.testutils.CheckerTestCase`](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#testing-a-checker). Pylint's documentation shows how to create a test class that inherits from the `CheckerTestCase` class, but at Oppia we prefer to inherit from `unittest.TestCase`. We store the `CheckerTestCase` object as an instance variable instead, so your `setUp()` methods will look like this for your checker `MyChecker`:
+
+```python
+def setUp(self):
+    super().setUp()
+    self.checker_test_object = testutils.CheckerTestCase()
+    self.checker_test_object.CHECKER_CLASS = pylint_extensions.MyChecker
+    self.checker_test_object.setup_method()
+```
+
+Pylint will handle setting up our checker, which will simplify our tests.
+
+### Use testing utilities for hello world checkers
+
+We'll walk through how to use the `checker_test_object` for each kind of checker below. Note that these examples don't show comprehensive test cases--see [above](#design-tests) for suggestions for how you can develop test cases.
+
+#### Tests for hello world AST checker
+
+To test our AST checker, we begin by using [`astroid.extract_node()`](https://pylint.pycqa.org/projects/astroid/en/latest/inference.html#crash-course-into-astroid-s-inference) to get some nodes that we can pass to our checker. We pass a string with code to `astroid.extract_node()`, annotating our code with `#@` to indicate which lines we want to get nodes for:
+
+```python
+def test_finds_hello_world(self):
+    assignment_expr, func_call_expr = astroid.extract_node(
+        """
+    s = "Hello, world!" #@
+    print("Hello, world!") #@
+    """)
+
+    assignment_node = assignment_expr.value
+    func_call_node = func_call_expr.args[0]
+
+    with self.checker_test_object.assertAddsMessages(
+        testutils.Message(
+            msg_id='hello-world-ast',
+            node=assignment_node,
+        )
+    ):
+        self.checker_test_object.checker.visit_const(
+            assignment_node)
+
+    with self.checker_test_object.assertAddsMessages(
+        testutils.Message(
+            msg_id='hello-world-ast',
+            node=func_call_node,
+        )
+    ):
+        self.checker_test_object.checker.visit_const(
+            func_call_node)
+```
+
+Notice that because astroid finds the node representing the _line_ we annotated with `#@`, we have to retrieve the nodes that represent the `Hello, world!` literals.
+
+#### Tests for hello world token checker
+
+To test our token checker, we write the code we want to lint to a temporary file. Then we can convert that file into tokens that our checker can understand:
+
+```python
+def test_finds_hello_world_assignment(self):
+    node = astroid.scoped_nodes.Module(
+        name='test',
+        doc='Custom test')
+    temp_file = tempfile.NamedTemporaryFile()
+    filename = temp_file.name
+    with python_utils.open_file(filename, 'w') as tmp:
+        tmp.write('s = "Hello, world!"')
+    node.file = filename
+    node.path = filename
+
+    self.checker_test_object.checker.process_tokens(
+        utils.tokenize_module(node))
+
+    message = testutils.Message(
+        msg_id='hello-world-token', line=1)
+
+    with self.checker_test_object.assertAddsMessages(message):
+        temp_file.close()
+
+def test_finds_hello_world_func_call(self):
+    node = astroid.scoped_nodes.Module(
+        name='test',
+        doc='Custom test')
+    temp_file = tempfile.NamedTemporaryFile()
+    filename = temp_file.name
+    with python_utils.open_file(filename, 'w') as tmp:
+        tmp.write('print("Hello, world!")')
+    node.file = filename
+    node.path = filename
+
+    self.checker_test_object.checker.process_tokens(
+        utils.tokenize_module(node))
+
+    message = testutils.Message(
+        msg_id='hello-world-token', line=1)
+
+    with self.checker_test_object.assertAddsMessages(message):
+        temp_file.close()
+```
+
+#### Tests for hello world raw checker
+
+Testing raw checkers is a lot like testing token checkers. The main difference is that we don't need to convert our temporary file into tokens. In the example below, we also show how you can test multiple lines at once:
+
+```python
+def test_finds_hello_world_assignment(self):
+    node = astroid.scoped_nodes.Module(
+        name='test',
+        doc='Custom test')
+    temp_file = tempfile.NamedTemporaryFile()
+    filename = temp_file.name
+
+    with python_utils.open_file(filename, 'w') as tmp:
+        tmp.write("""
+        s = "Hello, world!"
+        print("Hello, world!")
+        """)
+
+    node.file = filename
+    node.path = filename
+
+    self.checker_test_object.checker.process_module(node)
+
+    with self.checker_test_object.assertAddsMessages(
+        testutils.Message(
+            msg_id='hello-world-raw',
+            line=1
+        ),
+        testutils.Message(
+            msg_id='hello-world-raw',
+            line=2
+        ),
+    ):
+        temp_file.close()
+```
+
+### Run tests
 
 Once you've added test cases, you can run them like this:
 
