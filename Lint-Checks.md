@@ -25,7 +25,7 @@ We use linters to check our code for common errors or bad patterns. The Oppia li
 
 ## Run linters
 
-1. To lint only files that have been touched in a commit:
+1. To lint only files that have been changed but not committed:
 
    ```console
    python -m scripts.linters.pre_commit_linter
@@ -99,7 +99,7 @@ We use [Pylint](https://pylint.pycqa.org) to lint our Python code. It provides m
 
 #### isort
 
-We use [isort](https://pycqa.github.io/isort/) to make sure our Python imports are properly sorted. It is configured by [`.isort.cfg`](https://github.com/oppia/oppia/tree/develop/.isort.cfg).
+We use [isort](https://pycqa.github.io/isort/) to make sure our Python imports are properly sorted. It is configured by [`.isort.cfg`](https://github.com/oppia/oppia/tree/develop/.isort.cfg), but it does not support custom rules.
 
 #### htmllint
 
@@ -121,7 +121,7 @@ Even with custom rules, the third-party linters above are sometimes insufficient
 
 Our custom JavaScript and TypeScript lint checks are defined in the `JsTsLintChecksManager` class of [`scripts/linters/js_ts_linter.py`](https://github.com/oppia/oppia/blob/develop/scripts/linters/js_ts_linter.py).
 
-If at all possible, you should implement your lint check as a custom ESLint rule. However, if you have to, you can add a private helper method to the class to implement your lint check. Then call the method from `JsTsLintChecksManager.perform_al_lint_checks()`.
+If at all possible, you should implement your lint check as a custom ESLint rule. However, if you have to, you can add a private helper method to the class to implement your lint check. Then call the method from `JsTsLintChecksManager.perform_all_lint_checks()`.
 
 #### HTML linter
 
@@ -177,31 +177,9 @@ Finally, we have some miscellaneous lint checks defined in the `CustomLintChecks
 
 Sample PRs where checks were added:
 
-* Custom Eslint check added: https://github.com/oppia/oppia/pull/10494
+* Custom ESLint check: https://github.com/oppia/oppia/pull/10494
 
-   * A new eslint plugin added in custom_eslint_checks folder along with a test file: https://github.com/oppia/oppia/pull/10494/files#diff-f84fecf97b5ab1bd91993f21f866a8e7
-
-   * Rule enabled in eslintrc: https://github.com/oppia/oppia/pull/10494/files#diff-1dc6ee56b778cd91e0327b52aaeaa1b9
-
-   * All the files which violated the test are fixed in the PR.
-
-* Custom Pylint check added: https://github.com/oppia/oppia/pull/10107
-
-   * A new case added in pylint_extensions.py and the test file is updated for that check: https://github.com/oppia/oppia/pull/10107/files#diff-c9f33564b072eb94beb16826ae5f8a28
-
-   * To understand **how to write a unit test for lint checks**, please refer to the [Pylint documentation](https://pylint.readthedocs.io/en/latest/how_tos/custom_checkers.html#testing-a-checker).
-
-   * Note, that no update is required to pylintrc. By default, it includes all extensions in the pylint_extensions file.
-
-   * All the files which violated the test are fixed in the PR.
-
-* Examples of independent checks that were added to extra linters not working via eslint/pylint:
-
-   * Verifying ts ignore in typescript files: https://github.com/oppia/oppia/blob/develop/scripts/linters/js_ts_linter.py#L273.
-
-   * Checking type definitions for third party libs: https://github.com/oppia/oppia/blob/develop/scripts/linters/other_files_linter.py#L118
-
-   * Verifying all jobs are registered in jobs_registry file: https://github.com/oppia/oppia/blob/develop/scripts/linters/python_linter.py#L129
+* Custom Pylint check: https://github.com/oppia/oppia/pull/10107
 
 ## Contact
 

@@ -85,7 +85,7 @@ As we work through the example below, we'll cover each of the three kinds of che
 
 ### Hello world
 
-To get a better idea for how lint checks work, write a simple Pylint rule that forbids the string `Hello, world!`. Maybe we don't want people accidentally opening PRs that include code from when they were learning Python. First consider what kinds of code should violate the rule. Here are some examples:
+To get a better idea for how lint checks work, write a simple Pylint rule that forbids the string `Hello, world!`. Maybe you don't want people accidentally opening PRs that include code that prints `Hello, world!` from when they were learning Python. First consider what kinds of code should violate the rule. Here are some examples:
 
 ```python
 s = "Hello, world!";
@@ -95,13 +95,13 @@ print("Hello, world!");
 
 #### A note on undecidability
 
-While Python parses the code being linted, it does not execute it. This means that no lint rule will be able to prevent `Hello, world!` from being printed. No matter how complicated our lint rule, a devious programmer will always be able to construct some convoluted code that evades the rule. For example, code like this will pass our linter:
+While Pylint parses the code being linted, it does not execute it. This means that no lint rule will be able to prevent `Hello, world!` from being printed. No matter how complicated our lint rule, a devious programmer will always be able to construct some convoluted code that evades the rule. For example, code like this will pass our linter:
 
 ```python
 print(f'Hello, {"world"}!')
 ```
 
-It turns out that it is provably impossible for us to write a program that can determine whether a program prints `Hello, world!` with perfect accuracy. To see why, suppose for the sake of argument we had a linter `prints_hello_world()` that accepts the source code of a program and returns a boolean indicating whether the program prints `Hello, world!`. If such a linter existed, we could write the following program, whose source code we'll call `src`:
+It turns out that it is provably impossible for us to write a program that can determine whether a program prints `Hello, world!` with perfect accuracy. To see why, suppose for the sake of argument we had a linter `prints_hello_world()` that accepted the source code of a program and returned a boolean indicating whether the program prints `Hello, world!`. If such a linter existed, we could write the following program, whose source code we'll call `src`:
 
 ```python
 if not prints_hello_world(src):
@@ -110,7 +110,7 @@ if not prints_hello_world(src):
 
 No matter what `prints_hello_world(src)` returns, it's wrong! If it returns `True`, then the program exits without printing `Hello, world!`, but if it returns `False`, then the program does print `Hello, world!`. The only other alternative is for `prints_hello_world(src)` to run forever and never return anything, which really isn't useful. Since this argument would work for any linter `prints_hello_world()`, no such linter can exist. This is a variation of the halting problem, which is one of the most famous examples of undecidable problems in computability theory.
 
-This argument is somewhat esoteric, but it has important implications for writing linter rules. **If you want to prevent code that behaves a certain way, any linter you write must either miss some code that performs the undesired behavior or raise an error on benign code, or both.** Since we can't write a perfect linter, don't worry about trying to handle cases where a programmer is trying to circumvent your rule. Instead, focus on writing a rule to cover the ways developers normally write code.
+This argument is somewhat esoteric, but it has important implications for writing linter rules. **If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.** Since we can't write a perfect linter, don't worry about trying to handle cases where a programmer is trying to circumvent your rule. Instead, focus on writing a rule to cover the ways developers normally write code.
 
 #### Write the AST checker
 
@@ -153,11 +153,11 @@ Module(
             keywords=[]))])
 ```
 
-Notice that every time a `"Hello, world!"` literal appears in the code, the AST as a [`Const`](https://pylint.pycqa.org/projects/astroid/en/latest/api/astroid.nodes.html#id163) node. You can look up all the available node types in the [astroid documentation](https://pylint.pycqa.org/projects/astroid/en/latest/api/astroid.nodes.html).
+Notice that every time a `"Hello, world!"` literal appears in the code, the AST has a [`Const`](https://pylint.pycqa.org/projects/astroid/en/latest/api/astroid.nodes.html#id163) node. You can look up all the available node types in the [astroid documentation](https://pylint.pycqa.org/projects/astroid/en/latest/api/astroid.nodes.html).
 
 ##### Design the AST checker
 
-We could write a checker that raises an error whenever it finds a node that:
+Suppose you decide to write a checker that raises an error whenever it finds a node that:
 
 * is of type "Const"
 * has value "Hello, world!"
@@ -166,7 +166,7 @@ After designing any rule, it's important to consider what benign code it will ra
 
 * False positivies
 
-  * Code that includes the string `Hello, world!` but doesn't do anything with it will still raise errors. There probably aren't any good reasons to do this though.
+  * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
 * False negatives
 
@@ -206,7 +206,7 @@ Here's what we've defined so far:
 
   * **Message ID**: A unique identifier for the message consisting of a letter followed by 4 digits. The letter is the first letter of the message category, and the available categories are Convention, Warning, Error, Fatal, and Refactoring. The first two digits must be the same for all of the checker's messages.
 
-  Be sure to check that your message ID isn't already used by one of [Pylint's existing rules](https://pylint.pycqa.org/en/latest/technical_reference/features.html) or one of [our custom rules](https://github.com/oppia/oppia/blob/develop/scripts/linters/pylint_extensions.py).
+    Be sure to check that your message ID isn't already used by one of [Pylint's existing rules](https://pylint.pycqa.org/en/latest/technical_reference/features.html) or one of [our custom rules](https://github.com/oppia/oppia/blob/develop/scripts/linters/pylint_extensions.py).
 
   * **Displayed message**: The error message displayed to the user.
 
@@ -216,15 +216,15 @@ Here's what we've defined so far:
 
 You can also set an `options` variable to specify options that can be set by the configuration file and read by your rule. See the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#writing-an-ast-checker) for details.
 
-Next, we need to write the checker code. Pylint lets us define methods that get called as it traverses the AST. Methods of the form `visit_nodename()` are called upon entering the subtree rooted at a node of type `nodename`, and methods of the form `leave_nodename()` are called upon leaving the subtree. Each method is called with a single argument--the node of type `nodename`.
+Next, you need to write the checker code. Pylint lets you define methods that get called as it traverses the AST. Methods of the form `visit_nodename()` are called upon entering the subtree rooted at a node of type `nodename`, and methods of the form `leave_nodename()` are called upon leaving the subtree. Each method is called with a single argument--the node of type `nodename`.
 
-For our case, we can define a method `visit_const()` that will be called whenever we reach a `Const` node. Then we can check the node's value to see if it equals `"Hello, world!"`. Our method looks like this:
+For this case, you can define a method `visit_const()` that will be called whenever Pylint reaches a `Const` node. Then you can check the node's value to see if it equals `"Hello, world!"`. The method looks like this:
 
 ```python
-    def visit_const(self, node):
-        if node.value == "Hello, world!":
-            self.add_message(
-                'hello-world', node=node)
+def visit_const(self, node):
+    if node.value == "Hello, world!":
+        self.add_message(
+            'hello-world', node=node)
 ```
 
 That's it! After working through the two other kinds of linters, we'll discuss how to run and test your checker.
@@ -272,7 +272,7 @@ After designing any rule, it's important to consider what benign code it will ra
 
 * False positivies
 
-  * Code that includes the string `Hello, world!` but doesn't do anything with it will still raise errors. There probably aren't any good reasons to do this though.
+  * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
 * False negatives
 
@@ -299,7 +299,7 @@ class HelloWorldTokenChecker(checkers.BaseChecker):
 
 To learn about these metadata options, see the [section above on the AST checker code](#write-the-ast-checker-code). Notice that unlike the AST checker, we set `__implements__` equal to `interfaces.ITokenChecker`, and we used a new message ID, name, and symbol.
 
-For our token checker, we only need to implement a `process_tokens()` method that accepts a list of tokens. Each token is described by a 5-tuple as [documented in the tokenize library](https://docs.python.org/3/library/tokenize.html#tokenize.tokenize). The tuple takes the form `(type, string, start, end, line)`:
+For the token checker, you only need to implement a `process_tokens()` method that accepts a list of tokens. Each token is described by a named 5-tuple as [documented in the tokenize library](https://docs.python.org/3/library/tokenize.html#tokenize.tokenize). The tuple takes the form `(type, string, start, end, line)`:
 
 * `type`: The token type, for example `tokenize.STRING`.
 * `string`: A string with the code that the token represents.
@@ -330,17 +330,17 @@ You can use `tokenize.tokenize()` to see what these tuples look like for our `te
 Based on this output, we can see that we need to check that the token type is `tokenize.STRING` and that the token string is `Hello, world!` after we strip any quotes. Here's a `process_tokens()` method that implements this check:
 
 ```python
-    def process_tokens(self, tokens):
-        for token in tokens:
-            if token.type == tokenize.STRING:
-                quotes_stripped = token.string.strip('"').strip('\'')
-                if quotes_stripped == 'Hello, world!':
-                    self.add_message('hello-world-token', line=token.start[0])
+def process_tokens(self, tokens):
+    for token in tokens:
+        if token.type == tokenize.STRING:
+            quotes_stripped = token.string.strip('"').strip('\'')
+            if quotes_stripped == 'Hello, world!':
+                self.add_message('hello-world-token', line=token.start[0])
 ```
 
 #### Write the raw checker
 
-When writing a raw checker, we don't have to worry about any pre-processing by Pylint. However, that also makes these checkers slower than AST or token checkers. Therefore, **you should avoid using raw checkers wherever possible**. If you do need to use a raw checker, you should get approval from the [linter team](https://github.com/oppia/oppia/Lint-Checks#contact) first.
+When writing a raw checker, we don't have to worry about any pre-processing by Pylint. However, that also makes these checkers slower than AST or token checkers. Therefore, **you should avoid using raw checkers wherever possible**. If you do need to use a raw checker, you should get approval from the [linter team](https://github.com/oppia/oppia/wiki/Lint-Checks#contact) first.
 
 Pylint provides the code file as a node, which you can read using our `read_from_node()` function. This function returns an iterable of lines from the file.
 
@@ -355,7 +355,7 @@ After designing any rule, it's important to consider what benign code it will ra
 
 * False positivies
 
-  * Code that includes the string `Hello, world!` but doesn't do anything with it will still raise errors. There probably aren't any good reasons to do this though.
+  * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
 * False negatives
 
@@ -377,7 +377,7 @@ Start by creating a checker class with some metadata in [`scripts/linters/pylint
 
 ```python
 class HelloWorldRawChecker(checkers.BaseChecker):
-    __implements__ = interfaces.ITokenChecker
+    __implements__ = interfaces.IRawChecker
 
     name = 'hello-world-raw'
     priority = -1
@@ -395,11 +395,11 @@ To learn about these metadata options, see the [section above on the AST checker
 Now we need to implement the `process_module()` method, which accepts the node with the file contents as an argument. Then we iterate over the lines returned by `read_from_node()` and look for the substrings we identified in our design:
 
 ```python
-    def process_module(self, node):
-        file_content = read_from_node(node)
-        for (line_num, line) in enumerate(file_content):
-            if '"Hello, world!"' in line or '\'Hello, world!\'' in line:
-                self.add_message('hello-world-raw', line=line_num)
+def process_module(self, node):
+    file_content = read_from_node(node)
+    for (line_num, line) in enumerate(file_content):
+        if '"Hello, world!"' in line or '\'Hello, world!\'' in line:
+            self.add_message('hello-world-raw', line=line_num)
 ```
 
 #### Register the checker
@@ -416,9 +416,9 @@ def register(linter):
 
 ### Beyond hello world
 
-The example of looking for `Hello, world!` strings was fairly simple because we only needed information from one small part of the code at a time to identify lint violations. For more complicated lint rules, you'll need to think about how to keep track of information from many different places in the code. For example, the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#writing-an-ast-checker) describes how to write an AST checker to ensure that for every function, all the return statements in that function that return a constant return different constants. Here is some pseudocode for how you can do this:
+The example of looking for `Hello, world!` strings was fairly simple because we only needed information from one small part of the code at a time to identify lint violations. For more complicated lint rules, you'll need to think about how to keep track of information from many different places in the code. For example, the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#writing-an-ast-checker) describes how to write an AST checker to ensure that all the return statements in a function that return a constant return different constants. Here is some pseudocode for how you can do this:
 
-```python
+```text
 class UniqueReturnChecker(BaseChecker):
     ...
     def __init__(self, linter=None):
@@ -431,7 +431,7 @@ class UniqueReturnChecker(BaseChecker):
         pop a node off the stack
 
     def visit_return(self, node):
-        if node is not of type Const, return
+        if node is not of type Const: return
 
         for other_return in function_stack[-1]:
             if node.value == other_return's node's value:
@@ -464,8 +464,6 @@ def setUp(self):
     self.checker_test_object.CHECKER_CLASS = pylint_extensions.MyChecker
     self.checker_test_object.setup_method()
 ```
-
-Pylint will handle setting up our checker, which will simplify our tests.
 
 ### Use testing utilities for hello world checkers
 
