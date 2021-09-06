@@ -32,7 +32,7 @@ This guide covers Oppia’s backend tests. We also have separate pages for [[fro
 
 ## Testing philosophy
 
-Let's begin by explaining some testing philosophy. Don't worry yet about how to actually implement tests--just think about how to design them. There are two main kinds of tests that we use in the backend: unit tests and integration tests.
+Let's begin by explaining some testing philosophy. This will help you design your tests; we'll talk about how to actually write them later. There are two main kinds of tests that we use in the backend: unit tests and integration tests.
 
 ### Unit tests
 
@@ -42,14 +42,13 @@ Unit tests check that a small unit of code, usually a function or a class, works
 
 Let's consider what test cases we might write for such a utility. Suppose we only want to allow usernames that are between 1 and 7 characters (inclusive), and that include only English letters and Arabic numerals. These test cases would not be comprehensive:
 
-* `''`: Invalid
 * `'abc123'`: Valid
 * `'aBc'`: Valid
 * `'1'`: Valid
 * `'abc_123'`: Invalid
-* `abc123de`: Invalid
+* `'abc123de'`: Invalid
 
-Take a moment to think about what test cases are missing.
+**Exercise:** Take a moment to think about what test cases are missing.
 
 Here's an example implementation of our utility function that is incorrect but passes these test cases:
 
@@ -61,10 +60,10 @@ ALLOWED_USERNAME_CHARACTERS = [
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 ]
-USERNAME_LENGTH_RANGE = [1, 7]
+MAX_USERNAME_LENGTH= 7
 
 def check_is_username_valid(username):
-    if not USERNAME_LENGTH_RANGE[0] <= len(username) <= USERNAME_LENGTH_RANGE[1]:
+    if not len(username) <= USERNAME_LENGTH_RANGE[1]:
         return False
     for character in username:
         if character not in ALLOWED_USERNAME_CHARACTERS:
@@ -72,12 +71,9 @@ def check_is_username_valid(username):
     return True
 ```
 
-Why is this code incorrect? Consider the case where `username = ['a', 'b', 'c']`. The function will return True even though this "username" isn't even a string! Our test cases would be more thorough if we added some non-string inputs:
+Why is this code incorrect? Consider the case where `username = ''`. The function will return True even though this username is fewer than 1 character long. Our tests would be more thorough if we added a test with an empty string:
 
-* `123`: Invalid
-* `None`: Invalid
-
-These test cases cause the function to throw an exception, which would have reminded us to check that the provided username is a string.
+* `''`: Invalid
 
 **Tests should cover the full range of inputs that the code being tested might be given. Remember to test error cases where the function is used incorrectly.**
 
@@ -100,17 +96,7 @@ Note that https://worldtimeapi.org/api/timezone/Etc/UTC.txt returns text like th
 abbreviation: UTC
 client_ip: <redacted>
 datetime: 2021-08-26T00:38:19.941464+00:00
-day_of_week: 4
-day_of_year: 238
-dst: false
-dst_from:
-dst_offset: 0
-dst_until:
-raw_offset: 0
-timezone: Etc/UTC
-unixtime: 1629938299
-utc_datetime: 2021-08-26T00:38:19.941464+00:00
-utc_offset: +00:00
+...
 week_number: 34
 ```
 
@@ -124,17 +110,6 @@ def mock_download(url):
         'abbreviation: UTC',
         'client_ip: 127.0.0.1',
         'datetime: 2021-08-26T00:38:19.941464+00:00',
-        'day_of_week: 4',
-        'day_of_year: 238',
-        'dst: false',
-        'dst_from:',
-        'dst_offset: 0',
-        'dst_until:',
-        'raw_offset: 0',
-        'timezone: Etc/UTC',
-        'unixtime: 1629938299',
-        'utc_datetime: 2021-08-26T00:38:19.941464+00:00',
-        'utc_offset: +00:00',
         'week_number: 34',
     ])
 ```
@@ -221,7 +196,7 @@ Ran 326 tests in 47 test classes.
 (1 ERRORS, 0 FAILURES)
 ```
 
-You can find more information about the exact errors by scrolling up and looking through the error log for tests marked `FAILED` and `ERROR`.
+You can find more information about the exact errors by scrolling up and looking through the error log for tests marked `FAILED` (indicating that an assertion in the test failed) and `ERROR` (indicating that an exception was raised by the test).
 
 ### Coverage reports
 
@@ -270,17 +245,17 @@ Now consider the following sets of test cases:
 * `absoluteValue(0)` and `absoluteValue(1)`: These test cases are not comprehensive because they do not test negative numbers, and it's important for an absolute value function to correctly handle negative inputs. However, the code coverage is 100% because both blocks of the `if` statement are executed.
 * `absoluteValue(-1)`, `absoluteValue(0)`, and `absoluteValue(1)`: These test cases are comprehensive, and code coverage is 100%. Note that even though line 1 doesn't execute, coverage is 100% because line 1 is not executable.
 
-This example illustrates something very important about code coverage: **Code coverage less than 100% implies that the tests are not comprehensive, but code coverage of 100% does not imply that tests are comprehensive.** Therefore, while code coverage is a useful tool, you should primarily think about whether your tests cover all the possible behaviors of the code being tested. In other words, you should have a behavior-first perspective. Don't just think about which lines are covered.
+This example illustrates something very important about code coverage: **Code coverage less than 100% implies that the tests are not comprehensive, but code coverage of 100% does NOT imply that tests are comprehensive.** Therefore, while code coverage is a useful tool, you should primarily think about whether your tests cover all the possible behaviors of the code being tested. In other words, you should have a behavior-first perspective. Don't just think about which lines are covered.
 
 ## Write backend tests
 
 ### Backend test structure
 
-We write our backend tests with Python's [unittest framework](https://docs.python.org/3/library/unittest.html).You should familiarize yourself that framework. In particular, you will be using its assertion functions in your tests.
+We write our backend tests with Python's [unittest framework](https://docs.python.org/3/library/unittest.html). You should familiarize yourself that framework by reading through the ["basic example" in its documentation](https://docs.python.org/3/library/unittest.html#basic-example). You should also take a look at what [assertion functions](https://docs.python.org/3/library/unittest.html#unittest.TestCase) are available.
 
-Backend test files live alongside the backend code files they test. For example, alongside `core/controllers/base.py` you'll find `core/controllers/base_test.py`. That `_test.py` suffix is important. It's how we identify files that have tests to run.
+Backend test files live alongside the backend code files they test. For example, alongside `core/controllers/base.py` you'll find `core/controllers/base_test.py`. That `_test.py` suffix is important. It's how we identify which files have tests to run. Note that each file is entirely code or entirely tests. No file mixes code and tests.
 
-Inside test files, tests are organized into classes whose names end in `Tests`. Test cases are methods of these classes, and the method names begin with `test_`. For example, here is an example of a test from `base_test.py`:
+Inside test files, tests are organized into classes whose names end in `Tests`. Test cases are methods of these classes, and the method names begin with `test_`. Note that only methods beginning with `test_` and inside classes ending in `Tests` are executed as tests. Here is an example of a test from `base_test.py`:
 
 ```python
 class HelperFunctionTests(test_utils.GenericTestBase):
@@ -306,7 +281,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
 
     `expected_args` takes a list of tuples, where each tuple contains a group of expected positional arguments. The test will assert that the function is called once with each group of expected arguments, in the order in which you specify the groups. Note that the order of the arguments within each group must match the order in which the arguments are passed to the function.
 
-    `expected_kwargs` accepts a list of dictionaries. Each dictionary specifies keyword arguments as key-value pairs, and the test will assert that your function is called once with each group of keyword arguments you specify, in same order as the dictionaries appear in the list.
+    `expected_kwargs` accepts a list of dictionaries. Each dictionary specifies keyword arguments as key-value pairs, and the test will assert that your function is called once with each group of keyword arguments you specify, in the same order as the dictionaries appear in the list.
 
     If `expected_args` is `None`, then no assertions are made about the positional arguments that the mock function receives. The same is true of `expected_kwargs`.
 
@@ -328,7 +303,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
     mock_popen(['python2'], shell=False)
     ```
 
-  These swap functions each return a context where the mocking has been performed. You'll see this called a `swap` in the code. You use it using the `with` statement like this:
+  These swap functions each return a context where the mocking has been performed. You'll see this called a `swap` in the code. You can use the swap like this:
 
   ```python
   my_func_swap = self.swap(module, 'my_func', mock_my_func)
@@ -382,7 +357,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
        return abs(number)
    ```
 
-   Forget for the moment that this function is pointless and think about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly.
+   Let's forget for the moment that this function is pointless and just focus on thinking about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly.
 
    You can check whether you're following this principle by imagining what would happen if you changed the function. For example, say you implemented `absolute_value()` differently:
 
@@ -417,35 +392,6 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
    * Use `assertIsNone(value)` instead of `assertEqual(value, None)`.
 
 8. If you create a new test module (a `*_test.py` file), you will need to add it to a shard in [`oppia/scripts/backend_test_shards.json`](https://github.com/oppia/oppia/blob/develop/scripts/backend_test_shards.json). See the [section on shards below](#sharding-backend-tests).
-
-### Sharding backend tests
-
-#### How sharding works
-
-We shard the backend tests into many smaller jobs that run in parallel on GitHub Actions. In your PRs, you'll see something like this:
-
-![Display of backend test jobs on a pull request](https://user-images.githubusercontent.com/19878639/109242853-ddd78700-77a9-11eb-9cae-da5cece9ab26.png)
-
-The jobs named like `Run backend tests (ubuntu-18.04, i)` are running the sharded jobs, each with its own number `i`. The last job, `Check combined backend test coverage`, checks that the code coverage is 100%. All these jobs are defined in [`.github/workflows/backend_tests.yml`](https://github.com/oppia/oppia/blob/develop/.github/workflows/backend_tests.yml).
-
-The shards are defined in [`scripts/backend_test_shards.json`](https://github.com/oppia/oppia/blob/develop/scripts/backend_test_shards.json). Here's what the top of that file looks like:
-
-```json
-{
-    "1": [
-        "core.controllers.base_test",
-        "core.controllers.collection_editor_test",
-```
-
-Each shard is identified by a name, in this case `1`. You could run this shard with `python -m scripts.run_backend_tests --test_shard 1`. The shards are then defined by a list of test modules. For example, the module name for `core/controllers/base_test.py` is `core.controllers.base_test`. Notice that there is no `.py` at the end!
-
-#### Common errors
-
-Whenever you run a shard of backend tests, the `run_backend_tests.py` script checks to make sure the test modules on the filesystem and the modules in the shards file are exactly the same. If a shard has a module that isn't in the filesystem, you'll get a `Modules ... in shards not found` error. This often happens if the module name is incorrect. On the other hand, if there is a module on the filesystem that's not in the shards, you'll get a `Modules ... not in shards` error. This often happens because you forgot to add a new test to the shards.
-
-#### Adding new tests to shards
-
-The point of sharding the backend tests is to speed up test runs on PRs. When the backend tests run in parallel, we spread the tests out across the multiple machines available to us on GitHub Actions. This means it's important for the tests to remain evenly distributed across the shards. To help with that, please **add any new tests to the shard with the shortest runtime.** Further, **make sure that all shards run in under 30 minutes.** If all the shards are taking close to 30 minutes, create a new shard in the JSON file.
 
 ### Common testing scenarios
 
@@ -488,6 +434,37 @@ The point of sharding the backend tests is to speed up test runs on PRs. When th
 5. **For integration tests:**
 
    Begin by defining the section of code you want to test and considering how it's supposed to behave. Then design test cases to check that it behaves correctly. You should write one test for each test case you design.
+
+### Sharding backend tests
+
+#### How sharding works
+
+We shard the backend tests into many smaller jobs that run in parallel on GitHub Actions. In your PRs, you'll see something like this:
+
+![Display of backend test jobs on a pull request](https://user-images.githubusercontent.com/19878639/109242853-ddd78700-77a9-11eb-9cae-da5cece9ab26.png)
+
+The jobs named like `Run backend tests (ubuntu-18.04, i)` are running the sharded jobs, each with its own number `i`. The last job, `Check combined backend test coverage`, checks that the code coverage is 100%. All these jobs are defined in [`.github/workflows/backend_tests.yml`](https://github.com/oppia/oppia/blob/develop/.github/workflows/backend_tests.yml).
+
+The shards are defined in [`scripts/backend_test_shards.json`](https://github.com/oppia/oppia/blob/develop/scripts/backend_test_shards.json). Here's what the top of that file looks like:
+
+```json
+{
+    "1": [
+        "core.controllers.base_test",
+        "core.controllers.collection_editor_test",
+```
+
+Each shard is identified by a name, in this case `1`. You could run this shard with `python -m scripts.run_backend_tests --test_shard 1`. The shards are then defined by a list of test modules. For example, the module name for `core/controllers/base_test.py` is `core.controllers.base_test`. Notice that there is no `.py` at the end!
+
+#### Common errors
+
+Whenever you run a shard of backend tests, the `run_backend_tests.py` script checks to make sure the test modules on the filesystem and the modules in the shards file are exactly the same. If a shard has a module that isn't in the filesystem, you'll get a `Modules ... in shards not found` error. This often happens if the module name is incorrect. On the other hand, if there is a module on the filesystem that's not in the shards, you'll get a `Modules ... not in shards` error. This often happens because you forgot to add a new test to the shards.
+
+#### Adding new tests to shards
+
+The point of sharding the backend tests is to speed up test runs on PRs. When the backend tests run in parallel, we spread the tests out across the multiple machines available to us on GitHub Actions. This means it's important for the tests to remain evenly distributed across the shards. To help with that, please **add any new tests to the shard with the shortest runtime.** Further, **make sure that all shards run in under 30 minutes.** If all the shards are taking close to 30 minutes, create a new shard in the JSON file. You can find a shard's runtime from the test runs on your PR:
+
+![Display of backend test jobs on a pull request](https://user-images.githubusercontent.com/19878639/109242853-ddd78700-77a9-11eb-9cae-da5cece9ab26.png)
 
 ### Examples
 
@@ -586,11 +563,14 @@ class UpdateExplorationVersionHandlerTest(test_utils.GenericTestBase):
     exp_services.load_demo(self.exp_id)
 
   def test_version_gets_updated_correctly(self):
+    exploration = exp_services.get_exploration_by_id(self.exp_id)
+    # The exploration is loaded at version 1.
+    self.assertEqual(exploration.version, 1)
+
     self.post_json(
       '/explorehandler/update_exp_version/%s' % (self.exp_id),
       {'exp_version': 123})
 
-    self.exploration = exp_services.get_exploration_by_id(self.exp_id)
-
+    exploration = exp_services.get_exploration_by_id(self.exp_id)
     self.assertEqual(exploration.version, 123)
 ```

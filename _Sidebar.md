@@ -54,7 +54,7 @@
   * Testing
     * [[Running tests|Running-Tests]]
     * [[Backend tests|Backend-tests]]
-    * [[Frontend unit tests|Frontend-unit-tests-guide]]
+    * [[Frontend tests|Frontend-unit-tests-guide]]
     * [[Writing tests for custom Pylint Checkers|Writing-Tests-For-Pylint]]
     * [[End-to-end tests|End-to-End-Tests]]
     * [[Lighthouse Tests|Lighthouse-Tests]]
