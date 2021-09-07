@@ -358,7 +358,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
        return abs(number)
    ```
 
-   Let's forget for the moment that this function is pointless and just focus on thinking about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly, as that would be testing the implementation instead of the interface. Remember that we want to test that the function behaves correctly, and we can demonstrate this most clearly by providing our function numbers and checking that the function returns absolute values.
+   Let's forget for the moment that this function is pointless and just focus on thinking about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly, as that would be testing the implementation instead of the interface. Remember that we want to test that the function behaves correctly, and we can demonstrate this most clearly by providing numbers to our function and checking that the function returns absolute values.
 
    You can check whether you're following this principle by imagining what would happen if you changed the function. For example, say you implemented `absolute_value()` differently:
 
