@@ -73,7 +73,7 @@
     * [[Angular Migration | Angular-Migration]]
     * [UX guidelines](https://github.com/oppia/oppia/wiki/Oppia-UX-guidelines-&-rationales)
     * [[Writing style guide|Writing-style-guide]]
-    * [[Schema-based forms|Schema-based-Forms]]
+    * [[Schemas|Schemas]]
     * [[Editor pages|Editor-pages]]
   * Backend
     * [[Writing state migrations | Writing-state-migrations]]
@@ -86,7 +86,6 @@
     * [[Adding static assets|Adding-static-assets]]
     * [[Wipeout Implementation|Wipeout-Implementation]]
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
-    * [[Writing schema for handler args]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
