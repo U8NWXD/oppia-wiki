@@ -21,6 +21,18 @@ job, then follow the [Quick Start](#quick-start).
 Otherwise, if you're looking for supplemental material, you can read the entire
 guide and fallback to the [Apache Beam Programming Guide][1] for more details.
 
+Running Apache Beam Jobs
+========================
+
+Developer Environment
+---------------------
+![screencast of running jobs](https://user-images.githubusercontent.com/5094060/128743997-70cca5f9-0b76-4294-806e-f65f5df5be95.gif)
+1. Sign in as an administrator ([instructions][3])
+2. Navigate to **Admin Page > Roles Tab**
+3. Add the "Release Coordinator" role to the username you are signed in with
+4. Navigate to http://localhost:8181/release-coordinator, then to the **Beam Jobs tab**
+5. Search for your job and then click the **Play button**
+
 Apache Beam Job Architecture
 ============================
 
@@ -463,3 +475,4 @@ class MigrateToLatestVersion(beam.PTransform):
 
 [1]: https://beam.apache.org/documentation/programming-guide/
 [2]: https://github.com/oppia/oppia/blob/4d2f639869e57fbeaada414d923cae83eb0e082e/jobs/job_utils.py#L37-L63
+[3]: https://github.com/oppia/oppia/wiki/Firebase-authentication#creating-an-administrator-account

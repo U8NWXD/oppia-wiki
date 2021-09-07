@@ -51,11 +51,11 @@
     * [[Backend Type Annotations|Backend-Type-Annotations]]
     * [[Bytes and string handling in Python 3|Bytes-and-string-handling-in-Python-3]]
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
-  * Testing Guidelines
+  * Testing
     * [[Running tests|Running-Tests]]
     * Writing Tests
       * [[Writing backend tests]]
-      * [[Writing frontend unit tests|Frontend-unit-tests-guide]]
+      * [[Writing frontend tests|Frontend-unit-tests-guide]]
       * [[End-to-end tests|End-to-End-Tests]]
       * [[Lighthouse Tests|Lighthouse-Tests]]
     * [[Testing for Accessibility|Testing-for-Accessibility]]
@@ -86,7 +86,6 @@
     * [[Adding static assets|Adding-static-assets]]
     * [[Wipeout Implementation|Wipeout-Implementation]]
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
-    * [[Writing schema for handler args]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
