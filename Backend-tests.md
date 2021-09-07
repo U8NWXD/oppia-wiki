@@ -110,6 +110,7 @@ def mock_download(url):
         'abbreviation: UTC',
         'client_ip: 127.0.0.1',
         'datetime: 2021-08-26T00:38:19.941464+00:00',
+        ...
         'week_number: 34',
     ])
 ```
@@ -251,11 +252,11 @@ This example illustrates something very important about code coverage: **Code co
 
 ### Backend test structure
 
-We write our backend tests with Python's [unittest framework](https://docs.python.org/3/library/unittest.html). You should familiarize yourself that framework by reading through the ["basic example" in its documentation](https://docs.python.org/3/library/unittest.html#basic-example). You should also take a look at what [assertion functions](https://docs.python.org/3/library/unittest.html#unittest.TestCase) are available.
+We write our backend tests with Python's [unittest framework](https://docs.python.org/3/library/unittest.html). You should familiarize yourself with that framework by reading through the ["basic example" in its documentation](https://docs.python.org/3/library/unittest.html#basic-example). You should also take a look at what [assertion functions](https://docs.python.org/3/library/unittest.html#unittest.TestCase) are available.
 
 Backend test files live alongside the backend code files they test. For example, alongside `core/controllers/base.py` you'll find `core/controllers/base_test.py`. That `_test.py` suffix is important. It's how we identify which files have tests to run. Note that each file is entirely code or entirely tests. No file mixes code and tests.
 
-Inside test files, tests are organized into classes whose names end in `Tests`. Test cases are methods of these classes, and the method names begin with `test_`. Note that only methods beginning with `test_` and inside classes ending in `Tests` are executed as tests. Here is an example of a test from `base_test.py`:
+Inside test files, tests are organized into classes whose names end in `Tests`. Test cases are methods of these classes, and the method names begin with `test_`. Note that only methods beginning with `test_` and inside classes that inherit from `unittest.TestCase` are executed as tests. Here is an example of a test from `base_test.py`:
 
 ```python
 class HelperFunctionTests(test_utils.GenericTestBase):
@@ -357,7 +358,7 @@ Notice that the test class inherits from `test_utils.GenericTestBase`, which pro
        return abs(number)
    ```
 
-   Let's forget for the moment that this function is pointless and just focus on thinking about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly.
+   Let's forget for the moment that this function is pointless and just focus on thinking about how to test it. We should test the function by providing some values, some positive and some negative, and checking that their absolute values are returned. We should _not_ test it by mocking `abs()` and making sure it was called correctly, as that would be testing the implementation instead of the interface. Remember that we want to test that the function behaves correctly, and we can demonstrate this most clearly by providing our function numbers and checking that the function returns absolute values.
 
    You can check whether you're following this principle by imagining what would happen if you changed the function. For example, say you implemented `absolute_value()` differently:
 
