@@ -164,7 +164,7 @@ Suppose you decide to write a checker that raises an error whenever it finds a n
 
 After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). For our rule:
 
-* False positivies
+* False positives
 
   * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
@@ -270,7 +270,7 @@ We could write a checker that raises an error whenever it finds a token that:
 
 After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). For our rule:
 
-* False positivies
+* False positives
 
   * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
@@ -353,7 +353,7 @@ We could write a checker that raises an error whenever it finds a line that cont
 
 After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). For our rule:
 
-* False positivies
+* False positives
 
   * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
 
