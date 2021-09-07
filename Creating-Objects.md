@@ -9,16 +9,16 @@
 
 ## Introduction
 
-When collecting user input, we often define the kind of input we expect using [[schemas|Schemas]]. These schemas can describe arbitrarily nested collections of base types. We call these base types _objects_. For example, consider this schema:
+When collecting user input, we often define the kind of input we expect using [[schemas|Schemas]]. These schemas can describe arbitrarily nested collections of simple types. We call these simple types _objects_. For example, consider this schema:
 
 ```json
 {
   "type": "dict",
   "properties": [
     {
-      "name": "version",
+      "name": "length",
       "schema": {
-        "type": "int"
+        "type": "Real"
       }
     }
   ]
@@ -28,10 +28,12 @@ When collecting user input, we often define the kind of input we expect using [[
 The schema would match a dictionary like this:
 
 ```json
-{"version": 34}
+{"length": 34.5}
 ```
 
-This schema describes a dictionary with a `version` key whose value is an `int`, and the `int` type is an object. We define these objects as classes in [`extensions/objects/models/objects.py`](https://github.com/oppia/oppia/blob/develop/extensions/objects/models/objects.py) and components in [`extensions.objects/templates`](https://github.com/oppia/oppia/blob/develop/extensions/objects/templates).
+This schema describes a dictionary with a `length` key whose value is of type `Real`, and the `Real` type is one of our objects. We define these objects as classes in [`extensions/objects/models/objects.py`](https://github.com/oppia/oppia/blob/develop/extensions/objects/models/objects.py) and components in [`extensions.objects/templates`](https://github.com/oppia/oppia/blob/develop/extensions/objects/templates).
+
+Note that schemas can also use Python base types like `int`. These types are not objects, even though many of our objects are very similar to Python base types. For example, the `Real` object is essentially a `float`. However, `float` is not one of our objects.
 
 ## How objects are defined
 
