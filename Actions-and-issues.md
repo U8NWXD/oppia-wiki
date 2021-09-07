@@ -23,7 +23,7 @@ There are three actions defined at [`extensions/actions/`](https://github.com/op
 
 These actions are recorded using the functions provided by the [stats reporting service](https://github.com/oppia/oppia/tree/develop/core/templates/pages/exploration-player-page/services/stats-reporting.service.ts). For example, when a learner transitions into a terminal state (a card that ends the exploration), the [conversation skin directive](https://github.com/oppia/oppia/tree/develop/core/templates/pages/exploration-player-page/learner-experience/conversation-skin.directive.ts) calls `StatsReportingService.recordExplorationCompleted()`.
 
-When a learner's journey through an exploration goes smoothly, we don't store the actions anywhere; however, when we detect a problem in a learner's journey, then we create an issue that stores the associated actions.
+When a learner's journey through an exploration goes smoothly, we don't store the actions anywhere; however, when we detect a problem in a learner's journey, then we create an issue that stores the associated actions. Note that the issues does not record the user's identity.
 
 ## Issues
 
@@ -48,4 +48,4 @@ We define three different issues at [`extensions/issues/`](https://github.com/op
 
 ## Using actions and issues
 
-Right now, neither issues nor their associated actions are surfraced to exploration creators. They used to be available through the improvements tab of the exploration editor, but that tab has been removed. We are currently working on building a new improvements tab.
+Right now, neither issues nor their associated actions are surfaced to exploration creators. They used to be available through the improvements tab of the exploration editor, but that tab has been removed. We are currently working on building a new improvements tab.
