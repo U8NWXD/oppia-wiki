@@ -31,7 +31,7 @@ The schema would match a dictionary like this:
 {"version": 34}
 ```
 
-This schema describes a dictionary of ints, and the `int` type is an object. We define these objects as classes in [`extensions/objects/models/objects.py`](https://github.com/oppia/oppia/blob/develop/extensions/objects/models/objects.py) and components in [`extensions.objects/templates`](https://github.com/oppia/oppia/blob/develop/extensions/objects/templates).
+This schema describes a dictionary with a `version` key whose value is an `int`, and the `int` type is an object. We define these objects as classes in [`extensions/objects/models/objects.py`](https://github.com/oppia/oppia/blob/develop/extensions/objects/models/objects.py) and components in [`extensions.objects/templates`](https://github.com/oppia/oppia/blob/develop/extensions/objects/templates).
 
 ## How objects are defined
 
