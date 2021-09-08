@@ -60,6 +60,14 @@ If you’re seeing issues when trying to merge from upstream/develop that say so
 
 If you see an error that says something along the lines of `OSError: [Errno 2] No such file or directory: '/.../opensource/oppia_tools/google-cloud-sdk-XXX.X.X/google-cloud-sdk/platform/google_appengine/google/appengine'` while running `scripts.start` - then try deleting the `../oppia_tools` directory and then running `scripts.start` again.
 
+### No module named '_sqlite3'
+
+If you see an error that says something along the lines of `ERROR: gcloud failed to load: No module named _sqlite3` while running `scripts.start` - then follow the steps below:
+
+1. Uninstall Python 3.7.10 from pyenv with the command: `pyenv uninstall 3.7.10`
+2. Install the packages as per the [wiki](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to have the suggested build environment.
+3. Install Python 3.7.10 from pyenv with the command: `pyenv install 3.7.10` and make sure that there are no warnings or errors in the output of the command.
+
 ### Problems Cloning from GitHub
 
 If you have issues cloning the GitHub repository, make sure of the following:
@@ -118,7 +126,9 @@ If you see `Failed to start server on port XXXX, exiting ...` here are some poss
     ```
     For some version number `<version>`.
 
+### `./portserver.socket is not listed in the .github/CODEOWNERS file`
 
+Just delete the `./portserver.socket` file. It's generated automatically by the end-to-end tests and is supposed to be cleaned up automatically. However, if your tests don't exit cleanly, the file can get left behind, which causes lint failures. The file is just a socket for communication between processes, so it's safe to delete once the tests exit.
 
 ## Linux
 
@@ -207,6 +217,12 @@ No module named appengine.api
 ```
 If you're not using a virtual environment, make sure that the path to the appengine lib is locatable. Also, make sure that there are no other versions of google libraries installed globally which may cause path conflict issues. Refer to [this blog](https://medium.com/@maanavshah/fixing-python-import-error-no-module-named-appengine-ebcb540e7f18) for more reference.
 If this error occurs within a virtual environment, try reinstalling the libs by running clean.py followed by start.py.
+
+
+
+### ModuleNotFoundError: No module named _bz2
+1. Install bz2 headers. Use the command `sudo apt-get install libbz2-dev` on Ubuntu.
+2. Install Python 3 again so that the bz2 library gets included in `~/.pyenv/versions/3.7.10/lib/python3.7/`. Use the command `pyenv install 3.7.10`.
 
 
 
