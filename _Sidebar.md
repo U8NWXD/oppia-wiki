@@ -39,7 +39,10 @@
     * [[If your build fails...|If-Your-Build-Fails]]
       * [[If your presubmit checks fail|If-your-presubmit-check-fails]]
       * [[Interpreting CircleCI Results | Interpreting CircleCI Results]]
-      * [[Debugging Stories|Debugging-Stories]]
+      * Debugging
+        * [[Debugging Docs|Debugging-Docs]]
+        * [[Debugging end-to-end tests|Debugging-end-to-end-tests]]
+        * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
     * [[Lint Checks|Lint-Checks#how-to-run-the-linter]]
@@ -47,7 +50,6 @@
        * [[How to write lintchecks?|Lint-Checks#directory-structure]]
     * [[Oppia's code owners and checks to be carried out by developers|Oppia's-code-owners-and-checks-to-be-carried-out-by-developers]]
     * [[Privacy aware programming|Privacy-aware-programming]]
-    * [[Debugging Docs|Debugging-Docs]]
     * [[Backend Type Annotations|Backend-Type-Annotations]]
     * [[Bytes and string handling in Python 3|Bytes-and-string-handling-in-Python-3]]
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
