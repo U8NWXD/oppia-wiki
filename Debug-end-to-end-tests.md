@@ -1,3 +1,11 @@
+## Table of contents
+
+* [Introduction](#introduction)
+* [Using the debugger](#using-the-debugger)
+* [Rerunning with SSH](#rerunning-with-ssh)
+* [Downloading screenshots](#downloading-screenshots)
+* [Downloading screen recordings](#downloading-screen-recordings)
+
 ## Introduction
 
 Whenever you're debugging tests, you should create a debugging doc to document your work. This helps future contributors if they run into a similar bug in the future. If other people come in later to help you, they can also use the debugging doc to get up to speed on what you've already figured out. You can make a copy of [this template debugging doc](https://docs.google.com/document/d/1qRbvKjJ0A7NPVK8g6XJNISMx_6BuepoCL7F2eIfrGqM/edit?usp=sharing) to get started. Also check out the [[debugging docs wiki page|debugging-docs]].
@@ -16,7 +24,7 @@ There are many ways to go about debugging an E2E test, but here's one approach:
 
 5. Try and reproduce the error locally. If you succeed, you can use your [local debugger](#using-the-debugger) to investigate.
 
-### Using the debugger
+## Using the debugger
 
 1. Add a break-point in the code you want the control to stop at by adding the line `debugger;`. For example:
 
@@ -52,11 +60,11 @@ There are many ways to go about debugging an E2E test, but here's one approach:
 
 7. The control will stop at the point where the debugger statement was added. You can now choose to inspect elements, log variables in the test, or add more break-points.
 
-### Rerunning with SSH
+## Rerunning with SSH
 
 CircleCI allows debugging using SSH. For details, please read [this](https://circleci.com/docs/2.0/ssh-access-jobs/#steps). Debugging with SSH only reruns that particular job, so it is a great way to rerun a passing test to see if it flakes without rerunning all the tests.
 
-### Downloading screenshots
+## Downloading screenshots
 
 We capture screenshots of failing tests. On CircleCI, these are available under the `Artifacts` tab of the failure log page. You may also want to reference the [CircleCI artifacts documentation](https://circleci.com/docs/2.0/artifacts/). On GitHub Actions, look for an `Artifacts` link in the upper right where you can download a zip file of the screenshots.
 
@@ -80,7 +88,7 @@ then you can look for the report that includes this message. Times like `10003ms
 
 Sometimes you'll get screenshots that just aren't very helpful. For example, a lot of screenshots show the login page for some reason. You can check other examples of a flake though. One of the others might have a useful screenshot.
 
-### Downloading screen recordings
+## Downloading screen recordings
 
 When screen recordings are enabled, we capture video of the test running on GitHub Actions. This helps developers solve problems in E2E tests that only occur on CI or are difficult to replicate locally.
 
