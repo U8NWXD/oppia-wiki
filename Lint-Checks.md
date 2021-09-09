@@ -109,7 +109,7 @@ Unfortunately, htmllint doesn't support custom rules.
 
 #### stylelint
 
-We lint CSS files with [stylelint](https://stylelint.io), whose configuration lives in [`.stylelintrc`](https://github.com/oppia/oppia/tree/develop/.stylelintrc). Check out its documentation for a list of the available [rules](https://stylelint.io/user-guide/rules/list) and [configuration options](https://stylelint.io/user-guide/configure).
+We lint CSS and HTML files with [stylelint](https://stylelint.io). The linter is configured by [`.stylelintrc`](https://github.com/oppia/oppia/tree/develop/.stylelintrc) for HTML files and by [`core/templates/css/.stylelintrc`](https://github.com/oppia/oppia/blob/develop/core/templates/css/.stylelintrc) for CSS files. Check out its documentation for a list of the available [rules](https://stylelint.io/user-guide/rules/list) and [configuration options](https://stylelint.io/user-guide/configure).
 
 Since stylelint does not support custom rules, you'll need to use other linters if the built-in rules don't suit your needs.
 
@@ -119,9 +119,9 @@ Even with custom rules, the third-party linters above are sometimes insufficient
 
 #### JS/TS linter
 
-Our custom JavaScript and TypeScript lint checks are defined in the `JsTsLintChecksManager` class of [`scripts/linters/js_ts_linter.py`](https://github.com/oppia/oppia/blob/develop/scripts/linters/js_ts_linter.py).
+Our custom JavaScript and TypeScript lint checks are defined in the `JsTsLintChecksManager` class of [`scripts/linters/js_ts_linter.py`](https://github.com/oppia/oppia/blob/develop/scripts/linters/js_ts_linter.py). The individual lint checks are defined as private helper methods in that class, and those methods are called from the `JsTsLintChecksManager.perform_all_lint_checks()` method when the linter runs.
 
-If at all possible, you should implement your lint check as a custom ESLint rule. However, if you have to, you can add a private helper method to the class to implement your lint check. Then call the method from `JsTsLintChecksManager.perform_all_lint_checks()`.
+We do not allow adding new checks to this linter. Instead, you should use [ESLint](#eslint).
 
 #### HTML linter
 
@@ -129,7 +129,9 @@ Since we cannot add custom rules to htmllint, we have written our own HTML linte
 
 #### General-purpose linter
 
-The general-purpose linter relies on regular expressions to identify bad patterns in the code, but it is less efficient since it has to run over every file. Therefore, if your lint check only needs to look at Python, JavaScript, or TypeScript files, you should use one of the approaches above instead.
+The general-purpose linter relies on regular expressions to identify bad patterns in the code, but it is less efficient since it has to run over every file. We do not allow adding Python, JavaScript, or TypeScript checks here. Instead, you should use [Pylint](#pylint) or [ESLint](#eslint).
+
+Even though we do not allow new checks to this linter, we explain below how the checks are defined to help you understand the existing checks.
 
 We define regular expression checks like this:
 
@@ -145,7 +147,7 @@ We define regular expression checks like this:
 
 We have 4 keys in this dictionary:
 
-* `regexp`: The regular expression here which you want to match. Depending on the situation, this could be either a forbidden or a required pattern.
+* `regexp`: The regular expression here that the check matches. Depending on the situation, this could be either a forbidden or a required pattern.
 * `message` The error message that will be shown to the user if the lint check fails.
 * `excluded_files`: A tuple of excluded files, if really necessary (**not recommended**).
 * `excluded_dirs`: A tuple of excluded directories if really necessary (**not recommended**).
@@ -153,8 +155,8 @@ We have 4 keys in this dictionary:
 These regular expression checks can be added to any of the following constants in `general_purpose_linter.py`:
 
 * `BAD_PATTERNS_REGEXP`: The regular expressions here are forbidden in any file.
-* `MANDATORY_PATTERNS_REGEXP`: The regular expressions here must be present in every file. Here you can also specify an `included_types` key to limit what files this applies to.
-* `MANDATORY_PATTERNS_JS_REGEXP`: The regular expressions here must be present in all JavaScript and TypeScript files. You'll need to enforce this by specifying the `included_types` key.
+* `MANDATORY_PATTERNS_REGEXP`: The regular expressions here must be present in every file. The `included_types` key may be specified to limit what files this applies to.
+* `MANDATORY_PATTERNS_JS_REGEXP`: The regular expressions here must be present in all JavaScript and TypeScript files. The `included_types` key should specify JavaScript files, TypeScript files, or both.
 * `BAD_LINE_PATTERNS_HTML_REGEXP`: The regular expressions here are forbidden in HTML files.
 * `BAD_PATTERNS_PYTHON_REGEXP`: The regular expressions here are forbidden in Python files.
 
