@@ -53,7 +53,7 @@ TODO(#4): Add link to IDE tutorial.
 
 ## Developing your skills
 
-See our [[page of learning resources|Learning-Resources]] for suggestions on how you can improve your development skills.
+See our [[page of learning resources|Learning-Resources]] for suggestions on how you can improve your development skills. When you take up an issue that requires programming languages or tools you are unfamiliar with, check out that page for resources that other developers have found useful when learning.
 
 ## Finding something to do
 
