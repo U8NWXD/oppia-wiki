@@ -54,8 +54,8 @@
   * Testing
     * [[Running tests|Running-Tests]]
     * Writing Tests
-      * [[Writing backend tests]]
-      * [[Writing frontend tests|Frontend-unit-tests-guide]]
+      * [[Backend tests]]
+      * [[Frontend tests|Frontend-unit-tests-guide]]
       * [[End-to-end tests|End-to-End-Tests]]
       * [[Lighthouse Tests|Lighthouse-Tests]]
     * [[Testing for Accessibility|Testing-for-Accessibility]]

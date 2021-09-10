@@ -93,19 +93,27 @@ We make use of several third-party linters, some of which also accept custom rul
 
 We use [ESLint](https://eslint.org) to lint our JavaScript and TypeScript code. It has lots of [built-in rules](https://stylelint.io/), and if one of them does what you want, you can enable it in [`.eslintrc`](https://github.com/oppia/oppia/tree/develop/.eslintrc). If no existing rule does what you need, you can write a [[custom rule|Custom-ESLint-checks]].
 
+The ESLint checks are run by `scripts.linters.js_ts_linter.JsTsLintChecksManager`.
+
 #### Pylint
 
 We use [Pylint](https://pylint.pycqa.org) to lint our Python code. It provides many [rules and configuration options](https://pylint.pycqa.org/en/latest/technical_reference/features.html) that you may find useful. They are configured in [`.pylintrc`](https://github.com/oppia/oppia/tree/develop/.pylintrc). If they aren't enough though, you can also write a [[custom rule|Custom-Pylint-checks]].
 
+The Pylint checks are run by `scripts.linters.python_linter.ThirdPartyPythonLintChecksManager`.
+
 #### isort
 
 We use [isort](https://pycqa.github.io/isort/) to make sure our Python imports are properly sorted. It is configured by [`.isort.cfg`](https://github.com/oppia/oppia/tree/develop/.isort.cfg), but it does not support custom rules.
+
+The isort checks are run by `scripts.linters.python_linter.ThirdPartyPythonLintChecksManager`.
 
 #### htmllint
 
 We lint our HTML code with [htmllint](https://github.com/htmllint/htmllint/), which is configured in [`.htmllintrc`](https://github.com/oppia/oppia/tree/develop/.htmllintrc). See the [htmllint documentation](https://github.com/htmllint/htmllint/wiki/Options) for a list of the available configuration options.
 
 Unfortunately, htmllint doesn't support custom rules.
+
+The htmllint checks are run by `scripts.linters.html_linter.ThirdPartyHTMLLintChecksManager`.
 
 #### stylelint
 
