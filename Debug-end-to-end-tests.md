@@ -60,17 +60,11 @@ There are many ways to go about debugging an E2E test, but here's one approach:
 
 7. The control will stop at the point where the debugger statement was added. You can now choose to inspect elements, log variables in the test, or add more break-points.
 
-## Rerunning with SSH
-
-CircleCI allows debugging using SSH. For details, please read [this](https://circleci.com/docs/2.0/ssh-access-jobs/#steps). Debugging with SSH only reruns that particular job, so it is a great way to rerun a passing test to see if it flakes without rerunning all the tests.
-
 ## Downloading screenshots
 
-We capture screenshots of failing tests. On CircleCI, these are available under the `Artifacts` tab of the failure log page. You may also want to reference the [CircleCI artifacts documentation](https://circleci.com/docs/2.0/artifacts/). On GitHub Actions, look for an `Artifacts` link in the upper right where you can download a zip file of the screenshots.
+We capture screenshots of failing tests. On GitHub Actions, look for an `Artifacts` link in the upper right where you can download a zip file of the screenshots:
 
-Here's an example of what artifacts on CircleCI look like:
-
-![CircleCI artifacts page with hyperlinks to screenshots and reports](https://user-images.githubusercontent.com/19878639/111242142-f1ba2000-85d4-11eb-8bf1-66cfbbf71975.png)
+![Screenshot of E2E test run on GitHub Actions with artifacts link in upper right](images/githubActionsArtifacts.png)
 
 There are two kinds of artifacts:
 
