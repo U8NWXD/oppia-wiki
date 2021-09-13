@@ -2,7 +2,6 @@
 
 * [Introduction](#introduction)
 * [Using the debugger](#using-the-debugger)
-* [Rerunning with SSH](#rerunning-with-ssh)
 * [Downloading screenshots](#downloading-screenshots)
 * [Downloading screen recordings](#downloading-screen-recordings)
 
