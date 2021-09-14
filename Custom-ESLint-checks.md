@@ -9,10 +9,10 @@
     * [Write the rule](#write-the-rule)
     * [Add the rule to Oppia](#add-the-rule-to-oppia)
     * [Run the linter with the new rule](#run-the-linter-with-the-new-rule)
-  * [Beyond hello world](#beyond-hello-world)
-    * [Placeholders](#placeholders)
-    * [Navigating the AST](#navigating-the-ast)
 * [Write tests](#write-tests)
+* [Beyond hello world](#beyond-hello-world)
+  * [Placeholders](#placeholders)
+  * [Navigating the AST](#navigating-the-ast)
 
 ## Introduction
 
@@ -32,7 +32,7 @@ To write your lint rule in AST Explorer, select "ESLint v4" under the "Transform
 
 ### Hello world
 
-To get a better idea for how lint checks work, write a simple ESLint rule that forbids the string `Hello, world!`. Maybe you don't want people accidentally opening PRs that include code that prints `Hello, world!` from when they were learning JavaScript. First consider what kinds of code should violate the rule. Here are some examples:
+To get a better idea for how lint checks work, let's try writing a simple ESLint rule that forbids the string `Hello, world!`. (Maybe you don't want people accidentally opening PRs that include code that prints `Hello, world!` from when they were learning JavaScript.) First consider what kinds of code should violate the rule. Here are some examples:
 
 ```js
 const s = "Hello, world!";
@@ -178,9 +178,9 @@ module.exports = {
 };
 ```
 
-First, consider the `meta` key at the top of the exported object. The associated object contains the rule's metadata. Under `docs` we describe the rule, and under `messages` we list the error messages that this rule can raise. ESLint supports rules that suggest fixes, but since we can't automatically fix a `Hello, world!` usage, we set `fixable` to `null`.
+First, consider the `meta` key at the top of the exported object. The associated object contains the rule's metadata. Under `docs` we describe the rule, and under `messages` we list the error messages that this rule can raise. ESLint supports rules that suggest fixes, but since we can't automatically fix a `Hello, world!` usage, we set `fixable` to `null`. When writing your rule you should include all of these keys, but replace the values as needed to describe your rule.
 
-Next, consider the `create` key. This key maps to the function we wrote in AST Explorer. However, notice that the values passed to `context.report()` have changed. Instead of specifying the error message directly, it's better to reference a message from the rule's metadata.
+Next, consider the `create` key, which is required for ESLint rules. This key maps to the function we wrote in AST Explorer. However, notice that the values passed to `context.report()` have changed. Instead of specifying the error message directly like before, we now provide a `messageId` key that matches one of the keys under `meta.messages`. Now when we cal `context.report`, the user will be shown the `helloWorld` message from `meta.messages`. You should use the message ID structure when writing your rules.
 
 We also need to add our rule to `.eslintrc`. Add `"oppia/hello-world": "error",` under the top-level `rules` key.
 
@@ -190,7 +190,7 @@ To run the linter with your new rule, follow these steps:
 
 1. Delete the `node_modules/eslint-plugin-oppia/` directory so that in the next steps, the lint rules get re-installed.
 
-2. Run `yarn install` to install the custom rules, including the one you just wrote.
+2. Run `yarn install` from the `oppia/` directory to install the custom rules, including the one you just wrote.
 
 3. Execute the pre-commit linter, which will use your new rule. To speed up the lint checks, we recommend running the rule on just a single file when testing it. If you created a `test.js` file with some code to try linting, you would run the linter like this:
 
@@ -213,63 +213,7 @@ To run the linter with your new rule, follow these steps:
    ---------------------------
    ```
 
-   Note that you might see other lint errors too. Those are fine to ignore.
-
-### Beyond hello world
-
-ESLint has many more features described in the [ESLint documentation](https://eslint.org/docs/developer-guide/working-with-rules). In particular, you may find the following features useful:
-
-#### Placeholders
-
-Your error messages can have [placeholders](https://eslint.org/docs/developer-guide/working-with-rules#using-message-placeholders) that are filled by the data you pass to `context.report()`. For example, you might have an error message like this:
-
-```js
-literals: 'Please do not use "{{stringValue}}" literals.'
-```
-
-Then you could call `context.report()` like this:
-
-```js
-context.report({
-  node: node,
-  messageId: 'literals',
-  data: {
-    stringValue: node.value,
-  },
-})
-```
-
-The value of `node.value` will be substituted in place of `{{stringValue}}`.
-
-#### Navigating the AST
-
-You'll often want to move up or down the AST to check neighboring nodes. For example, suppose you want to forbid calling `console.log()`. `console` and `log` are different nodes, and you need to check both. Here's an abbreviated version of the AST for `console.log()`:
-
-```json
-{
-  "callee": {
-    "type": "MemberExpression",
-    ...
-    "object": {
-      "type": "Identifier",
-      ...
-      "name": "console",
-      ...
-    },
-    "property": {
-      "type": "Identifier",
-      ...
-      "name": "log",
-      ...
-    },
-    ...
-  },
-}
-```
-
-You could identify this pattern by specifying a function to run on all nodes of type `MemberExpression`. Inside your function, you could then check that `node.object.name === "console"` and `node.property.name === "log"`.
-
-It is also possible to work up the AST by calling `context.getAncestors()`. This call will return an array of all the ancestors of the current node.
+   Note that you might see other lint errors too related to your `test.js`. Those are fine to ignore since you won't actually be committing the `test.js` file.
 
 ## Write tests
 
@@ -327,3 +271,59 @@ Once you have written your tests, you can run them like this:
 ```console
 python -m scripts.run_custom_eslint_tests
 ```
+
+## Beyond hello world
+
+ESLint has many more features described in the [ESLint documentation](https://eslint.org/docs/developer-guide/working-with-rules). In particular, you may find the following features useful:
+
+### Placeholders
+
+Your error messages can have [placeholders](https://eslint.org/docs/developer-guide/working-with-rules#using-message-placeholders) that are filled by the data you pass to `context.report()`. For example, you might have an error message like this:
+
+```js
+literals: 'Please do not use "{{stringValue}}" literals.'
+```
+
+Then you could call `context.report()` like this:
+
+```js
+context.report({
+  node: node,
+  messageId: 'literals',
+  data: {
+    stringValue: node.value,
+  },
+})
+```
+
+The value of `node.value` will be substituted in place of `{{stringValue}}`.
+
+### Navigating the AST
+
+You'll often want to move up or down the AST to check neighboring nodes. For example, suppose you want to forbid calling `console.log()`. `console` and `log` are different nodes, and you need to check both. Here's an abbreviated version of the AST for `console.log()`:
+
+```json
+{
+  "callee": {
+    "type": "MemberExpression",
+    ...
+    "object": {
+      "type": "Identifier",
+      ...
+      "name": "console",
+      ...
+    },
+    "property": {
+      "type": "Identifier",
+      ...
+      "name": "log",
+      ...
+    },
+    ...
+  },
+}
+```
+
+You could identify this pattern by specifying a function to run on all nodes of type `MemberExpression`. Inside your function, you could then check that `node.object.name === "console"` and `node.property.name === "log"`. We recommend identifying the node types you need by examining the ASTs generated from examples you provide to AST Explorer, but you can also refer to the documentation for [`ESTree`](https://github.com/estree/estree), which defines the AST used by ESLint. The types you need are probably defined in [`es5.md`](https://github.com/estree/estree/blob/master/es5.md).
+
+It is also possible to work up the AST by calling `context.getAncestors()`. This call will return an array of all the ancestors of the current node.

@@ -85,13 +85,15 @@ As we work through the example below, we'll cover each of the three kinds of che
 
 ### Hello world
 
-To get a better idea for how lint checks work, write a simple Pylint rule that forbids the string `Hello, world!`. Maybe you don't want people accidentally opening PRs that include code that prints `Hello, world!` from when they were learning Python. First consider what kinds of code should violate the rule. Here are some examples:
+To get a better idea for how lint checks work, let's try writing a simple Pylint rule that forbids the string `Hello, world!`. (Maybe you don't want people accidentally opening PRs that include code that prints `Hello, world!` from when they were learning Python.) First consider what kinds of code should violate the rule. Here are some examples:
 
 ```python
 s = "Hello, world!";
 
 print("Hello, world!");
 ```
+
+Below, we'll walk through how to implement this rule using each of the three kinds of checkers in Pylint: AST checkers, token checkers, and raw checkers.
 
 #### A note on undecidability
 
@@ -268,15 +270,7 @@ We could write a checker that raises an error whenever it finds a token that:
 * is of type "STRING"
 * has value "Hello, world!", ignoring quotation marks.
 
-After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). For our rule:
-
-* False positives
-
-  * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
-
-* False negatives
-
-  * Code that constructs the string `Hello, world!` instead of including it as a literal will pass the lint check. This is an acceptable imperfection though since developers are almost always going to use the string literal when writing a hello world program.
+After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). Our rule suffers from the [same problems as the AST checker](#design-the-ast-checker).
 
 ##### Write the token checker code
 
@@ -351,25 +345,7 @@ We could write a checker that raises an error whenever it finds a line that cont
 * `"Hello, world!"`
 * `'Hello, world!'`
 
-After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). For our rule:
-
-* False positives
-
-  * Code that includes the string `Hello, world!` but doesn't print it will still raise errors. There probably aren't any good reasons to do this though.
-
-* False negatives
-
-  * Code that constructs the string `Hello, world!` instead of including it as a literal will pass the lint check. This is an acceptable imperfection though since developers are almost always going to use the string literal when writing a hello world program.
-
-  * Code that contains `Hello, world!` in a multi-line string will not raise lint errors. For example, this will pass the linter:
-
-    ```python
-    s = """
-    Hello, world!
-    """"
-    ```
-
-    There's no reason for a developer to do this though, so it's an acceptable imperfection.
+After designing any rule, it's important to consider what benign code it will raise errors on (false positives) and what bad code it will miss (false negatives). Our rule suffers from the [same problems as the AST checker](#design-the-ast-checker).
 
 ##### Write the raw checker code
 
