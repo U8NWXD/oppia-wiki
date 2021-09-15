@@ -28,7 +28,7 @@
     * [Similar tests should have similar checks](#similar-tests-should-have-similar-checks)
     * [Validate external side-effects](#validate-external-side-effects)
 * [General tips](#general-tips)
-  * [Debugging with print statements](#debugging-with-print-statements)
+  * [Debugging](#debugging)
   * [Spy utilities](#spy-utilities)
     * [Spying on third-party libraries](#spying-on-third-party-libraries)
     * [Spying on the same method/property more than one time in the same scope](#spying-on-the-same-methodproperty-more-than-one-time-in-the-same-scope)
@@ -362,9 +362,9 @@ Here, the call to `setLoginCookie()` is an external side-effect. In our unit tes
 
 ## General tips
 
-### Debugging with print statements
+### Debugging
 
-If you are used to using `console.log(...)` to debug tests, remember to pass `--verbose` when executing `run_frontend_tests.py`. Otherwise, your print statements will be suppressed. You should use `fdescribe` or `fit` to limit how many tests run; otherwise you will have to comb through a lot of console messages to find your debugging information.
+See our [[guide to debugging frontend tests|Debug-frontend-tests]] for debugging tips.
 
 ### Spy utilities
 
