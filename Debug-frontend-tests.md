@@ -1,17 +1,17 @@
 ## Table of contents
 
 * [Introduction](#introduction)
-* [Finding tests](#finding-tests)
-* [Isolating tests](#isolating-tests)
+* [Find tests](#find-tests)
+* [Isolate tests](#isolate-tests)
 * [Verbose mode](#verbose-mode)
-* [Finding stack elements](#finding-stack-elements)
+* [Find stack elements](#find-stack-elements)
 
 ## Introduction
 
 Debugging frontend tests can be difficult because the stack traces are much less helpful than in the backend. There are two reasons for this:
 
 * Because so much of our frontend code is asynchronous, the stack trace will often just point to code that executes a queue of jobs when you usually want to know what code submitted the job.
-* Jasmine, our testing framework, does not support showing accurate line numbers in stack traces. We looked into fixing this in [#9648](https://github.com/oppia/oppia/issues/9648) but abandoned the idea once it was clear that Jasmine wasn't interested in supporting the feature.
+* Jasmine, our testing framework, does not support showing accurate line numbers in stack traces. We looked into fixing this in [#9648](https://github.com/oppia/oppia/issues/9648) but abandoned the idea once it was clear that Jasmine lacked the functionality we needed.
 
 Here's an example frontend test stack trace:
 
@@ -35,7 +35,7 @@ The `zone.js` stack elements relate to the [zone.js](https://github.com/angular/
 
 Below, we'll discuss some strategies you can use to overcome these difficulties.
 
-## Finding tests
+## Find tests
 
 You can use test names to find test code files, but you can't just search for the whole name. You have to understand how test names are constructed. For example, here's the kind of test structure that produced the test name "Assets Backend API Service on dev mode should handle rejection when fetching a file fail" above:
 
@@ -51,7 +51,7 @@ describe('Assets Backend API Service', () => {
 
 The strings from the `describe` and `it` functions get concatenated with space (` `) delimiters to create the test name. The name of the `it` block usually starts with `should`, so we recommend searching the codebase for the portion of the test name from `should` to the end (e.g. "should handle rejection when fetching a file fails" in this case).
 
-## Isolating tests
+## Isolate tests
 
 Once you have identified which test is failing, you often want to run that test in isolation next. This will let you get results quickly as you try other debugging strategies. Thankfully, you just have to change the `it()` of your test to `fit()`. You can even do this multiple times to mark multiple tests for running. Then when you run the frontend tests, only those tests with `fit()` will run. Note that `fdescribe()` works the same way.
 
@@ -67,6 +67,6 @@ python -m scripts.run_frontend_tests --verbose
 
 **Only use --verbose when you are running a few tests in isolation. Otherwise, you will be swamped with way too many log messages.**
 
-## Finding stack elements
+## Find stack elements
 
 While you can't use the line numbers in a stack trace to find the associated code, you can sometimes use the function or class names. For example, in the example above we could try searching the codebase for `_maybeConvertBody`. The success of this technique depends on how frequently the string you search for occurs in the codebase. If the string occurs a lot, you will have a hard time figuring out which occurrence is the one you are interested in.
