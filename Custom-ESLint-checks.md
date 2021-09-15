@@ -1,9 +1,9 @@
 ## Table of contents
 
 * [Introduction](#introduction)
+  * [Limits of linters](#limits-of-linters)
 * [Write rules](#write-rules)
   * [Hello world](#hello-world)
-    * [A note on undecidability](#a-note-on-undecidability)
     * [Examine the AST](#examine-the-ast)
     * [Design the rule](#design-the-rule)
     * [Write the rule](#write-the-rule)
@@ -17,6 +17,21 @@
 ## Introduction
 
 We use [ESLint](https://eslint.org) to lint our JavaScript and TypeScript files. While ESLint comes with a ton of built-in rules that we can use, we sometimes need to write our own. This guide will cover how to write these custom ESLint rules and how to test them.
+
+### Limits of linters
+
+Before we get too far into custom lint rules, let's make sure we understand what linters like ESLint are actually capable of doing.
+
+Consider two types things you might want to prohibit with a lint rule:
+
+* A property of the code's text. For example, you might want to ensure that all lines are at most 80 characters long.
+* A property of the code's behavior. For example, you might want to ensure that the code, when executed, does not print a particular string.
+
+Linters operate on the code as text, so you can write a lint rule that bans a textual property with perfect accuracy. However, any lint rule that tries to prohibit a behavior must be imperfect. To see this intuitively, consider the problem we'll approach below: writing a linter to prohibit programs that print `Hello, world!`. If our linter searched for the string `Hello, world!`, it would miss a program that printed `'Hello, ' + 'world!'`.
+
+If you are interested in computability theory, the technical description for this problem is that predicting a program's behavior is an undecidable problem. Look up the halting problem if you want to learn more.
+
+**If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.**
 
 ## Write rules
 
@@ -39,26 +54,6 @@ const s = "Hello, world!";
 
 console.log("Hello, world!");
 ```
-
-#### A note on undecidability
-
-While ESLint parses the code being linted, it does not execute it. This means that no lint rule will be able to prevent `Hello, world!` from being printed. No matter how complicated our lint rule, a devious programmer will always be able to construct some convoluted code that evades the rule. For example, code like this will pass our linter:
-
-```js
-console.log(`Hello, ${"world"}!`)
-```
-
-It turns out that it is provably impossible for us to write a program that can determine whether a program prints `Hello, world!` with perfect accuracy. To see why, suppose for the sake of argument we had a linter `printsHelloWorld()` that accepted the source code of a program and returned a boolean indicating whether the program prints `Hello, world!`. If such a linter existed, we could write the following program, whose source code we'll call `src`:
-
-```js
-if (!printsHelloWorld(src)) {
-  console.log('Hello, world!');
-}
-```
-
-No matter what `printsHelloWorld(src)` returns, it's wrong! If it returns `true`, then the program exits without printing `Hello, world!`, but if it returns `false`, then the program does print `Hello, world!`. The only other alternative is for `printsHelloWorld(src)` to run forever and never return anything, which really isn't useful. Since this argument would work for any linter `printsHelloWorld()`, no such linter can exist. This is a variation of the halting problem, which is one of the most famous examples of undecidable problems in computability theory.
-
-This argument is somewhat esoteric, but it has important implications for writing linter rules. **If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.** Since we can't write a perfect linter, don't worry about trying to handle cases where a programmer is trying to circumvent your rule. Instead, focus on writing a rule to cover the ways developers normally write code.
 
 #### Examine the AST
 

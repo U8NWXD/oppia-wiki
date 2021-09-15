@@ -1,11 +1,10 @@
 ## Table of contents
 
-* [Table of contents](#table-of-contents)
 * [Introduction](#introduction)
+  * [Limits of linters](#limits-of-linters)
 * [Write checkers](#write-checkers)
   * [Types of checkers](#types-of-checkers)
   * [Hello world](#hello-world)
-    * [A note on undecidability](#a-note-on-undecidability)
     * [Write the AST checker](#write-the-ast-checker)
       * [Examine the AST](#examine-the-ast)
       * [Design the AST checker](#design-the-ast-checker)
@@ -31,6 +30,21 @@
 ## Introduction
 
 We use [Pylint](https://pylint.pycqa.org) to lint our Python code. Before writing a custom rule, you should check whether you can achieve your goals with [Pylint's built-in rules and configurations](https://pylint.pycqa.org/en/latest/technical_reference/features.html). If those are insufficient, you can follow this guide to write a custom Pylint checker.
+
+### Limits of linters
+
+Before we get too far into custom lint rules, let's make sure we understand what linters like ESLint are actually capable of doing.
+
+Consider two types things you might want to prohibit with a lint rule:
+
+* A property of the code's text. For example, you might want to ensure that all lines are at most 80 characters long.
+* A property of the code's behavior. For example, you might want to ensure that the code, when executed, does not print a particular string.
+
+Linters operate on the code as text, so you can write a lint rule that bans a textual property with perfect accuracy. However, any lint rule that tries to prohibit a behavior must be imperfect. To see this intuitively, consider the problem we'll approach below: writing a linter to prohibit programs that print `Hello, world!`. If our linter searched for the string `Hello, world!`, it would miss a program that printed `'Hello, ' + 'world!'`.
+
+If you are interested in computability theory, the technical description for this problem is that predicting a program's behavior is an undecidable problem. Look up the halting problem if you want to learn more.
+
+**If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.**
 
 ## Write checkers
 
@@ -94,25 +108,6 @@ print("Hello, world!");
 ```
 
 Below, we'll walk through how to implement this rule using each of the three kinds of checkers in Pylint: AST checkers, token checkers, and raw checkers.
-
-#### A note on undecidability
-
-While Pylint parses the code being linted, it does not execute it. This means that no lint rule will be able to prevent `Hello, world!` from being printed. No matter how complicated our lint rule, a devious programmer will always be able to construct some convoluted code that evades the rule. For example, code like this will pass our linter:
-
-```python
-print(f'Hello, {"world"}!')
-```
-
-It turns out that it is provably impossible for us to write a program that can determine whether a program prints `Hello, world!` with perfect accuracy. To see why, suppose for the sake of argument we had a linter `prints_hello_world()` that accepted the source code of a program and returned a boolean indicating whether the program prints `Hello, world!`. If such a linter existed, we could write the following program, whose source code we'll call `src`:
-
-```python
-if not prints_hello_world(src):
-    print('Hello, world!')
-```
-
-No matter what `prints_hello_world(src)` returns, it's wrong! If it returns `True`, then the program exits without printing `Hello, world!`, but if it returns `False`, then the program does print `Hello, world!`. The only other alternative is for `prints_hello_world(src)` to run forever and never return anything, which really isn't useful. Since this argument would work for any linter `prints_hello_world()`, no such linter can exist. This is a variation of the halting problem, which is one of the most famous examples of undecidable problems in computability theory.
-
-This argument is somewhat esoteric, but it has important implications for writing linter rules. **If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.** Since we can't write a perfect linter, don't worry about trying to handle cases where a programmer is trying to circumvent your rule. Instead, focus on writing a rule to cover the ways developers normally write code.
 
 #### Write the AST checker
 
