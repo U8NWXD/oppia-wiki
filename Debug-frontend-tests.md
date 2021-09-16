@@ -5,6 +5,7 @@
 * [Isolate tests](#isolate-tests)
 * [Verbose mode](#verbose-mode)
 * [Find stack elements](#find-stack-elements)
+* [Run tests repeatedly on CI](#run-tests-repeatedly-on-ci)
 
 ## Introduction
 
@@ -33,7 +34,11 @@ Chrome Headless 83.0.4103.116 (Mac OS 10.15.5): Executed 1 of 2277 (1 FAILED) (0
 
 The `zone.js` stack elements relate to the [zone.js](https://github.com/angular/angular/tree/master/packages/zone.js) package that is handling our asynchronous operations. Notice that the line numbers are unreasonably large. This is because to run our tests, we load all our testing code and dependencies into `combined-tests.spec.js`. The line numbers refer to the resulting "mega-file," which doesn't actually exist on the file system.
 
-Below, we'll discuss some strategies you can use to overcome these difficulties.
+Below, we'll discuss some strategies you can use to overcome these difficulties. We suggest you follow a workflow like this:
+
+1. [Find the code for the failing test](#find-tests)
+2. [Run the test in isolation](#isolate-tests)
+3. Debug by [printing out debugging information](#verbose-mode), [investigating the code referenced by the stack trace](#find-stack-elements), and/or [running many times on CI](#run-tests-repeatedly-on-ci).
 
 ## Find tests
 
@@ -67,6 +72,27 @@ python -m scripts.run_frontend_tests --verbose
 
 **Only use --verbose when you are running a few tests in isolation. Otherwise, you will be swamped with way too many log messages.**
 
+Note that depending on your situation, `console.log()` or `console.error()` might be preferable:
+
+* `console.log()` statements will cause the linter to fail, so they are a great choice for local debugging. Then if you forget to remove them before pushing your changes, the linter will remind you.
+* `console.error()` statements do not cause a lint failure, so they work well when you are pushing your code with debugging code to a PR to let the tests run in the CI environment.
+
 ## Find stack elements
 
 While you can't use the line numbers in a stack trace to find the associated code, you can sometimes use the function or class names. For example, in the example above we could try searching the codebase for `_maybeConvertBody`. The success of this technique depends on how frequently the string you search for occurs in the codebase. If the string occurs a lot, you will have a hard time figuring out which occurrence is the one you are interested in.
+
+## Run tests repeatedly on CI
+
+Especially when debugging flaky frontend tests, you may want to set your tests to run many times on CI. For example, you might add some debugging code and then rerun your frontend tests on CI until the flake occurs. You can update the frontend test CI workflow to enable this. In `.github/workflows/frontend_tests.yml`, change the step that runs the tests to:
+
+```yaml
+run: for run in {1..N}; do {{the normal command to run the tests}}`; done
+```
+
+Here `N` is the number of times you want the tests to run.
+
+For example, to run the tests 20 times, you could do this:
+
+```yaml
+run: for run in {1..20}; do PYTHONIOENCODING=utf-8 python -m scripts.run_frontend_tests --run_minified_tests --skip_install --check_coverage; done
+```
