@@ -17,7 +17,7 @@
 
 Before we can run the Oppia server, we have to build it. This build process transforms the files defining our application (e.g. code, images, configuration files, etc.) from the developer-friendly format we store in GitHub into a form that can be executed to run the server. If you are running the local development server, this build process makes minimal changes, but when deploying to production, we do much more optimization.
 
-This page documents how the build process works in each of its modes. For most developers the build steps are handled automatically and can be ignored; however, some bugs appear only in some build modes. For example, a bug might only happen in prod mode, in which case a developer will be unable to reproduce it in a local development mode.
+This page documents how the build process works in each of its modes. For most developers the build steps are handled automatically and can be ignored; however, some bugs appear only in certain build modes. For example, a bug might only happen in prod mode, in which case a developer will be unable to reproduce it in dev mode.
 
 ## Build script
 
@@ -32,12 +32,13 @@ There are two primary build modes: dev mode and prod mode. When running in prod 
   * Maintenance mode
   * Deploy mode
   * Minify only third-party libraries
-We use prod mode for most everything besides local development. We use prod mode when deploying to production and testing servers, and we run most tests in prod mode. A notable exception is the lighthouse accessibility tests, which run in dev mode.
+
+We use prod mode for most everything besides local development. For example, we use prod mode when deploying to production and testing servers, and we run most tests in prod mode. A notable exception is the lighthouse accessibility tests, which run in dev mode because they don't depend on prod mode, and dev mode compilation is faster.
 
 
 ### Build mode constants
 
-The build mode is controlled by the following constants in `assets/constants.ts`:
+The build mode affects the application during runtimes through the following constants in `assets/constants.ts`:
 
 * `DEV_MODE`: Set to `true` if and only if we are in dev mode. Otherwise, this is `false`.
 * `EMULATOR_MODE`: Set to `true` if and only if we are not in deploy mode. Note that being in deploy mode implies being in prod mode. Otherwise, this is `false`.
@@ -45,13 +46,13 @@ The build mode is controlled by the following constants in `assets/constants.ts`
 
 ### Dev mode
 
-We use dev mode for local development. For example, when you run `python -m scripts.start`, you build the app in dev mode. This mode is optimized to build as quickly as possible, so it doesn't do much optimization. This means that the server doesn't run quite as fast.
+We use dev mode for local development. For example, when you run `python -m scripts.start`, you build the app in dev mode. This mode is optimized to build as quickly as possible, so it doesn't do much optimization. This means that the server doesn't run quite as quickly.
 
 Here's what happens during a dev mode build:
 
-1. Third-party libraries are generated. If you recently ran the server, then there might not be much to change here. Otherwise, the third-party libraries from `manifest.json` are downloaded. The downloaded CSS and JavaScript code files are combined into `third_party/generated/third_party.css` and `third_party/generated/third_party.js`, and the downloaded fonts are placed in `third_party/webfonts/`.
-2. The build script sets the constants in `feconf.py` to enable dev mode. Specifically, `DEV_MODE` is `true`, and the other constants are `false`.
-3. [Webpack](https://webpack.js.org/) bundles our frontend code files and runs with a [configuration](https://github.com/oppia/oppia/blob/develop/webpack.dev.config.ts) designed for minimal compilation time. Note that the dev mode configuration file inherits from the [root webpack config file](https://github.com/oppia/oppia/blob/develop/webpack.common.config.ts). In dev mode, webpack runs in "watch" mode so that when files are changed, webpack re-builds the app automatically. Note that **this step is not handled by `build.py`.** Instead, this step is usually performed by whatever script you actually executed, for example `start.py`. When running the frontend tests without minifying third-party libraries, this step doesn't happen at all.
+1. Some third-party libraries are generated. If you recently ran the server, then there might not be much to change here. Otherwise, the third-party libraries from `manifest.json` are downloaded. Note that the libraries in `manifest.json` are just some of our frontend libraries. The downloaded CSS and JavaScript code files are combined into `third_party/generated/third_party.css` and `third_party/generated/third_party.js`, and the downloaded fonts are placed in `third_party/webfonts/`.
+2. The build script sets the constants in `assets/constants.ts` to enable dev mode. Specifically, `DEV_MODE` is `true`, and the other constants are `false`.
+3. [Webpack](https://webpack.js.org/) bundles our frontend code files and runs with a [configuration](https://github.com/oppia/oppia/blob/develop/webpack.dev.config.ts) designed for minimal compilation time. Note that the dev mode configuration file inherits from the [root webpack config file](https://github.com/oppia/oppia/blob/develop/webpack.common.config.ts). In dev mode, webpack runs in "watch" mode so that when files are changed, webpack re-builds the app automatically. Note that **this step is not handled by `build.py`.** Instead, this step is usually performed by whatever script you actually executed, for example `start.py`. When running the frontend tests, this step doesn't happen at all.
 4. The `app_dev.yaml` configuration file for the app already exists, so it doesn't need to be generated.
 
 ### Prod mode
@@ -68,7 +69,7 @@ First, let's consider what happens in plain prod mode where those three options 
 4. `app.yaml` is generated from `app_dev.yaml`. The two files are identical in plain prod mode, except for a comment in `app.yaml` noting that it is auto-generated.
 5. The third-party libraries, assets, files compiled by webpack, and some other files are all copied to a build folder `build/`. This mimics the build folder we generate and upload to production servers when deploying the app for real. During this process, asset files are renamed to include the hashes we generated earlier. This ensures that if the file content changes, the name changes, so any caches of the old file are invalidated.
 
-This is the mode our tests run in, and it's what you'll want to use if you want to locally run a version of the app that's as close to the production version as possible. You can use this mode like this:
+This is the mode our tests run in (except the lighthouse accessibility tests), and it's what you'll want to use if you want to locally run a version of the app that's as close to the production version as possible. You can use this mode like this:
 
 ```console
 python -m scripts.start --prod_env
@@ -80,7 +81,7 @@ In this mode, the third-party libraries are installed and minified, but no other
 
 #### Maintenance mode
 
-As far as the build process is concerned, maintenance mode works just like [plain prod mode](#plain-prod-mode) except that the `ENABLE_MAINTENANCE_MODE` constant gets set to `true`. Then when the app runs, only admins can log in. We use this when we are upgrading the production server and need to let jobs run without letting users modify any data.
+As far as the build process is concerned, maintenance mode works just like [plain prod mode](#plain-prod-mode) except that the `ENABLE_MAINTENANCE_MODE` constant gets set to `true`. Then when the app runs, only admins can log in. We use this when we are upgrading the production server and need to let jobs run while ensuring users don't change any data.
 
 This mode is used by our deployment scripts. You can also enable it locally like this:
 
