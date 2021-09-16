@@ -62,6 +62,24 @@ Once you have identified which test is failing, you often want to run that test 
 
 **Remember to revert your `fit()` and `fdescribe()` changes before committing!**
 
+Once you've specified which tests you want to run, you should make sure you can still reproduce the bug you are investigating. Some bugs are caused by how tests relate to each other, so in these cases, you won't be able to reproduce the bug by running the failing test in isolation. To see how this might happen, consider the following test code:
+
+```js
+describe('oppia', () => {
+  var test = 2;
+
+  it('should do something', () => {
+    test = 3;
+  });
+
+  it('should do something else', () => {
+    expect(test).toBe(2);
+  });
+});
+```
+
+These tests will fail if `should do something` runs before `should do something else`, but not if the tests run in the reverse order. Our frontend tests run in a non-deterministic order, so these kinds of problems generally appear as flakes. In other words, these tests will sometimes pass but fail other times, even if the underlying code is the same.
+
 ## Verbose mode
 
 By default, we suppress log output from the tests to the terminal when running the frontend tests. This keeps the test output clean so it's easy to find which tests failed. However, this output can be useful for debugging. For example, if you add `console.log()` or `console.error()` statements to your tests for debugging, the output from those statements will be suppressed by default. To view this output, pass `--verbose` when you run the frontend tests:
@@ -96,3 +114,5 @@ For example, to run the tests 20 times, you could do this:
 ```yaml
 run: for run in {1..20}; do PYTHONIOENCODING=utf-8 python -m scripts.run_frontend_tests --run_minified_tests --skip_install --check_coverage; done
 ```
+
+**To limit the load on oppia/oppia CI runners, please only run tests repeatedly on PRs that are opened against branches on your own fork.** For example, you will probably want to open a PR to merge changes from your feature branch to your fork's develop branch, not the oppia/oppia develop branch.
