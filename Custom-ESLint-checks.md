@@ -31,7 +31,7 @@ Linters operate on the code as text, so you can write a lint rule that bans a te
 
 If you are interested in computability theory, the technical description for this problem is that predicting a program's behavior is an undecidable problem. Look up the halting problem if you want to learn more.
 
-**If you want to prevent code that behaves a certain way, any linter you write must miss some code that performs the undesired behavior, raise an error on benign code, or both.**
+Whenever you are creating a new lint rule, consider whether you are trying to prohibit a textual or a behavioral property. If you want to prohibit a textual property, then your task is easy--just write a lint rule that perfectly blocks the property. On the other hand, if you want to prohibit a behavior, then you'll need to first decide on textual properties that you can prohibit to approximately prohibit the behavior. For example, if you want to stop programs from printing `Hello, world!`, it's approximately equivalent to prohibit literal `Hello, world!` strings. Then, write your lint rule to perfectly prohibit those textual properties. **Note that since your textual properties will be an imperfect translation of the behavioral properties you want to prohibit, your lint rule will miss some code that performs the banned behavior, will flag some code that doesn't actually perform the banned behavior, or both.** That's expected given the limits of linters.
 
 ## Write rules
 
@@ -92,7 +92,7 @@ If you click on the two `Hello, world!` strings, the associated parts of the AST
 }
 ```
 
-Note that the numbers will be different since they specify the location of the node in the file.
+Note that the numbers you see may be different since they specify the location of the node in the file.
 
 #### Design the rule
 
@@ -175,7 +175,7 @@ module.exports = {
 
 First, consider the `meta` key at the top of the exported object. The associated object contains the rule's metadata. Under `docs` we describe the rule, and under `messages` we list the error messages that this rule can raise. ESLint supports rules that suggest fixes, but since we can't automatically fix a `Hello, world!` usage, we set `fixable` to `null`. When writing your rule you should include all of these keys, but replace the values as needed to describe your rule.
 
-Next, consider the `create` key, which is required for ESLint rules. This key maps to the function we wrote in AST Explorer. However, notice that the values passed to `context.report()` have changed. Instead of specifying the error message directly like before, we now provide a `messageId` key that matches one of the keys under `meta.messages`. Now when we cal `context.report`, the user will be shown the `helloWorld` message from `meta.messages`. You should use the message ID structure when writing your rules.
+Next, consider the `create` key, which is required for ESLint rules. This key maps to the function we wrote in AST Explorer. However, notice that the values passed to `context.report()` have changed. Instead of specifying the error message directly like before, we now provide a `messageId` key that matches one of the keys under `meta.messages`. Now when we call `context.report`, the user will be shown the `helloWorld` message from `meta.messages`. You should use the message ID structure when writing your rules.
 
 We also need to add our rule to `.eslintrc`. Add `"oppia/hello-world": "error",` under the top-level `rules` key.
 
