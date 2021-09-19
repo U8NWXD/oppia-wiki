@@ -1,4 +1,23 @@
+## Table of contents
+
+* [Introduction](#introduction)
+* [Interpret log output](#interpret-log-output)
+* [Find tests](#find-tests)
+* [Run tests in isolation](#run-tests-in-isolation)
+* [Increase verbosity](#increase-verbosity)
+* [Use the Python debugger](#use-the-python-debugger)
+  * [Step 1: Insert break points](#step-1-insert-break-points)
+  * [Step 2: Run test with unittest](#step-2-run-test-with-unittest)
+  * [Step 3: PDB commands](#step-3-pdb-commands)
+
 ## Introduction
+
+When your backend tests fail, the strategies below can help you figure out how to fix them. We recommend following the following workflow:
+
+1. [Look at the log output](#interpret-log-output) to understand what it means.
+2. [Find the test that failed](#find-tests) and examine its code.
+3. [Run the failing test in isolation](#run-tests-in-isolation) so that you can iterate more quickly.
+4. Use [print statements](#increase-verbosity) and/or [the Python debugger](#use-the-python-debugger) to investigate further.
 
 ## Interpret log output
 
@@ -24,7 +43,7 @@ This is the part of the log that you should pay attention to. It tells you which
 * Next is the traceback. This shows you the state of the stack when the error was raised. In this example:
 
   * The `AssertionError` was raised by line 1306 of `test_utils.py` in the `assertRaisesRegexp()` function.
-  * That `assertRaisesRegexp()` function was called on line 158 of `jobs_manager_test.py` in the `test_failed_api_call_logs_the_exception` function. Since this is the function defining our test, it's the end of the trace.
+  * That `assertRaisesRegexp()` function was called on line 158 of `jobs_manager_test.py` in the `test_failed_api_call_logs_the_exception()` function. Since this is the function defining our test, it's the end of the trace.
 
 * Lastly, the line starting with `AssertionError` describes what caused the test to fail. In this case, it's because we expected an exception to be raised, but that didn't happen.
 
@@ -42,13 +61,13 @@ This means that the full dotted name of the failing test function is:
 jobs.jobs_manager_test.RefreshStateOfBeamJobRunModelTests.test_failed_api_call_logs_the_exception
 ```
 
-In Python, the first part of a dotted name maps onto a file path. For instance, the `jobs` at the start of the name refers to the `jobs/` folder at the root of the repository. Inside that folder is `jobs_manager_test.py`, which matches the `jobs_manager_test` part of the dotted name. (Notice that the `.py` extension of the file name disappeared.)
+In Python, the first part of a dotted name describes a file path. In this case, the `jobs` at the start of the name refers to the `jobs/` folder at the root of the repository. Inside that folder is `jobs_manager_test.py`, which matches the `jobs_manager_test` part of the dotted name. (Notice that the `.py` extension of the file name disappeared.)
 
 Now that we've reached a file, the rest of the dotted name refers to Python attributes. The `jobs_manager_test.py` file defines the `RefreshStateOfBeamJobRunModelTests` class, which has a `test_failed_api_call_logs_the_exception` method. This is the method that defines our test!
 
 ## Run tests in isolation
 
-When you know which test is causing you problems, running it in isolation can help you debug. For one thing, the tests will run much faster if you only run a few in isolation. For another thing, the console output from the test run will be much easier to understand when only a few tests are running.
+When you know which test is causing you problems, running it in isolation can help you debug. For one thing, the tests will run much faster if you only run a few in isolation. Further, the console output from the test run will be much easier to understand.
 
 To run a test in isolation, you can use the `--test_target` option:
 
@@ -56,7 +75,7 @@ To run a test in isolation, you can use the `--test_target` option:
 python -m scripts.run_backend_tests --test_target jobs.jobs_manager_test.RefreshStateOfBeamJobRunModelTests.test_failed_api_call_logs_the_exception
 ```
 
-If you wanted to run all the tests defined by the `RefreshStateOfBeamJobRunModelTests`, you can do that too. Just shorten the dotted name to end at the class:
+If you wanted to run all the tests defined by the `RefreshStateOfBeamJobRunModelTests`, you could do that too. Just shorten the dotted name to end at the class:
 
 ```console
 python -m scripts.run_backend_tests --test_target jobs.jobs_manager_test.RefreshStateOfBeamJobRunModelTests
@@ -72,7 +91,7 @@ python -m scripts.run_backend_tests --test_path jobs
 
 ## Increase verbosity
 
-Normally, we suppress any console output from passing tests so that even if you add print statements for debugging, you'll only see a success message:
+Normally, we suppress any console output from passing tests, so even if you add print statements for debugging, you'll only see a success message:
 
 ```text
 [datastore] Sep 19, 2021 3:30:21 PM io.gapi.emulators.grpc.GrpcServer$3 operationComplete
@@ -192,7 +211,7 @@ Notice that the `HELLO THERE` output appears above the summary of tests. Also no
 
 The Python debugger, or [pdb](https://docs.python.org/3/library/pdb.html), is very helpful for debugging tests. It is very similar to [GDB](https://www.gnu.org/software/gdb/), the GNU Debugger, in case you are familiar with GDB already.
 
-With pdb, you set break points to tell the debugger where to pause when executing your code. When the debugger pauses, you are dropped into a debugging shell where you can execute any normal Python commands. The shell reflects the state of your program at the break point, so you can print out variable values, call functions, and even change variables in your program.
+With pdb, you set break points to tell the debugger where to pause when executing your code. When the debugger pauses, you are dropped into a debugging shell where you can execute normal Python statements or pdb commands. The shell reflects the state of your program at the break point, so you can print out variable values, call functions, and even change variables in your program.
 
 ### Step 1: Insert break points
 
@@ -227,7 +246,7 @@ Once you are in a debugging shell, you can also use any of the following pdb com
 * `pp [expression]`: Evaluate `[expression]` and pretty-print it.
 * `q(uit)`: Abort the program and quit the debugger.
 
-These are just a few of the most useful commands. See the [pdb documentation](https://docs.python.org/3/library/pdb.html#debugger-commands) for more information.
+The parentheses indicate optional parts of the commands. For example, you can use the `where` command either by typing `w` or by typing `where`. These are just a few of the most useful commands. See the [pdb documentation](https://docs.python.org/3/library/pdb.html#debugger-commands) for more information.
 
 **Be careful when executing Python code directly in the debugging shell. If your commands look like a PDB command, the PDB command may be executed instead.**
 
