@@ -74,36 +74,12 @@ When you start a development server, you execute `scripts/start.py`. This file d
 
 #### Python packages
 
-Whenever `install_third_party_libs.py` is executed or imported, it installs the following Python packages:
+Whenever `install_third_party_libs.py` is executed or imported, it installs some Python packages that are needed early by the installation process. Some are installed to `oppia_tools/`, and other are installed to `third_party/python_libs/`.
 
-* pyyaml: Installed to `oppia_tools/`
-* future: Installed to `third_party/python_libs`
-* six: Installed to `third_party/python_libs`
-* certifi: Installed to `oppia_tools/`
+When `install_third_party_libs.main()` runs, it installs additional Python packages:
 
-When `install_third_party_libs.main()` runs, it installs the following additional Python packages:
-
-* Installed "globally" using pip (in practice these are installed into your virtual environment):
-
-  * enum34
-  * protobuf
-  * grpcio
-
-* Installed to `oppia_tools/`:
-
-  * coverage
-  * pylint
-  * Pillow
-  * pylint-quotes
-  * webtest
-  * isort
-  * pycodestyle
-  * esprima
-  * PyGithub
-  * protobuf
-  * psutil
-  * pip-tools
-  * setuptools
+* Packages that need to be available on the system `PATH` are installed "globally" using pip (in practice these are installed into your virtual environment).
+* Other packages are installed to `oppia_tools/`.
 
 All of these Python packages are listed directly in the `install_third_party_libs.py` file.
 
@@ -157,6 +133,8 @@ Under each of these keys is a collection of key-value pairs where each key is a 
 
   * `tarRootDirPrefix`: Same as `rootDirPrefix` for zip files.
   * `targetDirPrefix`: Same as `targetDirPrefix` for zip files.
+
+New dependencies should not be added to `manifest.json`, as this method of installing dependencies is deprecated.
 
 #### Redis and Elasticsearch
 
