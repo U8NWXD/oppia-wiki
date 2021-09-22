@@ -78,7 +78,9 @@ describe('oppia', () => {
 });
 ```
 
-These tests will fail if `should do something` runs before `should do something else`, but not if the tests run in the reverse order. Our frontend tests run in a non-deterministic order, so these kinds of problems generally appear as flakes. In other words, these tests will sometimes pass but fail other times, even if the underlying code is the same.
+These tests will fail if `should do something` runs before `should do something else`, but not if the tests run in the reverse order. Our frontend tests run in a non-deterministic order, so these kinds of problems generally appear as intermittent failures. In other words, these tests will sometimes pass but fail other times, even if the underlying code is the same.
+
+The tests should work correctly regardless of what order they run in. If you find some tests where it matters what order the tests run in, those tests are incorrect, so you should fix them just like you would fix a failing test.
 
 ## Verbose mode
 
@@ -97,11 +99,11 @@ Note that depending on your situation, `console.log()` or `console.error()` migh
 
 ## Find stack elements
 
-While you can't use the line numbers in a stack trace to find the associated code, you can sometimes use the function or class names. For example, in the example above we could try searching the codebase for `_maybeConvertBody`. The success of this technique depends on how frequently the string you search for occurs in the codebase. If the string occurs a lot, you will have a hard time figuring out which occurrence is the one you are interested in.
+While you can't use the line numbers in a stack trace to find the associated code, you can sometimes use the function or class names. For example, in the example above we could try searching the codebase for functions named as `_maybeConvertBody`. The success of this technique depends on how frequently we define functions with the name you search for. For example, we define lots of `constructor()` functions, so if you search for `constructor()`, you'll have a hard time figuring out which function is the one appearing in the stack trace. You will have better luck searching for a function whose name is less common.
 
 ## Run tests repeatedly on CI
 
-Especially when debugging flaky frontend tests, you may want to set your tests to run many times on CI. For example, you might add some debugging code and then rerun your frontend tests on CI until the flake occurs. You can update the frontend test CI workflow to enable this. In `.github/workflows/frontend_tests.yml`, change the step that runs the tests to:
+Especially when debugging frontend tests that only fail intermittently, you may want to set your tests to run many times on CI. For example, you might add some debugging code and then rerun your frontend tests on CI until the failure occurs. You can update the frontend test CI workflow to enable this. In `.github/workflows/frontend_tests.yml`, change the step that runs the tests to:
 
 ```yaml
 run: for run in {1..N}; do {{the normal command to run the tests}}`; done
