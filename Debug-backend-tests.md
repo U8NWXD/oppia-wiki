@@ -12,7 +12,7 @@
 
 ## Introduction
 
-When your backend tests fail, the strategies below can help you figure out how to fix them. We recommend following the following workflow:
+When your backend tests fail, the strategies below can help you figure out how to fix them. We recommend the following workflow:
 
 1. [Look at the log output](#interpret-log-output) to understand what it means.
 2. [Find the test that failed](#find-tests) and examine its code.
