@@ -26,7 +26,7 @@ Oppia has some development dependencies that the user has to manage themselves. 
 * git
 * Tools commonly found on Linux and MacOS systems like bash
 
-In our setup instructions, we walk developers through installing these.
+In our [[setup instructions|Installing-Oppia]], we walk developers through installing these.
 
 ## Managed dependencies
 
@@ -134,7 +134,7 @@ Under each of these keys is a collection of key-value pairs where each key is a 
   * `tarRootDirPrefix`: Same as `rootDirPrefix` for zip files.
   * `targetDirPrefix`: Same as `targetDirPrefix` for zip files.
 
-New dependencies should not be added to `manifest.json`, as this method of installing dependencies is deprecated.
+New dependencies should not be added to `manifest.json`, as this method of installing dependencies is deprecated. Instead, you should use the [node modules](#node-modules) method.
 
 #### Redis and Elasticsearch
 
