@@ -49,7 +49,7 @@ This is the part of the log that you should pay attention to. It tells you which
 
 ## Find tests
 
-You usually want to look at the full code of the failing test to better understand what could have gone wrong. Unittest makes this really easy: the description of which test failed also tells us exactly where to find it. In the example above, we saw this line:
+You usually want to look at the full code of the failing test to better understand what could have gone wrong. Unittest, the Python testing framework we use, makes this really easy: the description of which test failed also tells us exactly where to find it. In the example above, we saw this line:
 
 ```text
 FAIL: test_failed_api_call_logs_the_exception (jobs.jobs_manager_test.RefreshStateOfBeamJobRunModelTests)
@@ -149,29 +149,6 @@ If a test fails, you'll always see its console output:
 [datastore] INFO: Adding handler(s) to newly registered Channel.
 [datastore] Sep 19, 2021 3:34:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 [datastore] INFO: Detected HTTP/2 connection.
-Error 1
-HELLO THERE
-test_is_oppia_server_already_running_when_ports_closed (scripts.run_e2e_tests_test.RunE2ETestsTests) ... FAIL
-
-======================================================================
-FAIL: test_is_oppia_server_already_running_when_ports_closed (scripts.run_e2e_tests_test.RunE2ETestsTests)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/oppia/scripts/run_e2e_tests_test.py", line 70, in test_is_oppia_server_already_running_when_ports_closed
-    raise AssertionError('hi')
-AssertionError: hi
-
-----------------------------------------------------------------------
-Ran 1 test in 1.078s
-
-FAILED (failures=1)
-Traceback (most recent call last):
-  File "/oppia/core/tests/gae_suite.py", line 126, in <module>
-    main()
-  File "/oppia/core/tests/gae_suite.py", line 122, in main
-    result.testsRun, len(result.errors), len(result.failures)))
-Exception: Test suite failed: 1 tests run, 0 errors, 1 failures.
-
 19:34:42 ERROR scripts.run_e2e_tests_test.RunE2ETestsTests.test_is_oppia_server_already_running_when_ports_closed: 21.1 secs
 Error 1
 HELLO THERE
@@ -205,7 +182,7 @@ Stopping Cloud Datastore Emulator(name="python2.7", pid=38015)...
 ...
 ```
 
-Notice that the `HELLO THERE` output appears above the summary of tests. Also notice that it appears twice. This is a bug that will soon be fixed by [#13886](https://github.com/oppia/oppia/pull/13886).
+Notice that the `HELLO THERE` output appears above the summary of tests.
 
 ## Use the Python debugger
 
