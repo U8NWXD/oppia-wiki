@@ -28,6 +28,7 @@
     * [[Apache Beam Jobs|Apache-beam-jobs]]
     * [[Tips for analyzing the codebase|Analyzing-the-codebase]]
     * [[Tour of Oppia webpages|How-to-access-Oppia-webpages]]
+    * [[How to find the right code to change|Find-the-right-code-to-change]]
     * [User documentation](https://oppia.github.io/)
   * [[List of current projects|https://github.com/oppia/oppia/projects]]
   * **[[Good first issues|https://github.com/oppia/oppia/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22]]**
@@ -40,7 +41,7 @@
     * [[Revert and Regression Policy|Revert-and-Regression-Policy]]
     * [[If your build fails...|If-Your-Build-Fails]]
       * [[If your presubmit checks fail|If-your-presubmit-check-fails]]
-      * [[Interpreting CircleCI Results | Interpreting CircleCI Results]]
+      * [[Interpreting CircleCI Results|Interpreting-CircleCI-Results]]
       * Debugging
         * [[Debugging Docs|Debugging-Docs]]
         * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
@@ -91,6 +92,7 @@
     * [[Adding static assets|Adding-static-assets]]
     * [[Wipeout Implementation|Wipeout-Implementation]]
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
+    * [[How to handle merging of change lists for exploration properties|Guide-to-handle-merging-of-change-lists-for-exploration-properties]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
