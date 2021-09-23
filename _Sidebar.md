@@ -18,6 +18,7 @@
   * [[Tips for common IDEs|Tips-for-common-IDEs]]
   * [[Firebase authentication|Firebase-authentication]]
     * [[Creating an Administrator account|https://github.com/oppia/oppia/wiki/Firebase-authentication#creating-an-administrator-account]]
+  * [[Make a pull request|Make-a-pull-request]]
   * [[Pull requests at Oppia|Pull-requests-at-Oppia]]
   * [[How to get help|Get-help]]
   * [[Learning resources for developers|Learning-Resources]]
@@ -44,6 +45,7 @@
         * [[Debugging Docs|Debugging-Docs]]
         * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
         * [[Debugging backend tests|Debug-backend-tests]]
+        * [[Debugging frontend tests|Debug-frontend-tests]]
         * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
