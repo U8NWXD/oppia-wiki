@@ -6,7 +6,7 @@
 Angular is an app-design framework and development platform for creating efficient and sophisticated apps.
 
 Currently, the project is in a hybrid state where we have both Angular and AngularJS. This makes our application slow and bulky. The codebase has a duplication of libraries since many of the AngularJS libraries are not compatible with Angular. This project aims to migrate the entire codebase to Angular. The benefits of doing this are:
-* Improved Developer Experience: 
+* Improved Developer Experience:
   * Developing when the application is a hybrid state opens us to a whole host of complicated errors which are in some cases not possible to be solved.
   * Angular is being actively maintained and comes out with a lot of new features that aid in developing new features.
 * Improved User Experience:
@@ -27,7 +27,7 @@ The [angular migration tracker](https://docs.google.com/spreadsheets/d/1L9Udn-XT
 ## Implementation details to migrate services
 
 1. Import following dependencies
-  
+
    ```
    import { downgradeInjectable } from '@angular/upgrade/static';
    import { Injectable } from '@angular/core';
@@ -84,18 +84,18 @@ The [angular migration tracker](https://docs.google.com/spreadsheets/d/1L9Udn-XT
    ```
    The `dataDict` is not required in Angular services. You can directly use the `response` variable.
 
-   (b) Search in the  codebase where the service is used to obtain results from get requests and change 
+   (b) Search in the  codebase where the service is used to obtain results from get requests and change
    `response.data` to `response`.
 
    (c) Return the `errorCallback` (the reject function) with `errorResponse.error.error` as follows:
-  
+
    ```
    (errorResponse) => {
      errorCallback(errorResponse.error.error);
    }
    ```
 
-   (d) Add `$rootScope.apply()` in the controller/directive that is resolving the http request similar to how it is 
+   (d) Add `$rootScope.apply()` in the controller/directive that is resolving the http request similar to how it is
    added [here](https://github.com/oppia/oppia/pull/8427/files#diff-ecf6cefd0707bcbafeb6a0b4009aa60cR78). You can find this by doing a simple search of the function name in service where get request is handled.
       To do this, make a global search in the code-base for the function. eg. if the service is `SkillBackendApiService` and the function in which the call is made is `fetchSkill`. The search the code-base for `SkillBackendApiService.fetchSkill`. You will find instances like the following:
    ```
@@ -105,7 +105,7 @@ The [angular migration tracker](https://docs.google.com/spreadsheets/d/1L9Udn-XT
        $rootScope.$applyAsync() //add here
     }, (...) => {
        ...
-       //reject function	
+       //reject function
     }
    );
    ```
@@ -125,17 +125,17 @@ The [angular migration tracker](https://docs.google.com/spreadsheets/d/1L9Udn-XT
       (response) => {...;
    ```
 
-   (b) Add `$rootScope.apply()` in the controller/directive that is resolving the HTTP request similar to how it is 
+   (b) Add `$rootScope.apply()` in the controller/directive that is resolving the HTTP request similar to how it is
    added [here](https://github.com/oppia/oppia/pull/8427/files#diff-ecf6cefd0707bcbafeb6a0b4009aa60cR78). You can find this by doing a simple search of the function name in service where get request is handled.
 
 8. If you are migrating a service that is named as `.*-backend-api.service.ts` then please return a domain object and not a dict in the `successCallback` function. For example take a look at this change [PR #9505](https://github.com/oppia/oppia/pull/9505/files#diff-05de50229b44c01bdaeac172928b514dR64), where the domain object is created via an object factory and this is sent ahead. You also need to change the piece of code where this response is used because the response is now a domain object instead of a dict. If there is no specific object factory to alter the response to a domain object, create one similar to how it is done in this [change](https://github.com/oppia/oppia/pull/9570/files#diff-09e3c3999c18dabdf2ddedf6e3e250f8R1).
-Topic Domain Objects need to contain properties that are being read from the backend. So, the Topic Domain Object does not depend on the service being migrated, but the expected return value of the function. For example, in `SkillBackendApiService`, the function `fetchSkill` will clearly return a `Skill` object. Note that `SkillObjectFactory.ts` already exists, so we don't need to create it. But if there is no corresponding Object Factory, you need to create one similar to how `SkillObjectFactory` is created. So, we take the response from the backend and instead of `successCallback(response)`, we resolve `successCallback(SkillObjectFactory.createFromBackendDict(response))`. This passes the frontend `Skill` object to functions that call `fetchSkill` when the promise gets resolved.  
-However, there is more to it. Since before you migrated the file, the calling functions were expecting a backend dict object, the references need to be changed as well.  
+Topic Domain Objects need to contain properties that are being read from the backend. So, the Topic Domain Object does not depend on the service being migrated, but the expected return value of the function. For example, in `SkillBackendApiService`, the function `fetchSkill` will clearly return a `Skill` object. Note that `SkillObjectFactory.ts` already exists, so we don't need to create it. But if there is no corresponding Object Factory, you need to create one similar to how `SkillObjectFactory` is created. So, we take the response from the backend and instead of `successCallback(response)`, we resolve `successCallback(SkillObjectFactory.createFromBackendDict(response))`. This passes the frontend `Skill` object to functions that call `fetchSkill` when the promise gets resolved.
+However, there is more to it. Since before you migrated the file, the calling functions were expecting a backend dict object, the references need to be changed as well.
 To do this, do a global search in the code-base for the function, eg. `SkillBackendApiService.fetchSkill` and refactor the code inside the resolve function to reflect that the parameter is now a `Skill` object and not a backend dict object.
 Please note that interfaces/properties in Object Factories and the `.*-backend-api.service.ts` could be in snake_case, please surround them with single quotes as in `'some_property'`. Except for these two categories, all the properties inside all other files should be camel case: `someProperty`.
 
-9. For functions in the service, add type definitions for all the arguments as well as return values. 
-**Note:** For complex types or some type that is being used over functions or files we can declare interface or export interface (if it has to be imported over files). For example in the file [rating-computation.service.ts](https://github.com/oppia/oppia/blob/develop/core/templates/components/ratings/rating-computation/rating-computation.service.ts) we have an export interface to declare the type RatingFrequencies. In the same file, we also have a function named static, which is used by the functions of the class itself. 
+9. For functions in the service, add type definitions for all the arguments as well as return values.
+**Note:** For complex types or some type that is being used over functions or files we can declare interface or export interface (if it has to be imported over files). For example in the file [rating-computation.service.ts](https://github.com/oppia/oppia/blob/develop/core/templates/components/ratings/rating-computation/rating-computation.service.ts) we have an export interface to declare the type RatingFrequencies. In the same file, we also have a function named static, which is used by the functions of the class itself.
 
 10. For functions which are private to the service (used as helper functions) add the private keyword for those functions.
 
@@ -182,7 +182,7 @@ Please note that interfaces/properties in Object Factories and the `.*-backend-a
    });
    ```
 
-   (a) If your spec file needs any pipe (filters in angular), import them and add it to the providers in the 
+   (a) If your spec file needs any pipe (filters in angular), import them and add it to the providers in the
    TestBed configuration
    ```
    beforeEach(() => {
@@ -192,7 +192,7 @@ Please note that interfaces/properties in Object Factories and the `.*-backend-a
      instance = TestBed.get(ServiceName);
    ```
 
-   (b) If your spec file tests service that makes HTTP requests, you need to make a HttpClientTestingModule and 
+   (b) If your spec file tests service that makes HTTP requests, you need to make a HttpClientTestingModule and
    add afterEach statement to check there are no pending requests after each test.
    ```
    beforeEach(() => {
@@ -350,7 +350,7 @@ export class ConceptCardComponent implements OnInit {
     private conceptCardBackendApiService: ConceptCardBackendApiService,
     private conceptCardObjectFactory: ConceptCardObjectFactory
   ) {}
-  
+
   ngOnInit(): void {
 	  ...
   }
@@ -382,7 +382,7 @@ will change to
 ```
   layoutAlignType: '<',
 ```
-changes to 
+changes to
 ```
   @Input() layoutAlignType: string;
 ```
@@ -394,24 +394,24 @@ When you get the results, in each and every case you will find something like `l
 
 **Otherwise, change it to `[layoutAlignType]=layoutAlign`.**
 
-**If you find something like `layout-align-type="center center"`, leave it as it is, do not change it. The `[]` syntax can only be used with variables. If the attribute is not surrounded by `[]` and the attribute value is surrounded by double quotes, that means the passed value is a string.** 
+**If you find something like `layout-align-type="center center"`, leave it as it is, do not change it. The `[]` syntax can only be used with variables. If the attribute is not surrounded by `[]` and the attribute value is surrounded by double quotes, that means the passed value is a string.**
 
 ##### The changes required for `'&'`:
 
 You will find `'&'` with a syntax that looks like `getSkillIds: '&skillIds',`. This requires some significant changes so please follow the next steps very carefully:
 
-First, change the 
+First, change the
 ```
 getSkillIds: '&skillIds',
-``` 
-to 
+```
+to
 ```
 @Input() skillIds: Array<string>,
 ```
 Note: If the syntax looks like `skillIds: '&'`, then just change it to:
 ```
 @Input() skillIds: Array<string>,
-``` 
+```
 
 (Array<string> is an example. please be aware of the type used in your case).
 Then change all cases of `ctrl.getSkillIds()` to `this.skillIds`. (Notice the parenthesis were also removed).
@@ -420,20 +420,20 @@ Take a look at the directive name (in this case it is conceptCard). Now do a glo
 When you get the results, in each and every case you will find something like `skill-ids=skillIds`.
 
 **If the occurence is in an angularjs template** (i.e. the corresponding .ts file for the html has not been migrated), change that to `[skill-ids]=skillIds`.
-(Notice in the component it was `skillIds` but in HTML it is [skill-ids]. The camelCase to kebab-case change is required when the template is a template of an angularjs component/directive). 
+(Notice in the component it was `skillIds` but in HTML it is [skill-ids]. The camelCase to kebab-case change is required when the template is a template of an angularjs component/directive).
 
 **Otherwise, change it to `[skillIds]=skillIds`.**
 
-**Note: If you find something like `skill-type="supersonic"`, leave it as it is, do not change it. The `[]` syntax can only be used with variables. If the attribute is not surrounded by `[]` and the attribute value is surrounded by double quotes, that means the passed value is a string.** 
+**Note: If you find something like `skill-type="supersonic"`, leave it as it is, do not change it. The `[]` syntax can only be used with variables. If the attribute is not surrounded by `[]` and the attribute value is surrounded by double quotes, that means the passed value is a string.**
 
 Understanding binding interpolation:
 1.  Binding is a way to share information between different directives using variables that pass values. Variables are passed via selectors of other directives present in the HTML file of the directive we are working on
-    
+
 2.  Interpolation is simply a way to make sure we pass variables and not values in our HTML. Eg. How do we know if in `<dir-name abc=”xyz”>`, `xyz` is a string or a variable? So for variables, we use interpolation -> {{ }}. Hence, for variables, we use two methods:
 	a. `<dir-name [abc]="xyz">` The `[]` assumes that the string is a variable.
 	b. `<dir-name abc="{{ xyz }}">`.
 	We use method `a` in all cases except if the variable is interspersed with other text. eg. `<dir-name abc="The boy has {{ count }} apples">`
-    
+
 3.  Do not use interpolation with properties marked with [prop], or events. These automatically assume that a variable is passed
 
 ##### The syntax for `=`:
@@ -573,7 +573,7 @@ It very simple, anything with `ctrl.` becomes `this.`.
 For example:
 ```
 ctrl.isLastWorkedExample = function() {
-  return ctrl.numberOfWorkedExamplesShown ===  
+  return ctrl.numberOfWorkedExamplesShown ===
     ctrl.currentConceptCard.getWorkedExamples().length;
 };
 ```
@@ -586,7 +586,7 @@ isLastWorkedExample(): boolean {
 }
 ```
 **Note the dependency injections also get the `this.` prefix**
-in the controller.$OnInit function we have 
+in the controller.$OnInit function we have
 ```
 ConceptCardBackendApiService.loadConceptCards(
               ctrl.getSkillIds()
@@ -606,7 +606,7 @@ this.conceptCardBackendApiService.loadConceptCards(
        {component: ConceptCardComponent}));
    ```
 
-#### 9. Change the name of the file from `*directive|controller.ts` to `*component.ts`. Import this component into the corresponding module page and add it in the `declarations` and `entryComponents`. 
+#### 9. Change the name of the file from `*directive|controller.ts` to `*component.ts`. Import this component into the corresponding module page and add it in the `declarations` and `entryComponents`.
 You can find the corresponding module page as follows:
 For directives in the pages folder, they will be in the same subfolder as `*.module.ts`
 For directives in the components folder, the module page is `shared-component.module.ts`
@@ -693,11 +693,11 @@ Modified: https://github.com/oppia/oppia/pull/9957/files#diff-45cbfaec92adcc7097
    python -m scripts.run_frontend_tests
    ```
 
-   Note: If your migrated service involves HTTP calls and when you run the frontend test your frontend test fail for some other service (One error that might pop is `Error: No pending request to flush !`) then go ahead and migrate the failing tests for the other service too. You might have 
-   guessed that in such case we have migrated a service which is now making HTTP calls in Angular using HttpClient 
-   but some other service that is issuing HTTP requests to this service is still testing by making calls via 
-   AngularJS HTTP module (using $httpBackend). Go through this [PR #9029](https://github.com/oppia/oppia/pull/9029/files), 
-   wherein `question-creation.service` and `question-backend-api.service` are migrated to Angular and we went 
+   Note: If your migrated service involves HTTP calls and when you run the frontend test your frontend test fail for some other service (One error that might pop is `Error: No pending request to flush !`) then go ahead and migrate the failing tests for the other service too. You might have
+   guessed that in such case we have migrated a service which is now making HTTP calls in Angular using HttpClient
+   but some other service that is issuing HTTP requests to this service is still testing by making calls via
+   AngularJS HTTP module (using $httpBackend). Go through this [PR #9029](https://github.com/oppia/oppia/pull/9029/files),
+   wherein `question-creation.service` and `question-backend-api.service` are migrated to Angular and we went
    ahead to change relevant tests in `questions-list.service.spec`.
 
 2. Ensure there are no typescript error
@@ -720,7 +720,7 @@ Modified: https://github.com/oppia/oppia/pull/9957/files#diff-45cbfaec92adcc7097
 The following imports will no longer be required.
 
 ```
-import { downgradeInjectable } from '@angular/upgrade/static';	
+import { downgradeInjectable } from '@angular/upgrade/static';
 import { Injectable } from '@angular/core';
 ```
 
@@ -874,8 +874,8 @@ Each *-object.factory.ts will have its corresponding spec file name *-object.fac
 
 1. Error like this:
  ```
- 'some-selector' is not a known element: 
- 1. If 'some-selector' is an Angular component, then verify that it is part of this module. 
+ 'some-selector' is not a known element:
+ 1. If 'some-selector' is an Angular component, then verify that it is part of this module.
  2. 2. If 'some-selector' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
  ```
  This can occur for a couple of reasons:
@@ -886,7 +886,7 @@ Each *-object.factory.ts will have its corresponding spec file name *-object.fac
 
 **Why do we need @Injectable decorator?**
 
-The first line is needed since our app is in hybrid state i.e half angular and half AngularJS and we need to downgrade each of our services to AngularJS so that our application runs smoothly. The second line is needed as a decorator in every service. To define a class as a service, Angular uses the @Injectable() decorator to provide the metadata that allows Angular to inject it into a component as a dependency. 
+The first line is needed since our app is in hybrid state i.e half angular and half AngularJS and we need to downgrade each of our services to AngularJS so that our application runs smoothly. The second line is needed as a decorator in every service. To define a class as a service, Angular uses the @Injectable() decorator to provide the metadata that allows Angular to inject it into a component as a dependency.
 For any class that is to be used as service, we need to add the following decorator for the above reason.
 When we provide the service at the root level, Angular creates a single, shared instance of the service and injects it into any class that asks for it. Registering the provider in the @Injectable() metadata also allows Angular to optimize an app by removing the service from the compiled app if it isn't used. There are two other methods for registering a service but we’ll go with the one described above.
 
@@ -915,42 +915,70 @@ When a service has a dependent service, DI (dependency injector) finds or create
 
 **Some Common Migration Queries**
 1.  What are Promises? - Promises are exactly what they sound like. In the simplest words, they are a promise to the developer that things will work, what to do when they work, and also when they don’t work.
-    
+
 	 They can have three states:
-	    
+
 
 	1.  Resolved: The caller of the promise has executed as expected.
-	    
+
 	2.  Rejected: The caller of the promise didn’t execute as expected
-	    
+
 	3.  Pending: The caller is yet to be executed
-    
+
 	So,  then what exactly are the resolve and reject that we pass? They are simply the function calls that we pass. Eg. successCallback(abcd) will give parameter abcd to the resolve function when the promise caller is called.
-	    
+
 	How is it structured? A promise is called using a .then() statement after the function. Note that you cannot put this after any function, only one that returns a promise. Then functions follow. If there is only one function, it is the resolve function. If there are two functions, they are called resolve and reject respectively. The reject function is used mostly for error handling and unexpected behaviour
-    
+
 	  For more reading check out the [MDN Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)!
-    
+
 
 2. What is `rootScope`? - Angular has scopes. `$scope` is a local scope, which is bound to exactly one controller. It can local properties and functions of the controller. `$rootScope` on the other hand, is the global scope and can be accessed from everywhere.
-    
+
 
 	What is `$rootScope.$applyAsync()` and why do we use it? `$rootScope.$applyAsync` is used to update the global properties and variables so that the new state can be used by the function where it is called. As to why it is not updated automatically, the reason is that the Angular DOM basically runs in cycles, and apply causes the changes to be saved. Mostly this is done explicitly, but in some cases, we have to do it explicitly. This is mentioned in the Angular migration guide. Remember that this function will go in the resolve of the promise! This is because we want the variables to get to their new state in case of expected behaviour.
-    
+
 	For more reference: [Scopes](https://docs.angularjs.org/guide/scope)
-    
+
 
 3. How to assign types in the Angular file?
-    
+
 	Follow a trail. Some are really simple. But they all follow the same pattern. Keep following the variable through different references to see what type to assign. You can even use other references of that variable. Eg. If you wanted to assign a type to a function that returned WindowRef.nativeWindow! I went to window-ref.service file saw that nativeWindow returned the _window object which had a type Window. Just follow trails.
-    
+
 	Other times it might be obvious from the name. Eg SkillList is obviously an array of Skills. However, double-check these!
-    
+
 	The final way is to use a console log statement. This is good for complicated data types. Run the python development server and log the value where you get the return. You’ll see something of type Object with certain properties. Global search these properties in the codebase and find out what type it is!
-    
+
 
 4.  What is fakeAsync() and flushMicrotasks() and why do we use it? For this we need to understand why being synchronous is a problem for tests. Compilers don’t compile code line by line and instead push processes into a queue as they come and the resulting processes are pushed once these end. What this means is that a process whose parent was called earlier may be executed after another whose parent was called later due to how much time the parent processes took. To make an asynchronous function synchronous we use fakeAsync combined with flushMicrotasks. FakeAsync creates a fake asynchronous zone wherein you can control process flow. When flushMicrotasks is called, it flushes the task queues, i.e it waits for the processes to leave the queue before proceeding further. So, the tests are consistent!
-    
+
 5.  What are MockServices/FakeServices that are in the codebase? MockServices are basically just used to imitate real services and provide functionality for tests via inorganically made function copies of the service. These are faster but don’t test services so be wary of using them. The reason we use them is that we want to want to test the current service, not the other service, so we just use a small shell to use the functionality we want.
+
+6.  How can I have constants shared across Angular and AngularJS code?
+
+    The Angular 2+ constants file to be named _*.constants.ts_ whereas the AngularJS equivalents of those constants must be in a separate file named _*.constants.ajs.ts_. The constants must be first declared in the Angular constants file and then be declared in the corresponding AngularJS constants file by importing the constants class from the Angular constants file and using that class's properties to declare the AngularJS equivalents. Import the constants class in the module and add it to the `providers` list of the `NgModule`.
+
+    For example: If there is a constant named `SKILL_EDITOR_CONSTANT` that needs to be used in skill editor, then add that constant to the `SkillEditorConstants` class of the file _skill-editor-page.constants.ts_ as such:
+
+    ```js
+    export class SkillEditorPageConstants {
+      ...
+      public static SKILL_EDITOR_CONSTANT = 'constant_value';
+      ...
+    }
+    ```
+
+    Now, add the constant to the AngularJS file as well:
+
+    ```js
+    import { SkillEditorPageConstants } from
+      'pages/skill-editor-page/skill-editor-page.constants.ts';
+
+    ...
+     oppia.constant('SKILL_EDITOR_CONSTANT', SkillEditorPageConstants.SKILL_EDITOR_CONSTANT);
+    ...
+    ```
+
+    And now you can use the constant in both your AngularJS as well as Angular parts of the code!
+
 
 _For any queries related to angular migration, please don't hesitate to reach out to **Srijan Reddy (@srijanreddy98)**._
