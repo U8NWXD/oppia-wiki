@@ -5,13 +5,14 @@
 * [Build modes](#build-modes)
   * [Build mode constants](#build-mode-constants)
   * [Dev mode](#dev-mode)
+  * [Minify only mode](#minify-only-mode)
   * [Prod mode](#prod-mode)
     * [Plain prod mode](#plain-prod-mode)
-    * [Minify only third-party libraries](#minify-only-third-party-libraries)
     * [Maintenance mode](#maintenance-mode)
     * [Deploy mode](#deploy-mode)
-    * [Unused: Deparallelized terser mode](#unused-deparallelized-terser-mode)
+* [Considering build modes when debugging](#considering-build-modes-when-debugging)
 * [Source maps](#source-maps)
+  * [Using source maps](#using-source-maps)
 
 ## Introduction
 
