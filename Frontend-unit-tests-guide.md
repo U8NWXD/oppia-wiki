@@ -18,6 +18,7 @@
     * [`afterAll`](#afterall)
     * [`expect`](#expect)
   * [Good practices](#good-practices)
+    * [Tests should work in any order](#tests-should-work-in-any-order)
     * [Do not test private methods/properties](#do-not-test-private-methodsproperties)
     * [Worry about behavior and not about coverage](#worry-about-behavior-and-not-about-coverage)
     * [Name variables clearly](#name-variables-clearly)
@@ -232,6 +233,26 @@ The `afterAll` function runs after all the tests have finished, but it is almost
 The `expect` function is used to assert a condition in the test. You can check all its methods in the [Jasmine documentation](https://jasmine.github.io/api/edge/matchers.html). [Here's](https://github.com/oppia/oppia/blob/2e60d69d7b/core/templates/pages/exploration-editor-page/services/graph-data.service.spec.ts#L92-L112) a good example of how to use it correctly.
 
 ### Good practices
+
+#### Tests should work in any order
+
+It is possible to write frontend tests that only pass when run in a particular order. Here's an example:
+
+```js
+describe('oppia', () => {
+  var test = 2;
+
+  it('should do something', () => {
+    test = 3;
+  });
+
+  it('should do something else', () => {
+    expect(test).toBe(2);
+  });
+});
+```
+
+This test will pass when `should do something else` runs before `should do something`, but not when the tests run in the opposite order. This is bad! Since Karma runs tests in a non-deterministic order, you should never assume that tests will run in a particular order.
 
 #### Do not test private methods/properties
 
