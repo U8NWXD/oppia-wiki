@@ -276,13 +276,13 @@ _The following notes are thanks to @ashish-patwal. They come with no guarantees,
 
 ### Changes to installation prerequisites
 
-Arch uses pacman as package manager, so the install_prerequisites.sh script is not going to work and all of the prerequisites have to be installed manually using pacman. Just type the following command in the shell (notation: `#` denotes sudo access while `$` denotes normal user access):
+Arch uses pacman as its package manager, so the `install_prerequisites.sh` script is not going to work. Instead, all of the prerequisites have to be installed manually using pacman. Just type the following command in the shell (notation: `#` denotes sudo access while `$` denotes normal user access):
 
 ```console
 # pacman -Sy curl jre8-openjdk python-setuptools git python-pip python-yaml unzip python-matplotlib
 ```
 
-Also, note that pacman doesn't support Google Chrome (which is needed to run frontend and end-to-end tests) in the default package manager. However, you can use the chromium package instead; Chromium is the open-source core of Google Chrome. Install the chromium browser and then create a soft link from the google-chrome command to chromium:
+Also, note that pacman doesn't support Google Chrome (which is needed to run frontend and end-to-end tests) in the default package manager. However, you can use the chromium package instead; chromium is the open-source core of Google Chrome. Install the chromium browser and then create a soft link from the google-chrome command to chromium:
 
 ```console
 # pacman -Sy chromium
@@ -290,15 +290,13 @@ Also, note that pacman doesn't support Google Chrome (which is needed to run fro
 # ln -sf chromium google-chrome
 ```
 
-If you do want to use google chrome instead, you could also use the third-party repository AUR (with the help of yaourt or yay).
-
 ### Changes to the virtual environment setup
 
 On Arch Linux, you should follow these instructions to set up your virtual environment:
 
 1. **Make sure you install the Python build dependencies for your operating system. These are specified [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment). If you don't do this it might lead to problems further on.**
 
-2. Install pyenv (notation: # denotes sudo access while $ denotes normal user access):
+2. Install pyenv (notation: `#` denotes sudo access while `$` denotes normal user access):
 
    ```console
    # pacman -S pyenv
@@ -344,7 +342,7 @@ On Arch Linux, you should follow these instructions to set up your virtual envir
    eval "$(pyenv virtualenv-init -)"
    ```
 
-3. Reload your shell or open a new terminal window to load your updated `.bashrc / .zshrc / config.fish`
+3. Reload your shell or open a new terminal window to load your updated `.bashrc`, `.zshrc`, or `config.fish`
 
 4. Now you can install Python 3.7.10 and the associated pip like this:
 
