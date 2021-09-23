@@ -93,6 +93,7 @@
     * [[Wipeout Implementation|Wipeout-Implementation]]
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
     * [[How to handle merging of change lists for exploration properties|Guide-to-handle-merging-of-change-lists-for-exploration-properties]]
+    * [[Instructions for editing roles or actions|Instructions-for-editing-roles-or-actions]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
