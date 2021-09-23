@@ -58,7 +58,10 @@ Here's what happens during a dev mode build:
 2. The build script sets the constants in `assets/constants.ts` to enable dev mode. Specifically, `DEV_MODE` is `true`, `EMULATOR_MODE` is `true`, and the other constants are `false`.
 3. [Webpack](https://webpack.js.org/) bundles our frontend code files and runs with a [dev configuration](https://github.com/oppia/oppia/blob/develop/webpack.dev.config.ts) designed for minimal compilation time. Note that the dev mode configuration file inherits from the [root webpack config file](https://github.com/oppia/oppia/blob/develop/webpack.common.config.ts). In dev mode, webpack runs in "watch" mode so that when files are changed, webpack re-builds the app automatically.
 
-   Note that **this step is not handled by `build.py`** because when running the frontend tests, Karma takes care of running webpack for us. In other cases, webpack compilation is handled by whatever script you actually executed, for example `start.py`.
+   Note that **this step is not handled by `build.py`** for two reasons:
+
+   * When we run the frontend tests, webpack has to be handled by Karma, not `build.py`.
+   * When we run in dev mode, we need to keep webpack running so that it can watch for changes to the code. However, we don't want to keep `build.py` running since `build.py` is supposed to build the application and then exit. Therefore, we leave webpack compilation to be handled by whatever script you actually executed, for example `start.py`.
 
 4. The `app_dev.yaml` configuration file for the app already exists, so it doesn't need to be generated.
 
