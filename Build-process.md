@@ -5,7 +5,7 @@
 * [Build modes](#build-modes)
   * [Build mode constants](#build-mode-constants)
   * [Dev mode](#dev-mode)
-  * [Minify only mode](#minify-only-mode)
+  * [Minify-only mode](#minify-only-mode)
   * [Prod mode](#prod-mode)
     * [Plain prod mode](#plain-prod-mode)
     * [Maintenance mode](#maintenance-mode)
@@ -29,14 +29,14 @@ The build process is performed by [`scripts/build.py`](https://github.com/oppia/
 There are two primary build modes: dev mode and prod mode. When running in prod mode, you can also enable maintenance mode or deploy mode, or you can choose to only minify third-party libraries. This means the build mode hierarchy looks like this:
 
 * Dev mode
-* Minify only mode
+* Minify-only mode
 * Prod mode
   * Maintenance mode
   * Deploy mode
 
-Note that the maintenance and deploy modes can be enabled simultaneously, so you should really think of them as flags. If you're in prod mode, you can also enable maintenance mode dev mode, both, or neither.
+Note that the maintenance and deploy modes can be enabled simultaneously, so you should really think of them as flags. For example, suppose you have decided to enable prod mode. You can further choose to enable maintenance mode, enable dev mode, enable both maintenance mode and dev mode, or leave both maintenance mode and dev mode disabled.
 
-Dev mode compiles the fastest, but it produces an application that's least like what we run in production. On the other hand, prod mode takes longer to compile but produces an application that is  the closest to what we run in production. Minify only mode is in the middle.
+Dev mode compiles the fastest, but it produces an application that's least like what we run in production. On the other hand, prod mode takes longer to compile but produces an application that is the closest to what we run in production. Minify-only mode is in the middle.
 
 We use prod mode for most everything besides local development. For example, we use prod mode when deploying to production and testing servers, and we run most tests in prod mode. A notable exception is the lighthouse accessibility tests, which run in dev mode because they don't depend on the minifications and optimizations applied in prod mode, and dev mode compilation is faster. Note that we also sometimes use prod mode locally when debugging to run a version of the app that's closer to the deployed version.
 
@@ -65,7 +65,7 @@ Here's what happens during a dev mode build:
 
 4. The `app_dev.yaml` configuration file for the app already exists, so it doesn't need to be generated.
 
-### Minify only mode
+### Minify-only mode
 
 In this mode, the third-party libraries are installed and minified, but the build script doesn't do anything else. This is only used by the frontend tests, where the `karma.conf.ts` configuration file triggers webpack as described above for [dev mode](#dev-mode).
 
@@ -112,7 +112,7 @@ This mode is used by our deployment scripts.
 
 Most bugs appear in all build modes, so we recommend first trying to reproduce bugs locally in dev mode. Dev mode is optimized for fast compilation, so it's usually faster to debug in [dev mode](#dev-mode). If you can't reproduce the bug in dev mode, then you can try using [plain prod mode](#plain-prod-mode). Plain prod mode takes longer to compile, but since it more closely mimics how the application works in production, you may need it for bugs that don't appear in dev mode.
 
-You should only need to use [maintenance mode](#maintenance-mode) if you are debugging a problem with the mode or testing it. You can't use [deploy mode](#deploy-mode) locally, so bugs specific to deploy mode can only be debugged on a testing server. Finally, we only use the [minify only mode](#minify-only-mode) mode for the frontend tests, so you shouldn't ever need to run a server this way for debugging. You should just [[debug the frontend tests|Debug-frontend-tests]] directly.
+You should only need to use [maintenance mode](#maintenance-mode) if you are debugging a problem with the mode or testing it. You can't use [deploy mode](#deploy-mode) locally, so bugs specific to deploy mode can only be debugged on a testing server. Finally, we only use the [minify-only mode](#minify-only-mode) mode for the frontend tests, so you shouldn't ever need to run a server this way for debugging. You should just [[debug the frontend tests|Debug-frontend-tests]] directly.
 
 ## Source maps
 
