@@ -10,6 +10,7 @@
     * [[Designers and artists|Contributing-to-Oppia's-design]]
   * **[[Google Summer of Code 2021|Google-Summer-of-Code-2021]]**
   * **[[Season of Docs 2021|Season-of-Docs-2021]]**
+  * **[[Hacktoberfest 2021|Hacktoberfest-2021]]**
 
 ---
 **Developing Oppia**
@@ -18,6 +19,7 @@
   * [[Tips for common IDEs|Tips-for-common-IDEs]]
   * [[Firebase authentication|Firebase-authentication]]
     * [[Creating an Administrator account|https://github.com/oppia/oppia/wiki/Firebase-authentication#creating-an-administrator-account]]
+  * [[Make a pull request|Make-a-pull-request]]
   * [[Pull requests at Oppia|Pull-requests-at-Oppia]]
   * [[How to get help|Get-help]]
   * [[Learning resources for developers|Learning-Resources]]
@@ -41,14 +43,17 @@
       * [[Diagnose PR failures|Diagnose-PR-failures]]
       * [[If your presubmit checks fail|If-your-presubmit-check-fails]]
       * [[Interpreting CircleCI Results | Interpreting CircleCI Results]]
-      * [[Debugging Docs|Debugging-Docs]]
-      * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
-      * [[Debugging Stories|Debugging-Stories]]
+      * Debugging
+        * [[Debugging Docs|Debugging-Docs]]
+        * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
+        * [[Debugging backend tests|Debug-backend-tests]]
+        * [[Debugging frontend tests|Debug-frontend-tests]]
+        * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
-    * [[Lint Checks|Lint-Checks#how-to-run-the-linter]]
-       * [[How to run lint checks?|Lint-Checks#how-to-run-the-linter]]
-       * [[How to write lintchecks?|Lint-Checks#directory-structure]]
+    * [[Lint Checks|Lint-Checks]]
+      * [[Custom Pylint checks|Custom-Pylint-checks]]
+      * [[Custom ESLint checks|Custom-ESLint-checks]]
     * [[Oppia's code owners and checks to be carried out by developers|Oppia's-code-owners-and-checks-to-be-carried-out-by-developers]]
     * [[Privacy aware programming|Privacy-aware-programming]]
     * [[Backend Type Annotations|Backend-Type-Annotations]]
@@ -56,11 +61,11 @@
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
   * Testing
     * [[Running tests|Running-Tests]]
-    * [[Backend tests|Backend-tests]]
-    * [[Frontend tests|Frontend-unit-tests-guide]]
-    * [[Writing tests for custom Pylint Checkers|Writing-Tests-For-Pylint]]
-    * [[End-to-end tests|End-to-End-Tests]]
-    * [[Lighthouse Tests|Lighthouse-Tests]]
+    * Writing Tests
+      * [[Backend tests|Backend-tests]]
+      * [[Frontend tests|Frontend-unit-tests-guide]]
+      * [[End-to-end tests|End-to-End-Tests]]
+      * [[Lighthouse Tests|Lighthouse-Tests]]
     * [[Testing for Accessibility|Testing-for-Accessibility]]
     * [[Release accessibility checklist|Release-accessibility-checklist]]
   * Release Process
@@ -89,6 +94,7 @@
     * [[Adding static assets|Adding-static-assets]]
     * [[Wipeout Implementation|Wipeout-Implementation]]
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
+    * [[Protocol buffers|Protocol-buffers]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
@@ -106,6 +112,7 @@
   * [[Mobile development|Mobile-development]]
   * [[Mobile device testing|Mobile-device-testing]]
   * [[Performance testing|Performance-Testing]]
+  * [[Build process|Build-process]]
   * [[Team structure|Team-Structure]]
   * Playbooks
     * [[Instructions for making PR passes|Instructions-for-making-PR-passes]]

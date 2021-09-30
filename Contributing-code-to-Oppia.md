@@ -49,7 +49,8 @@ TODO(#4): Add link to IDE tutorial.
 
 8. Join [our discord](https://discord.com/invite/dCJwEAgk3D) for fun activities!
 
-9. Take up your first starter project! You can find more details below.
+9. Take up your first starter project! You can find more details below. (Make sure to read and follow the [[PR instructions|Make-a-pull-request]] closely so that your PR review proceeds smoothly.)
+
 
 ## Developing your skills
 
@@ -73,7 +74,7 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 
 * [#9749](https://github.com/oppia/oppia/issues/9749) (Migrate directives/controllers to Angular components)
 
-* [#8472](https://github.com/oppia/oppia/issues/8472) (Migrating AngularJS files to Angular 2+)
+* [#13764](https://github.com/oppia/oppia/issues/13764) (Maintaining Oppia's core data with frontend validation checks)
 
 * [#10798](https://github.com/oppia/oppia/issues/10798) (Fixing end-to-end tests, which are written with protractor)
 
@@ -86,8 +87,6 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 * [#8038](https://github.com/oppia/oppia/issues/8038) (Refactoring frontend services - The backend api calls in the frontend should only happen through services)
 
 * [#10474](https://github.com/oppia/oppia/issues/10474) (Make typescript checks strict)
-
-* [#10306](https://github.com/oppia/oppia/issues/10306) (Refactoring frontend - Add "async" keyword to asynchronous functions that return a promise)
 
 * [#10616](https://github.com/oppia/oppia/issues/10616) (Introduce new @typescript-eslint rules n the codebase)
 
@@ -165,7 +164,6 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
    * [[Backend Tests|Backend-tests]]
    * [[Frontend Tests|Frontend-unit-tests-guide]]
    * [[End to end tests|End-to-End-Tests]]
-   * [[Tests for Pylint extensions|Writing-Tests-For-Pylint]]
 
 3. If you're stuck on something, ask for help instead of letting it block all your work. It can be difficult to know when to ask for help, so one rule of thumb is to ask whenever you've been unable to make progress for an hour.
 
