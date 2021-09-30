@@ -43,12 +43,11 @@
       * [[Diagnose PR failures|Diagnose-PR-failures]]
       * [[If your presubmit checks fail|If-your-presubmit-check-fails]]
       * [[Interpreting CircleCI Results | Interpreting CircleCI Results]]
-      * Debugging
-        * [[Debugging Docs|Debugging-Docs]]
-        * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
-        * [[Debugging backend tests|Debug-backend-tests]]
-        * [[Debugging frontend tests|Debug-frontend-tests]]
-        * [[Debugging Stories|Debugging-Stories]]
+      * [[Debugging Docs|Debugging-Docs]]
+      * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
+      * [[Debugging backend tests|Debug-backend-tests]]
+      * [[Debugging frontend tests|Debug-frontend-tests]]
+      * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
     * [[Lint Checks|Lint-Checks]]
