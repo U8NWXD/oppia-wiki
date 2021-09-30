@@ -195,9 +195,9 @@ Backend libraries that are not installed using pip also have their versions spec
 
 You can update all frontend libraries that we install from npm as follows. Note that `<yarn version>` specifies the currently-installed version of yarn (there should only be one version in `oppia_tools`). Also, all commands should be run from the repository root.
 
-1. Run `../oppia_tools/yarn-<yarn version>/bin/yarn upgrade`
-2. Run `../oppia_tools/yarn-<yarn version>/bin/yarn outdated` to show outdated libraries.
-3. Check for breaking changes in the outdated libraries. You should:
+1. Run `../oppia_tools/yarn-<yarn version>/bin/yarn upgrade` to upgrade libraries that should not have any breaking changes.
+2. Run `../oppia_tools/yarn-<yarn version>/bin/yarn outdated` to show outdated libraries whose newer versions might have breaking changes.
+3. Check for breaking changes in the outdated libraries from the previous step. You should:
 
    * Check the library's changelog for breaking changes.
    * Test that after you install the upgraded version (see below), everything works correctly.
