@@ -21,13 +21,22 @@ Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 
 ```
 
-(These instructions come from the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#debugging-a-checker).)
+(These instructions come from the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#debugging-a-checker).) Note that the Pylint version number (2.8.3 in this case) may vary.
 
 When running a single checker, two more debugging techniques may be useful: print statements and the Python debugger.
 
 ### Print statements
 
-You can print out debugging information from your checker code using `print()` statements. The output will appear when you run the checker as shown above.
+You can print out debugging information from your checker code using `print()` statements. The output will appear when you run the checker as shown above. For example, if we added a `print('DEBUGGING')` statement to our checker, we might see:
+
+```console
+$ PYTHONPATH=scripts/linters ../oppia_tools/pylint-2.8.3/bin/pylint --load-plugins=pylint_extensions --disable=all --enable=my-checker-message test.py
+DEBUGGING
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+```
 
 ### The Python debugger
 
