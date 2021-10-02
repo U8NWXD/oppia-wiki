@@ -10,7 +10,7 @@ Especially for complex lint rules, it can be hard to figure out why a test faile
 
 ## Print statements
 
-If you add a `console.log()` or `console.error()` statement to your custom ESLint rule code, the output will appear along with the test status output . For example, suppose we have a lint rule that raises an error every time `.click()` or `.sendKeys()` is called on an object instead of `action.click()` or `action.sendKeys()`, which we would like people to use instead. If we add `console.log()` statement to print `DEBUGGING found lint error` whenever our lint rule raises an error, we see this output:
+If you add a `console.log()`, `console.error()`, or `console.info()` statement to your custom ESLint rule code, the output will appear along with the test status output. For example, suppose we have a lint rule that raises an error every time `.click()` or `.sendKeys()` is called on an object instead of `action.click()` or `action.sendKeys()`, which we would like people to use instead. If we add `console.log()` statement to print `DEBUGGING found lint error` whenever our lint rule raises an error, we see this output when running the tests:
 
 ```text
   e2e-action
