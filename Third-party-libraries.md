@@ -14,7 +14,7 @@
   * [`install_backend_python_libs.py`](#install_backend_python_libspy)
 * [Upgrade dependencies](#upgrade-dependencies)
   * [Upgrade backend libraries](#upgrade-backend-libraries)
-    * [Upgrade production, backend libraries installed using pip](#upgrade-production-backend-libraries-installed-using-pip)
+    * [Upgrade production, backend libraries](#upgrade-production-backend-libraries)
     * [Upgrade development, backend libraries](#upgrade-development-backend-libraries)
   * [Upgrade frontend libraries](#upgrade-frontend-libraries)
     * [Upgrade frontend libraries installed from npm](#upgrade-frontend-libraries-installed-from-npm)
@@ -23,7 +23,7 @@
   * [Add a backend library](#add-a-backend-library)
     * [Add a backend, production library from pip](#add-a-backend-production-library-from-pip)
     * [Add a backend, development library from pip](#add-a-backend-development-library-from-pip)
-    * [Add a library not installable from pip](#add-a-library-not-installable-from-pip)
+    * [Add a library that cannot be installed from pip](#add-a-library-that-cannot-be-installed-from-pip)
   * [Add a frontend library](#add-a-frontend-library)
     * [Add a frontend library from npm](#add-a-frontend-library-from-npm)
     * [Add a frontend library from outside npm](#add-a-frontend-library-from-outside-npm)
@@ -49,8 +49,8 @@ The rest of Oppia's development and production dependencies are managed by the O
 
 * `oppia_tools/` stores development tools that aren't used in production. This folder is a sibling of the repository root (`oppia/`), so if you are in the root of the repository, this folder is at `../oppia_tools/`. However, we'll use `oppia_tools/` here for simplicity.
 * `third_party/python_libs` stores our production Python dependencies.
-* `third_party/static` stores some of our production Node.js dependencies.
-* `node_modules` stores more production Node.js dependencies. On developer machines, it also stores development dependencies.
+* `third_party/static` stores the production Node.js dependencies that aren't installed from npm. These dependencies are downloaded and compiled by our own code.
+* `node_modules` stores the production Node.js dependencies that we install from npm. On developer machines, it also stores development dependencies. These dependencies are downloaded by yarn and compiled by webpack.
 * `third_party/` also stores some other production dependencies like protobuf files.
 
 When you run `python -m scripts.start`, a chain of scripts installs and/or upgrades dependencies as necessary:
@@ -149,7 +149,7 @@ Under each of these keys is a collection of key-value pairs where each key is a 
   * `tarRootDirPrefix`: Same as `rootDirPrefix` for zip files.
   * `targetDirPrefix`: Same as `targetDirPrefix` for zip files.
 
-New dependencies should not be added to `manifest.json`, as this method of installing dependencies is deprecated. Instead, you should use the [node modules](#node-modules) method.
+New dependencies should not be added to `manifest.json`, as we are trying to remove this method of installing dependencies. Instead, you should use the [node modules](#node-modules) method.
 
 #### Redis and Elasticsearch
 
@@ -157,7 +157,7 @@ We download and install the Redis CLI and Elasticsearch development server. We p
 
 ### `install_backend_python_libs.py`
 
-This script installs the Python dependencies we need in production to `third_party/python_libs`. We define these dependencies using `requirements.in`, which lists the libraries we depend on directly. Then `install_backend_python_libs.py` runs `scripts.regenerate_requirements` to generate `requirements.txt`, which lists those direct dependencies, plus all the packages that our direct dependencies need, and so on. Both `requirements.in` and `requirements.txt` specify versions, so `requirements.txt` is analogous to `yarn.lock` in that it pins all the versions of all the Python packages we use in production.
+This script uses pip to install the Python dependencies we need in production to `third_party/python_libs`. We define these dependencies using `requirements.in`, which lists the libraries we depend on directly. Then `install_backend_python_libs.py` runs `scripts.regenerate_requirements` to generate `requirements.txt`, which lists those direct dependencies, plus all the packages that our direct dependencies need, and so on. Both `requirements.in` and `requirements.txt` specify versions, so `requirements.txt` is analogous to `yarn.lock` in that it pins all the versions of all the Python packages we use in production.
 
 ## Upgrade dependencies
 
@@ -166,13 +166,13 @@ This script installs the Python dependencies we need in production to `third_par
 Before upgrading any backend dependencies, you should check for any breaking changes between the currently installed version and the new version you want to upgrade the library to. You should:
 
 * Check the library's changelog for breaking changes.
-* Test that after you install the upgraded version (see below), everything works correctly.
+* **Important:** Test that everything works correctly after you install the upgraded version (see below).
 
-Note that we don't have an automatic way to detect outdated backend dependencies, so to upgrade all outdated backend dependencies, you have to check each version manually.
+Note that we don't have an automatic way to detect outdated backend dependencies, so to upgrade all outdated backend dependencies, you have to look up each library online to find its latest version and compare that to the version currently specified in our code. We explain where our code specifies version numbers below.
 
-#### Upgrade production, backend libraries installed using pip
+#### Upgrade production, backend libraries
 
-A production library installed using pip can be upgraded as follows:
+A production library (these are listed in `requirements.in`) can be upgraded as follows:
 
 1. Update the library's version number in `requirements.in`.
 2. Run `scripts/regenerate_requirements.py` to update `requirements.txt` based on the new `requirements.in`.
@@ -200,7 +200,7 @@ You can update all frontend libraries that we install from npm as follows. Note 
 3. Check for breaking changes in the outdated libraries from the previous step. You should:
 
    * Check the library's changelog for breaking changes.
-   * Test that after you install the upgraded version (see below), everything works correctly.
+   * **Important:** Test that everything works correctly after you install the upgraded version.
 
 4. Manually update the versions in `package.json` for all packages you decide to upgrade.
 5. Run `../oppia_tools/yarn-<yarn version>/bin/yarn install`
@@ -217,6 +217,8 @@ Other frontend libraries are specified in `manifest.json`. You can upgrade these
 2. Change the version in `manifest.json` to the new version you want to install.
 
 Note that we don't have an automatic way to detect outdated libraries in `manifest.json`, so to upgrade all such libraries, you have to check each version manually.
+
+Note that we don't have an automatic way to detect outdated libraries in `manifest.json`, so to identify outdated dependencies, you have to look up each library online to find its latest version and compare that to the version specified in `manifest.json`.
 
 ## Add dependencies
 
@@ -235,9 +237,11 @@ Here's how to add a backend, production library that can be installed from pip:
 
 #### Add a backend, development library from pip
 
-To add a backend, development library that can be installed from pip, first ask whether the library is needed before running or importing any script. If the answer is yes, add it to the `PREREQUISITES` constant in `scripts/install_third_party_libs.py`. Otherwise, add it to the `local_pip_dependencies` variable in `scripts/install_third_party_libs.py`.
+To add a backend, development library that can be installed from pip, first figure out whether the library is needed before running or importing any script. The libraries needed this early are usually only those required by the installation scripts. If the answer is yes, add it to the `PREREQUISITES` constant in `scripts/install_third_party_libs.py`. Otherwise, add it to the `local_pip_dependencies` variable in `scripts/install_third_party_libs.py`.
 
-#### Add a library not installable from pip
+If you aren't sure whether a library is needed before running or importing any script, you can guess that the answer is "no" and follow the above instructions accordingly. Then try running `python -m scripts.start` and see if there are any errors. If there are, then the answer is actually "yes." Otherwise, your guess was correct and the answer is "no."
+
+#### Add a library that cannot be installed from pip
 
 If a library cannot be installed from pip, you'll have to add custom code to `scripts/install_third_party_libs.py` to handle installation.
 
@@ -252,4 +256,4 @@ If the library is available from npm, you can install it like this:
 
 #### Add a frontend library from outside npm
 
-If your library is not available from npm, you can add it to `manifest.json`.
+If your library is not available from npm, you can add it to `manifest.json`. However, you should check with @vojtechjelinek first as we are trying to move away from `manifest.json`.
