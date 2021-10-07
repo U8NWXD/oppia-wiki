@@ -23,7 +23,7 @@ Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 
 (These instructions come from the [Pylint documentation](https://pylint.pycqa.org/en/latest/how_tos/custom_checkers.html#debugging-a-checker).) Note that the Pylint version number (2.8.3 in this case) may vary.
 
-When running a single checker, two more debugging techniques may be useful: print statements and the Python debugger.
+In this case, the checker found no issues with our code in `test.py`, but your checker might flag problems with the code in `test.py`. In either case, you should consider whether your checker behaved as expected. Did the checker flag any code that isn't actually a problem? Did the checker miss any problematic code? If the checker behaved unexpectedly, you should debug further. You may find two other debugging strategies useful: print statements and the Python debugger.
 
 ### Print statements
 
