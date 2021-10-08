@@ -71,13 +71,12 @@ If you see that a test is failing, there are two possibilities: your code could 
 
   This message is based on a list of known flakes maintained by the Automated QA team. Note however that this list may be incomplete, so a test could be flaking even if this message says `false`.
 
-If your code is wrong, then you'll need to fix it just as you would [respond to reviewer comments](https://github.com/oppia/oppia/wiki/Make-a-pull-request#step-5-address-review-comments-until-all-reviewers-approve). You may also want to review the documentation on our various CI checks to help you debug:
+If your code is wrong, then you'll need to fix it just as you would [respond to reviewer comments](https://github.com/oppia/oppia/wiki/Make-a-pull-request#step-5-address-review-comments-until-all-reviewers-approve). You may also want to review the documentation on our various CI checks to help you debug.
 
 * [[Lint Checks|Lint-Checks]]
-* [[Backend tests|Backend-tests]]
-* [[Frontend tests|Frontend-unit-tests-guide]]
-* [[End-to-end tests|End-to-End-Tests]]
-* [[Lighthouse Tests|Lighthouse-Tests]]
+* [[Tests|Tests]]
+
+We also have [[debugging guides|Debugging]] that you may find useful.
 
 Note that all our CI checks except for the backend tests merge from the upstream `develop` branch before running, so you may need to merge from `develop` locally to reproduce the failure.
 
