@@ -61,14 +61,15 @@
     * [[Bytes and string handling in Python 3|Bytes-and-string-handling-in-Python-3]]
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
   * Testing
-    * [[Running tests|Running-Tests]]
-    * Writing Tests
+    * [[Automated tests|Tests]]
+      * [[TypeScript tests|TypeScript-tests]]
       * [[Backend tests|Backend-tests]]
       * [[Frontend tests|Frontend-unit-tests-guide]]
       * [[End-to-end tests|End-to-End-Tests]]
       * [[Lighthouse Tests|Lighthouse-Tests]]
-    * [[Testing for Accessibility|Testing-for-Accessibility]]
-    * [[Release accessibility checklist|Release-accessibility-checklist]]
+    * Manual tests
+      * [[Testing for Accessibility|Testing-for-Accessibility]]
+      * [[Release accessibility checklist|Release-accessibility-checklist]]
   * Release Process
     * [[Release schedule|Release-schedule-and-other-information]]
     * [[Testing jobs and other features on production|Testing-jobs-and-other-features-on-production]]
