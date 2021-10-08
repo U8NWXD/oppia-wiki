@@ -1,5 +1,29 @@
 ## Table of contents
 
+* [Introduction](#introduction)
+* [How the storage layer works](#how-the-storage-layer-works)
+  * [Storage model concepts](#storage-model-concepts)
+  * [Model classes with ndb](#model-classes-with-ndb)
+  * [Oppia's datastore interface](#oppias-datastore-interface)
+    * [The GAE datastore interface implementation](#the-gae-datastore-interface-implementation)
+  * [Model classes at Oppia](#model-classes-at-oppia)
+    * [Naming conventions](#naming-conventions)
+    * [Model versioning](#model-versioning)
+    * [Deletion policy for wipeout](#deletion-policy-for-wipeout)
+    * [Takeout policy](#takeout-policy)
+    * [Export data](#export-data)
+    * [Map property names to takeout keys](#map-property-names-to-takeout-keys)
+    * [Has reference to user ID](#has-reference-to-user-id)
+    * [Apply deletion policy](#apply-deletion-policy)
+    * [Pseudonymizable models](#pseudonymizable-models)
+* [Common procedures](#common-procedures)
+  * [Create a new model class](#create-a-new-model-class)
+  * [Add a pseudonymizable model](#add-a-pseudonymizable-model)
+  * [Modify a model field](#modify-a-model-field)
+    * [Add an index to a field](#add-an-index-to-a-field)
+    * [Remove an old field from a model](#remove-an-old-field-from-a-model)
+* [Contact](#contact)
+
 ## Introduction
 
 You might be used to programs holding data in variables, but for an application like Oppia, we need some way to store that data such that it survives the application shutting down. We don't want to lose all our data just because we release a new version of Oppia! To store data persistently, you might think about writing it to a file like this:
@@ -297,17 +321,7 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
    Add tests that verify that this deletion works correctly!
 
-## Contact
-
-If you have any questions about Oppia's storage models, please reach out to @vojtechjelinek (vojtin.j@gmail.com).
-
-
------------------------------------------------------------------------
------------------------------------------------------------------------
-
-
-
-## Add a pseudonymizable model
+### Add a pseudonymizable model
 
 1. Check whether the new model is already connected to some existing model or set of models. For example, when you add a model that is supposed to track statistics for a feedback thread, it would be connected to `GeneralFeedbackThreadModel`.
 
@@ -321,15 +335,15 @@ If you have any questions about Oppia's storage models, please reach out to @voj
 
 3. Make sure to add tests for the newly-added model in [wipeout_service_test.py](https://github.com/oppia/oppia/blob/develop/core/domain/wipeout_service_test.py). The tests are structured as follows: for each storage module, there are two test classes, one for deletion and the other for verification. Add new test methods for your newly-created model to both classes.
 
-## Modify a model field
+### Modify a model field
 
-### Add an index to a field
+#### Add an index to a field
 
 If you need to index a field (i.e., add `indexed=True` to the field constructor), you'll need to also build the index manually in the production datastore. This can be done by a simple MapReduce job that iterates over all the models and, without any modification, puts them again in the datastore.
 
 An example job can be seen at https://github.com/oppia/oppia/blob/624e4b1a9f09996df5ffcd4cbed96ebd6ba96e32/core/domain/takeout_domain_jobs_one_off.py#L38-L79.
 
-### Remove an old field from a model
+#### Remove an old field from a model
 
 Prepare for removal in the next release:
 
@@ -352,3 +366,8 @@ Actually remove the field:
 3. If the model inherits from `VersionedModel`, add a `_reconstitute()` method for the model that will ensure that, when we revert to an older version of the model, we properly remove the field so that the model can be loaded. To see an example, take a look at the `_reconstitute()` methods in `CollectionRightsModel` and `ExplorationRightsModel` [here](https://github.com/oppia/oppia/blob/7623cd028d15a6326cac186f673f368dcae30929/core/storage/exploration/gae_models.py#L403-L440)
 
 4. Create a PR and [[submit the job to be tested on the backup server|Running-jobs-in-production]].
+
+## Contact
+
+If you have any questions about Oppia's storage models, please reach out to @vojtechjelinek (vojtin.j@gmail.com).
+
