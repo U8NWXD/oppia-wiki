@@ -7,7 +7,7 @@
   * [Oppia's datastore interface](#oppias-datastore-interface)
     * [The GAE datastore interface implementation](#the-gae-datastore-interface-implementation)
   * [Model classes at Oppia](#model-classes-at-oppia)
-    * [Naming conventions](#naming-conventions)
+    * [Naming conventions and structure](#naming-conventions-and-structure)
     * [Model versioning](#model-versioning)
     * [Deletion policy for wipeout](#deletion-policy-for-wipeout)
     * [Takeout policy](#takeout-policy)
@@ -26,7 +26,7 @@
 
 ## Introduction
 
-You might be used to programs holding data in variables, but for an application like Oppia, we need some way to store that data such that it survives the application shutting down. We don't want to lose all our data just because we release a new version of Oppia! To store data persistently, you might think about writing it to a file like this:
+You might be used to programs holding data in variables, but for an application like Oppia, we need some way to store that data such that it survives the application shutting down. We don't want to lose all our data just because we release a new version of Oppia! To store data persistently, you might think about storing it in a file like this:
 
 ```text
  User        Application               File system
@@ -65,7 +65,7 @@ To interact with the datastore, we use Google's [ndb library](https://googleapis
 
 ### Storage model concepts
 
-We organize our data using _models_, which you can think of like Python classes: A model describes an object that can have properties of various types. Instances of these models can then be created with particular values for those properties. However, unlike Python classes, a model has only data (no functions), and a model's properties are strictly typed.
+We organize our data using _models_, which you can think of like Python classes. A model describes an object that can have properties of various types. Instances of these models can then be created with particular values for those properties. However, unlike Python classes, a model has only data (no functions), and a model's properties are strictly typed.
 
 For example, we might define a user model with the following properties:
 
@@ -82,7 +82,7 @@ User[id=14, username=admin1, admin=True]
 
 ### Model classes with ndb
 
-In practice, we define models using special Python classes called _model classes_. If we used ndb directly, we could define our user model from above as the following model class:
+In practice, we define models using special Python classes called _model classes_. If we used ndb directly ([we don't](#oppias-datastore-interface)), we could define our user model from above as the following model class:
 
 ```python
 class User(Model):
@@ -109,11 +109,11 @@ user2.put()
 User.query().filter(User.id == 1).get()  # Returns user1
 ```
 
-For more information on how ndb model classes work, including all the available property types, see the [ndb documentation](https://googleapis.dev/python/python-ndb/latest/model.html).
+For more information on how ndb model classes work, including all the available property types, see the [ndb documentation](https://googleapis.dev/python/python-ndb/latest/model.html). Also note that "properties" are also sometimes called "fields."
 
 ### Oppia's datastore interface
 
-Most Oppia code doesn't use ndb directly. Instead, we provide our own _datastore interface_ that matches the ndb interface pretty closely. This interface is called a _seam_ because, just like a seam in clothing joins two pieces of cloth, the interface joins two pieces of code: Oppia and ndb. It's true that the seam just calls ndb under the hood, but it's important that you use the datastore interface, and not ndb, in your code so that if one day we wanted to switch to a different datastore provider, we would only have to change the seam.
+Most Oppia code doesn't use ndb directly. Instead, we provide our own _datastore interface_ that matches the ndb interface pretty closely. This interface is called a _seam_ because, just like a seam in clothing joins two pieces of cloth, the interface joins two pieces of code: Oppia and ndb. It's true that the seam just calls ndb under the hood, but it's important that you use the seam, and not ndb, in your code so that if one day we wanted to switch to a different storage provider, we would only have to change the seam.
 
 The seam code lives in [`core/platform/`](https://github.com/oppia/oppia/tree/develop/core/platform).
 
@@ -128,21 +128,15 @@ transaction_services = models.Registry.import_transaction_services()
 
 All datastore interactions should occur through the `base_models`, `datastore_services`, and `transaction_services` modules. We never import `ndb` into files outside the seam.
 
-The `Registry` we are retrieving these modules from is defined in [`core/platform/models.py`](https://github.com/oppia/oppia/blob/develop/core/platform/models.py). This registry lets us load the implementation of our seam interface that applies for our platform. Right now we only have one implementation, which is defined as `_Gae` in the `core/platform/models.py`.
+The `Registry` we are retrieving these modules from is defined in [`core/platform/models.py`](https://github.com/oppia/oppia/blob/develop/core/platform/models.py). This registry lets us load the implementation of our seam interface that applies for our platform. Right now we only have one implementation, which is defined as `_Gae` in `core/platform/models.py`.
 
-Note that the datastore interface isn't well-defined right now. In practice, we assume that the interface is what the GAE implementation provides.
+`Registry` defines the datastore interface. It provides a number of functions, but here are the most important ones:
 
-#### The GAE datastore interface implementation
+* `import_models(model_names)`: Returns a tuple of the model modules named in `model_names`. The modules are returned in the same order in which they appeared in `model_names`. Each module's name is specified in the `core.platform.models.NAMES` constant.
 
-The GAE implementation of the datastore interface provides many functions, but here are the most important ones:
+* `import_datastore_services()`: Returns a module (by convention named `datastore_services`) that includes most of the functions you'll need to interact with the datastore. For example, instead of defining a property with `ndb.IntegerProperty()`, you'll use `datastore_services.IntegerProperty()`.
 
-* `import_models(model_names)`: Returns a tuple of the model modules named in `model_names`. The modules are returned in the same order in which they appeared in `model_names`. Each module's name is specified in the `core.platform.models.NAMES` constant, and loading each module is handled by dedicated code in `import_models()`. This means that if you add a new model module, you need to update `import_models()` to support it.
-
-  By convention, models are defined in files whose paths have the form `core/storage/<model module name>/gae_models.py`. For example, above we saw `base_models` being loaded using `import_models`. This module is defined at `core/storage/base_model/gae_models.py`, so `base_models` in the example above refers to `core.storage.base_model.gae_models`.
-
-* `import_datastore_services()`: Returns a module that includes most of the functions you'll need to interact with the datastore. For example, instead of defining a property with `ndb.IntegerProperty()`, you'll use `datastore_services.IntegerProperty()`. This module is [`core.platform.datastore.cloud_datastore_services`](https://github.com/oppia/oppia/blob/develop/core/platform/datastore/cloud_datastore_services.py).
-
-  Note that `datastore_services` will not include everything from ndb. For example, only some properties are available in `cloud_datastore_services.py`. This is intentional! The properties in `datastore_services` are the only ones we support, so if you can't achieve what you want through `datastore_services`, you should not fall back to ndb. Instead, you should devise an alternate approach that only requires the functionality available through `datastore_services`.
+  Note that `datastore_services` will not include everything from ndb. For example, only some properties are included. This is intentional! The properties in `datastore_services` are the only ones we support, so if you can't achieve what you want through `datastore_services`, you should not fall back to ndb. Instead, you should devise an alternate approach that only requires the functionality available through `datastore_services`.
 
 * `import_transaction_services()` returns a module that contains the decorator `run_in_transaction_wrapper`. You can use it to perform a datastore operation as a _transaction_, which means that it is guaranteed to either complete fully or not happen at all. In other words, if a transaction fails, the datastore will look like the transaction was never started.
 
@@ -157,11 +151,27 @@ The GAE implementation of the datastore interface provides many functions, but h
 
   Now if `profile_key.delete()` fails, the transaction will ensure that the user doesn't get deleted either.
 
+Note that in some places the datastore interface is not well-defined. For example, `Registry` doesn't specify which ndb properties should be available. In practice, we assume that the interface is what our Google Appengine (GAE) implementation provides.
+
+#### The GAE datastore interface implementation
+
+The GAE implementation provides modules that the `Registry` functions return.
+
+* `import_models(model_names)`: Loading each module is handled by dedicated code in `_Gae.import_models()`. This means that if you add a new model module, you need to update `import_models()` to support it.
+
+  By convention, models are defined in files whose paths have the form `core/storage/<model module name>/gae_models.py`. For example, above we saw `base_models` being loaded using `import_models`. This module is defined at `core/storage/base_model/gae_models.py`, so `base_models` in the example above refers to `core.storage.base_model.gae_models`.
+
+* `import_datastore_services()`: The returned module is [`core.platform.datastore.cloud_datastore_services`](https://github.com/oppia/oppia/blob/develop/core/platform/datastore/cloud_datastore_services.py). You can refer to this module file to check which ndb properties we support.
+
+* `import_transaction_services()` returns the module [`core/platform/transactions/cloud_transaction_services.py`](https://github.com/oppia/oppia/blob/develop/core/platform/transactions/cloud_transaction_services.py).
+
 ### Model classes at Oppia
 
-#### Naming conventions
+#### Naming conventions and structure
 
-* The modules that define storage models have file paths of the form `core/storage/<model module name>/gae_models.py`
+Naming conventions:
+
+* The modules that define storage models (model modules) have file paths of the form `core/storage/<model module name>/gae_models.py`. These modules then define model classes.
 
 * Model class names end in `Model`, for example `UserSettingsModel`.
 
@@ -175,14 +185,14 @@ Un-versioned models don't track old versions and inherit from `core.storage.base
 
 #### Deletion policy for wipeout
 
-[[Wipeout|Wipeout-implementation]] is our program for ensuring that when a user deletes their account, we properly delete or their data or make it pseudonymous. Whenever you create a new model, you should have already gotten a [[design doc|Writing-design-docs]] approved by Oppia's data owners. If you have questions about how this approval process works or how we handle privacy at Oppia, see our [[guide to privacy-aware programming|Privacy-aware-programming]].
+[[Wipeout|Wipeout-implementation]] is our program for ensuring that when a user deletes their account, we properly delete their data or make it pseudonymous. Whenever you create a new model, you should have already gotten a [[design doc|Writing-design-docs]] approved by Oppia's data owners. If you have questions about how this approval process works or how we handle privacy at Oppia, see our [[guide to privacy-aware programming|Privacy-aware-programming]].
 
 **IMPORTANT: You MUST get your model's deletion policy approved through a design doc before opening a PR.**
 
-The deletion policies are defined in the `DELETION_POLICY` enum in [`core/storage/base_model/gae_models.py`](https://github.com/oppia/oppia/blob/develop/core/storage/base_model/gae_models.py):
+The deletion policies are defined in the `DELETION_POLICY` enum in [`core/storage/base_model/gae_models.py`](https://github.com/oppia/oppia/blob/develop/core/storage/base_model/gae_models.py). This enum has the following values:
 
 * `KEEP`: The model should be kept for auditing or logging purposes. For example: `DeletedUserModel` or `SentEmailModel`.
-* `DELETE`: The model only belongs to one user, and should be deleted. For example: `CompletedActivitiesModel` or `LearnerPlaylistModel`.
+* `DELETE`: The model only belongs to one user and should be deleted. For example: `CompletedActivitiesModel` or `LearnerPlaylistModel`.
 * `DELETE_AT_END`: The model only belongs to one user and should be deleted, but since the data in that model is relevant for the wipeout process, the model should only be deleted at the end after all other models are deleted. For example: `UserSettingsModel` or `UserAuthDetailsModel`.
 * `LOCALLY_PSEUDONYMIZE`: The model should be pseudonymized accounting for the local context. For example, `GeneralFeedbackThreadModel` is pseudonymized together with `GeneralFeedbackMessageModel` and `GeneralSuggestionModel`.
 * `PSEUDONYMIZE_IF_PUBLIC_DELETE_IF_PRIVATE`: The model should be pseudonymized if it is accessible by the general public (like published explorations) and deleted if it is not public. For example: `ExplorationRightsModel` or `ExpSummaryModel`.
@@ -204,9 +214,9 @@ Takeout is our program that lets users download their data. Takeout needs to kno
 
   This question is answered by the `get_model_association_to_user()` static method, which returns one of the values of the enum `MODEL_ASSOCIATION_TO_USER` in [`core/storage/base_model/gae_models.py`](https://github.com/oppia/oppia/blob/develop/core/storage/base_model/gae_models.py). These values are:
 
-  * `ONE_INSTANCE_PER_USER`: There is a single instance of the model per user. An example of this would be the `UserSettingsModel` because each user has exactly one settings model, and each settings model is for exactly one user.
+  * `ONE_INSTANCE_PER_USER`: There is a single instance of the model per user and a single user for each model instance. An example of this would be the `UserSettingsModel` because each user has exactly one settings model, and each settings model is for exactly one user.
   * `ONE_INSTANCE_SHARED_ACROSS_USERS`: An instance of a model may be shared across users. For example, explorations may have multiple contributors, so the `ExplorationRightsModel` is shared by multiple users.
-  * `MULTIPLE_INSTANCES_PER_USER`: There could be multiple models associated with a single user. For example, a user could have multiple feedback threads, thus they could have multiple `GeneralFeedbackThreadModels` associated with their account.
+  * `MULTIPLE_INSTANCES_PER_USER`: There could be multiple models associated with a single user. For example, a user could have multiple feedback threads, so they could have multiple `GeneralFeedbackThreadModels` associated with their account.
   * `NOT_CORRESPONDING_TO_USER`: The model has no association with any user. In other words, the model does not contain user data.
 
   For example, our User model would have a one-to-one relationship with users, so its model association would look like this:
@@ -221,26 +231,27 @@ Takeout is our program that lets users download their data. Takeout needs to kno
 
   This question is answered by the `get_export_policy()` static method, which returns a dictionary mapping each property name to one of the values of the enum `EXPORT_POLICY` in [`core/storage/base_model/gae_models.py`](https://github.com/oppia/oppia/blob/develop/core/storage/base_model/gae_models.py). These values are:
 
-* `EXPORTED`: The property is exported as one of the values in the takeout dictionary.
-* `EXPORTED_AS_KEY_FOR_TAKEOUT_DICT`: The property is exported as the key for a sub-dictionary within the takeout dictionary. For example, consider the case where we have a model with a `MULTIPLE_INSTANCE_PER_USER` association to a user. In this case, in order to distinguish between multiple models in the takeout dictionary, we need a unique ID per model. Thus, we may export the model ID as a key for the sub-dictionaries within the takeout dictionary. To do this, we would assign the model ID an export policy of `EXPORTED_AS_KEY_FOR_TAKEOUT_DICT.
-* `NOT_APPLICABLE`. The indicated field is not exported as part of the takeout dictionary. This should only be done when we have a reason to not export the property, such as with internal user IDs.
+  * `EXPORTED`: The property is exported as one of the values in the takeout dictionary.
+  * `EXPORTED_AS_KEY_FOR_TAKEOUT_DICT`: The property is exported as the key for a sub-dictionary within the takeout dictionary. For example, consider the case where we have a model with a `MULTIPLE_INSTANCE_PER_USER` association to a user. In this case, in order to distinguish between multiple models in the takeout dictionary, we need a unique ID per model. Thus, we may export the model ID as a key for the sub-dictionaries within the takeout dictionary. To do this, we would assign the model ID an export policy of `EXPORTED_AS_KEY_FOR_TAKEOUT_DICT`.
+  * `NOT_APPLICABLE`: The indicated field is not exported as part of the takeout dictionary. This should only be done when we have a reason to not export the property, such as with internal user IDs.
 
-  For example, if we want to export all the properties of our example User model except the ID, we would have:
+    For example, if we want to export all the properties of our example User model except the ID, we would have:
 
-  ```python
-  @staticmethod
-  def get_export_policy() -> Dict[str, base_models.EXPORT_POLICY:
-      return {
-          'username': base_models.EXPORT_POLICY.EXPORTED,
-          'admin': base_models.EXPORT_POLICY.EXPORTED,
-      }
-  ```
+    ```python
+    @staticmethod
+    def get_export_policy() -> Dict[str, base_models.EXPORT_POLICY]:
+        return {
+            'id': base_models.EXPORT_POLICY.NOT_APPLICABLE,
+            'username': base_models.EXPORT_POLICY.EXPORTED,
+            'admin': base_models.EXPORT_POLICY.EXPORTED,
+        }
+    ```
 
 #### Export data
 
 If a model has a [takeout policy](#takeout-policy) that results in exporting data from the model, the model class needs to provide an `export_data(user_id)` static method that returns the takeout dictionary for the model. This dictionary should follow the structure specified by the takeout policy.
 
-For example, our example User model had a takeout policy indicating that the `username` and `admin` properties should be exported. Therefore, its `get_data()` function might look like this:
+For instance, our example User model had a takeout policy indicating that the `username` and `admin` properties should be exported. Therefore, its `get_data()` function might look like this:
 
 ```python
 @staticmethod
@@ -255,19 +266,22 @@ def export_data(user_id) -> Dict[str, Union[str, bool]]:
 
 #### Map property names to takeout keys
 
-By default, the key in the takeout dictionary will have the exact same name as the property. For example, a field named `asdf` is by default exported as `asdf`. However, there are cases where we want to rename a field for the sake of clarity in the takeout dictionary. For example, instead of exporting date properties (such as `last_updated`) unchanged, we append `_msec` to the ends of their names to make it clear to a user that the data they are viewing is represented as time since the Epoch. Furthermore, we also use this for when we want to hide user IDs, often by replacing the user ID with the username.
+By default, the key in the takeout dictionary will have the exact same name as the property. For example, a field named `asdf` is by default exported as `asdf`. However, there are cases where we want to rename a field for the sake of clarity in the takeout dictionary. For example, instead of exporting date properties (such as `last_updated`) unchanged, we append `_msec` to the ends of their names to make it clear to a user that the data they are viewing is represented as time since the Epoch.
 
-To support this, models can optionally provide a static `get_field_names_for_takeout()` method that returns a dictionary mapping from property names to the corresponding names in the takeout dictionary. For example, suppose we wanted to replace the value of the `parent_id` property with the value of the `parent_username` property. Then we would include `'parent_id': 'parent_username'` in the mapping.
+To support this, models can optionally provide a static `get_field_names_for_takeout()` method that returns a dictionary mapping from property names to the corresponding names in the takeout dictionary.
 
 For example, suppose we have a model with the property `date_created`, but when we create the takeout dictionary in `export_data()`, we use the key `date_created_msec`. Then we would provide the following function:
 
 ```python
 @staticmethod
-get_field_names_for_takeout() -> Dict[str, str]:
+def get_field_names_for_takeout() -> Dict[str, str]:
     return {
         'date_created': 'date_created_msec',
     }
 ```
+
+Further, we also use this for when we want to hide user IDs, often by replacing the user ID with the username. For example, suppose we wanted to replace the value of the `parent_id` property with the value of the `parent_username` property. Then we would include `'parent_id': 'parent_username'` in the mapping.
+
 
 #### Has reference to user ID
 
@@ -303,7 +317,10 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
 ### Create a new model class
 
-1. Decide if you want a [versioned or an un-versioned model](#model-versioning). Based on your decision, create the model following the [naming conventions](#naming-conventions) and with the correct superclass (`VersionedModel` or `BaseModel`).
+1. Decide if you want a [versioned or an un-versioned model](#model-versioning). Based on your decision, create the model following the [naming conventions ans structure](#naming-conventions-and-structure) and with the correct superclass (`VersionedModel` or `BaseModel`).
+
+   Note that if you add a new module for your model class, you'll need to add support for it in our [GAE datastore interface implementation](#the-gae-datastore-interface-implementation).
+
 2. Add properties to the model. Refer to the [GAE datastore interface implementation section above](#gae-datastore-interface-implementation) for details on what properties are available.
 3. Specify your model's [deletion policy](#deletion-policy-for-wipeout) and [takeout policy](#takeout-policy).
 4. Provide a [`has_reference_to_user_id()` method](#has-reference-to-user-id) if required.
@@ -321,6 +338,8 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
    Add tests that verify that this deletion works correctly!
 
+10. Write [[backend tests|Backend-tests]] for your new model.
+
 ### Add a pseudonymizable model
 
 1. Check whether the new model is already connected to some existing model or set of models. For example, when you add a model that is supposed to track statistics for a feedback thread, it would be connected to `GeneralFeedbackThreadModel`.
@@ -331,7 +350,7 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
    * If your new model is not connected to an existing model, create a new function in the wipeout service that will handle the pseudonymization. You can take a look at the existing pseudonymization functions like `_pseudonymize_feedback_models()` or `_pseudonymize_activity_models_without_associated_rights_models()` for inspiration.
 
-2. If the model has a deletion policy of PSEUDONYMIZE_IF_PUBLIC_DELETE_IF_PRIVATE, make sure that, for private models, the whole model is actually deleted and not just pseudonymized. This should be done in deletion functions that are usually placed in the model services files. For example, explorations are deleted by a `delete_exploration()` function in [exp_services.py](https://github.com/oppia/oppia/blob/develop/core/domain/exp_services.py)).
+2. If the model has a deletion policy of `PSEUDONYMIZE_IF_PUBLIC_DELETE_IF_PRIVATE`, make sure that, for private models, the whole model is actually deleted and not just pseudonymized. This should be done in deletion functions that are usually placed in the model services files. For example, explorations are deleted by a `delete_exploration()` function in [exp_services.py](https://github.com/oppia/oppia/blob/develop/core/domain/exp_services.py)).
 
 3. Make sure to add tests for the newly-added model in [wipeout_service_test.py](https://github.com/oppia/oppia/blob/develop/core/domain/wipeout_service_test.py). The tests are structured as follows: for each storage module, there are two test classes, one for deletion and the other for verification. Add new test methods for your newly-created model to both classes.
 
@@ -341,7 +360,9 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
 If you need to index a field (i.e., add `indexed=True` to the field constructor), you'll need to also build the index manually in the production datastore. This can be done by a simple MapReduce job that iterates over all the models and, without any modification, puts them again in the datastore.
 
-An example job can be seen at https://github.com/oppia/oppia/blob/624e4b1a9f09996df5ffcd4cbed96ebd6ba96e32/core/domain/takeout_domain_jobs_one_off.py#L38-L79.
+An example job can be seen [here](https://github.com/oppia/oppia/blob/624e4b1a9f09996df5ffcd4cbed96ebd6ba96e32/core/domain/takeout_domain_jobs_one_off.py#L38-L79).
+
+Once you have gotten a PR with your job merged, you'll need to [[submit the job to be tested on the backup server|Running-jobs-in-production]].
 
 #### Remove an old field from a model
 
@@ -370,4 +391,3 @@ Actually remove the field:
 ## Contact
 
 If you have any questions about Oppia's storage models, please reach out to @vojtechjelinek (vojtin.j@gmail.com).
-
