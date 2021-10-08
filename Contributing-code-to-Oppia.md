@@ -25,11 +25,7 @@ If you run into any problems along the way, we're here to help! Check out our [[
 
 2. Fill in the [Oppia contributor survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3) to let us know what your interests are. (You can always change your responses later.) Filling out the survey will also get you assigned to a mentor at Oppia who will reach out to you over email to help you get started.
 
-3. Install Oppia following the [[installation instructions|Installing-Oppia]].  If you run into any issues, please check out the [[troubleshooting instructions|Troubleshooting]].
-
-<!--
-TODO(#4): Add link to IDE tutorial.
--->
+3. Install Oppia following the [[installation instructions|Installing-Oppia]].  If you run into any issues, please check out the [[troubleshooting instructions|Troubleshooting]]. If you want help setting up a code editor, also check out our [[guide to common IDEs|Tips-for-common-IDEs]].
 
 4. Update your GitHub settings:
 
