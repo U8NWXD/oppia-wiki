@@ -16,7 +16,7 @@ Please follow these steps to get started:
 
 ### Reaching and defining pilots plan with NGOs
 
-* For reaching and drafting pilot plans with NGOs, we recommend that you start finding and listing a few NGOs related to children education that you could potentially work with to use Oppia lessons. You will need to contact and meet with the NGOs in order to introduce Oppia and talk about the NGO activities. 
+* For reaching and drafting pilot plans with NGOs, we recommend that you start finding and listing a few NGOs related to children's education that you could potentially work with to use Oppia lessons. You will need to contact and meet with the NGOs in order to introduce Oppia and talk about the NGO activities. 
 * In this meeting, try to understand their pains and needs to better find a way for us to work together in a mutual beneficial partnership. You may make a copy and personalize this [presentation slides ](https://docs.google.com/presentation/d/1kWXni2omdpOZjUId712odYGSxfEziHg0wu81ChdvHAE/edit?usp=sharing) to help you pitch Oppia to the partner.
 * After you have a good understanding of the NGO context, work with them to draft a pilot plan detailing how they can include Oppia in their activities. If you think you need help on how to prioritize which NGOs to reach and how elaborate a nice reach out message, you can email our mentors for more materials.
 
