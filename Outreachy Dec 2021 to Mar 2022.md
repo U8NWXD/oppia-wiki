@@ -29,7 +29,7 @@ Please follow these steps to get started:
 
 **Q: How can I contribute with the project?**
 
-A: After finishing the required tasks, add a contribution URL to your Outreachy portal with all the necessary details and links. (The Contribution URL for each task would be a link to a Google Drive where you have uploaded the document/spreadsheet for that specific task.) Make sure that the file access is public!
+A: After finishing the required tasks, add a contribution URL to your Outreachy portal with all the necessary details and links. The contribution URL for each task should be a link to a Google Drive folder where you have uploaded the document/spreadsheet for that specific task. Make sure that the file access is public!
 
 **Q: How can I translate a lesson?**
 
