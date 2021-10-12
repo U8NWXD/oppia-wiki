@@ -33,4 +33,4 @@ A: After finishing the required tasks, add a contribution URL to your Outreachy 
 
 **Q: How can I translate a lesson?**
 
-A: To translate a lesson, **first** fill out this contributor agreement to confirm that you’re happy to submit contributions under the Creative Commons license. **Secondly** read through [this document](https://docs.google.com/document/d/17jMFtfHVWtJYrzyGQUKdsRXgky7lWv76sGYLOxSbA5w/edit?usp=sharing)  with information on how the translation process works, and let me know if you have any questions.  After you've filled out the form and read the documentation, please contact the mentors by email for further guidance.
+A: To translate a lesson, **first** fill out this contributor agreement to confirm that you’re happy to submit contributions under the Creative Commons license. **Second,** read through [this document](https://docs.google.com/document/d/17jMFtfHVWtJYrzyGQUKdsRXgky7lWv76sGYLOxSbA5w/edit?usp=sharing)  with information on how the translation process works, and let me know if you have any questions.  After you've filled out the form and read the documentation, please contact the mentors by email for further guidance.
