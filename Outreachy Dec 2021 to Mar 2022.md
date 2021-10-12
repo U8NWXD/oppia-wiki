@@ -21,7 +21,10 @@ Please follow these steps to get started:
 * After you have a good understanding of the NGO context, work with them to draft a pilot plan detailing how they can include Oppia in their activities. If you think you need help on how to prioritize which NGOs to reach and how elaborate a nice reach out message, you can email our mentors for more materials.
 
 ### Reaching and defining pilots plan with NGOs
-* For this task, you will need to create a plan on how you would scale the lessons and provide them to a larger audience in your country. It's important for the plan to be supported by reliable research that can include: (a) a benchmark analysis of similar products in your region, (b) an analysis of your country's/region's demographics, and (c) an analysis of existing NGOs and potential partners. 
+* For this task, you will need to create a plan on how you would scale the lessons and provide them to a larger audience in your country. It's important for the plan to be supported by reliable research that can include: 
+   1. a benchmark analysis of similar products in your region
+   2. an analysis of your country's/region's demographics, and 
+   3. an analysis of existing NGOs and potential partners. 
 * You can use any documents and research you find relevant to support your proposal. The format of the plan is completely up to you. 
 * If you need help with the background research for your plan, you can contact the mentors for further guidance and additional materials.
 
