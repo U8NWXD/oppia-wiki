@@ -1,6 +1,5 @@
-## Table of Contents
+## Table of contents
 
-* [Table of Contents](#table-of-contents)
 * [Introduction](#introduction)
 * [Flaky tests](#flaky-tests)
   * [What is a flake](#what-is-a-flake)
