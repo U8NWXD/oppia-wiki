@@ -1,4 +1,4 @@
-Oppia is excited to be participating on [Outreachy](https://www.outreachy.org/) December 2021 to March 2022 round! Outreachy is a diversity initiative that provides paid, remote internships to people subject to systemic bias and impacted by underrepresentation in the technical industry where they are living.
+Oppia is excited to be participating in [Outreachy](https://www.outreachy.org/)'s December 2021 to March 2022 round! Outreachy is a diversity initiative that provides paid, remote internships to people subject to systemic bias and impacted by under-representation in the technical industry where they are living.
 
 Thank you for your interest in contributing with our project! Here you can find initial guidance on how to get started with the required tasks listed on the project [Scale Community Outreach and Conduct Research on Oppia's Lessons](https://www.outreachy.org/outreachy-december-2021-internship-round/communities/oppia/#scale-community-outreach-and-conduct-research-on-o).
 
