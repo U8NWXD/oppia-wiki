@@ -1,4 +1,4 @@
-We do a lot of debugging at Oppia, whether because test are failing on a PR or because of a tricky bug that was found during release testing. These guides will help you get started debugging and offer useful tips:
+We do a lot of debugging at Oppia, whether because tests are failing on a PR or because of a tricky bug that was found during release testing. These guides will help you get started debugging and offer useful tips:
 
 Start here if failing tests are stopping you from pushing or merging a PR:
 

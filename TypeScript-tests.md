@@ -17,7 +17,7 @@ You can run the TypeScript tests like this:
 python -m scripts.typescript_checks
 ```
 
-These tests compile all ts files in the codebase and check for errors (including type errors) during compilation. The compiled files are put in the folder `local_compiled_js_for_test`, which is automatically deleted after the tests.
+These tests compile all ts files in the codebase and check for errors (including type errors) during compilation. The compiled files are put in the folder `local_compiled_js_for_test`, which is automatically deleted after the tests finish running. Note that this folder might not be deleted if you abort the tests early.
 
 The tests pass if, at the end of the test output, you see the message:
 
