@@ -136,7 +136,7 @@ The `Registry` we are retrieving these modules from is defined in [`core/platfor
 
 * `import_datastore_services()`: Returns a module (by convention named `datastore_services`) that includes most of the functions you'll need to interact with the datastore. For example, instead of defining a property with `ndb.IntegerProperty()`, you'll use `datastore_services.IntegerProperty()`.
 
-  Note that `datastore_services` will not include everything from ndb. For example, only some properties are included. This is intentional! The properties in `datastore_services` are the only ones we support, so if you can't achieve what you want through `datastore_services`, you should not fall back to ndb. Instead, you should devise an alternate approach that only requires the functionality available through `datastore_services`.
+  Note that `datastore_services` will not include everything from ndb. For example, only some properties are included. This is intentional! The properties in `datastore_services` are the only ones we support, so if you can't achieve what you want through `datastore_services`, you should not fall back to ndb. Instead, you should devise an alternate approach that only requires the functionality available through `datastore_services`, or you should extend `datastore_services`.
 
 * `import_transaction_services()` returns a module that contains the decorator `run_in_transaction_wrapper`. You can use it to perform a datastore operation as a _transaction_, which means that it is guaranteed to either complete fully or not happen at all. In other words, if a transaction fails, the datastore will look like the transaction was never started.
 
@@ -161,9 +161,9 @@ The GAE implementation provides modules that the `Registry` functions return.
 
   By convention, models are defined in files whose paths have the form `core/storage/<model module name>/gae_models.py`. For example, above we saw `base_models` being loaded using `import_models`. This module is defined at `core/storage/base_model/gae_models.py`, so `base_models` in the example above refers to `core.storage.base_model.gae_models`.
 
-* `import_datastore_services()`: The returned module is [`core.platform.datastore.cloud_datastore_services`](https://github.com/oppia/oppia/blob/develop/core/platform/datastore/cloud_datastore_services.py). You can refer to this module file to check which ndb properties we support.
+* `import_datastore_services()`: The returned module determines which ndb  properties we support.
 
-* `import_transaction_services()` returns the module [`core/platform/transactions/cloud_transaction_services.py`](https://github.com/oppia/oppia/blob/develop/core/platform/transactions/cloud_transaction_services.py).
+* `import_transaction_services()`: Returns a module that provides a transaction decorator.
 
 ### Model classes at Oppia
 
@@ -309,6 +309,8 @@ def apply_deletion_policy(cls, user_id):
         user.delete()
 ```
 
+Note that after you write `apply_deletion_policy()`, you have to make sure it is called by the [wipeout service](https://github.com/oppia/oppia/blob/develop/core/domain/wipeout_service.py).
+
 #### Pseudonymizable models
 
 Pseudonymization is not handled by the model classes. Instead, it's handled in [`wipeout_service.py`](https://github.com/oppia/oppia/blob/develop/core/domain/wipeout_service.py). See that file and our [[wipeout wiki page|Wipeout-implementation]] for details.
@@ -360,8 +362,6 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
 If you need to index a field (i.e., add `indexed=True` to the field constructor), you'll need to also build the index manually in the production datastore. This can be done by a simple MapReduce job that iterates over all the models and, without any modification, puts them again in the datastore.
 
-An example job can be seen [here](https://github.com/oppia/oppia/blob/624e4b1a9f09996df5ffcd4cbed96ebd6ba96e32/core/domain/takeout_domain_jobs_one_off.py#L38-L79).
-
 Once you have gotten a PR with your job merged, you'll need to [[submit the job to be tested on the backup server|Running-jobs-in-production]].
 
 #### Remove an old field from a model
@@ -382,7 +382,7 @@ Actually remove the field:
 
 1. Remove the field from the storage model code.
 
-2. Add a migration job to remove the field from existing models. For example, the one-off job for removing the `username` from commit log models looks like in [this example](https://github.com/oppia/oppia/blob/170bdeae5912ced0abc71257f5b0e5ca98fd1418/core/domain/activity_jobs_one_off.py#L142-L182)
+2. Add a migration job to remove the field from existing models.
 
 3. If the model inherits from `VersionedModel`, add a `_reconstitute()` method for the model that will ensure that, when we revert to an older version of the model, we properly remove the field so that the model can be loaded. To see an example, take a look at the `_reconstitute()` methods in `CollectionRightsModel` and `ExplorationRightsModel` [here](https://github.com/oppia/oppia/blob/7623cd028d15a6326cac186f673f368dcae30929/core/storage/exploration/gae_models.py#L403-L440)
 
@@ -390,4 +390,4 @@ Actually remove the field:
 
 ## Contact
 
-If you have any questions about Oppia's storage models, please reach out to @vojtechjelinek (vojtin.j@gmail.com).
+If you have any questions about Oppia's storage models, please reach out to @vojtechjelinek (vojtech.jelinek@hey.com).
