@@ -37,3 +37,9 @@ A: After finishing the required tasks, add a contribution URL to your Outreachy 
 **Q: How can I translate a lesson?**
 
 A: To translate a lesson, **first** fill out this [contributor agreement](https://forms.gle/4bHhrZ211R6LMg93A) to confirm that you’re happy to submit contributions under the Creative Commons license. **Second,** read through [this document](https://docs.google.com/document/d/17jMFtfHVWtJYrzyGQUKdsRXgky7lWv76sGYLOxSbA5w/edit?usp=sharing) with information on how the translation process works. After you've filled out the form and read the documentation, please contact the mentors by email for further guidance. You can find mentors' contact information on Outreachy portal, within the [Oppia project](https://www.outreachy.org/outreachy-december-2021-internship-round/communities/oppia/#scale-community-outreach-and-conduct-research-on-o).
+
+**Q: Who are the students I should work with?**
+
+A: Oppia's mission is to empower learners across the globe by providing equitable access to high-quality, engaging education. As our lessons are specially designed to meet the unique needs of under-resourced learners around the world, our target audience is underserved students who lack access to high-quality basic education. For this project in general, including the user studies, these are students you should be working in the contribution period and during the internship. 
+
+**Please keep in mind that your internship will be contingent on you being able to contact and work with the required students and NGOs.**
