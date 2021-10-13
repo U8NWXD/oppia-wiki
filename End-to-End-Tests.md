@@ -185,7 +185,7 @@ Chrome will open and start running your tests.
 The end-to-end tests are run on the Chrome browser and depend on chromedriver. The chromedriver version to be used depends on the Chrome browser version installed on the machine. We try to determine this version automatically, but if our automatic determination fails, you'll see an error with this advice:
 
 ```text
-Please set the chromedriver version manually using --chrome_driver_version flag.
+Please set the chromedriver version manually using the --chrome_driver_version flag.
 ```
 
 You may also want to set the chromedriver version manually if you want to test a particular version.
