@@ -40,7 +40,7 @@ A: To translate a lesson, **first** fill out this [contributor agreement](https:
 
 **Q: Who are the students I should work with?**
 
-A: Oppia's mission is to empower learners across the globe by providing equitable access to high-quality, engaging education. As our lessons are specially designed to meet the unique needs of under-resourced learners around the world, our target audience is underserved students who lack access to high-quality basic education. For this project in general, including the user studies, these are students you should be working in the contribution period and during the internship. 
+A: Oppia's mission is to empower learners across the globe by providing equitable access to high-quality, engaging education. As our lessons are specially designed to meet the unique needs of under-resourced learners around the world, our target audience is underserved students who lack access to high-quality basic education. For this project, including the user studies, you should be working with these underserved students during the contribution period and the internship. 
 
 *Please keep in mind that **your internship will be contingent** on you being able to contact and work with the required students and NGOs.*
 
