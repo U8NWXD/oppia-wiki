@@ -47,4 +47,3 @@ A: Oppia's mission is to empower learners across the globe by providing equitabl
 **Q: How can I keep my mentors updated about my work?**
 
 A: The best way to report your progress and clarify questions with the project mentors is starting an email thread, with both mentors as recipients. You should always reply to this same thread when giving updates and reporting the relevant information about your work. This ensures that both mentors have visibility and are synchronized about all your contributions, making the selection process easier and more organized.
-
