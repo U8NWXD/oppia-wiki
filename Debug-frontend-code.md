@@ -50,7 +50,7 @@ In the "Console" tab, you can run JavaScript code to interact with the page. For
 
 Notice that in the screenshot above, we are hovering over the HTML returned by `$('.oppia-splash-button-browse')[0]`, which is why the associated element on the page is highlighted.
 
-This tab is also where the output from any `console.log()`, `console.error()`, or other print statements appears.
+This tab is also where you'll see the output from `console.log()`, `console.error()`, or other print statements.
 
 ### Sources tab
 
