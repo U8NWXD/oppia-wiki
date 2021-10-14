@@ -178,4 +178,4 @@ git push origin --delete new-branch-name
 
 ## Step 8: Celebrate
 
-Congratulations, you have contributed to Oppia! To learn more, see our [[guide to PRs at Oppia|Pull-requests-at-Oppia]].
+Congratulations, you have contributed to Oppia! To learn some more advanced ways to use PRs at Oppia, see our [[guide to common PR workflows|Common-pull-request-workflows]].

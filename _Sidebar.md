@@ -20,7 +20,7 @@
   * [[Firebase authentication|Firebase-authentication]]
     * [[Creating an Administrator account|https://github.com/oppia/oppia/wiki/Firebase-authentication#creating-an-administrator-account]]
   * [[Make a pull request|Make-a-pull-request]]
-  * [[Pull requests at Oppia|Pull-requests-at-Oppia]]
+  * [[Common pull request workflows|Common-pull-request-workflows]]
   * [[How to get help|Get-help]]
   * [[Learning resources for developers|Learning-Resources]]
   * [[Git cheat sheet|Git-cheat-sheet]]
