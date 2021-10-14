@@ -2,7 +2,7 @@ Oppia is excited to be participating in [Outreachy](https://www.outreachy.org/)'
 
 Thank you for your interest in contributing to our project! Here you can find initial guidance on how to get started with the required tasks listed on the project [Scale Community Outreach and Conduct Research on Oppia's Lessons](https://www.outreachy.org/outreachy-december-2021-internship-round/communities/oppia/#scale-community-outreach-and-conduct-research-on-o).
 
-If you have any questions, feel free to send them to outreachy-questions@oppia.org or send them **directly to mentors by email**. You can find mentors' contact information on Outreachy portal, within the [Oppia project](https://www.outreachy.org/outreachy-december-2021-internship-round/communities/oppia/#scale-community-outreach-and-conduct-research-on-o).
+If you have any questions, feel free to send them to outreachy-questions@oppia.org or send them **directly to mentors by email**. You can find mentors' contact information on the Outreachy portal within the [Oppia project](https://www.outreachy.org/outreachy-december-2021-internship-round/communities/oppia/#scale-community-outreach-and-conduct-research-on-o).
 
 ## Getting Started
 
