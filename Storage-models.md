@@ -161,7 +161,7 @@ The GAE implementation provides modules that the `Registry` functions return.
 
   By convention, models are defined in files whose paths have the form `core/storage/<model module name>/gae_models.py`. For example, above we saw `base_models` being loaded using `import_models`. This module is defined at `core/storage/base_model/gae_models.py`, so `base_models` in the example above refers to `core.storage.base_model.gae_models`.
 
-* `import_datastore_services()`: The returned module determines which ndb  properties we support.
+* `import_datastore_services()`: The returned module determines which ndb properties we support.
 
 * `import_transaction_services()`: Returns a module that provides a transaction decorator.
 
