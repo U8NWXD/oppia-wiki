@@ -71,13 +71,13 @@ For example, we might define a user model with the following properties:
 
 * `id`: An integer
 * `username`: A string
-* `admin`: A boolean
+* `user_is_admin`: A boolean
 
 Then we could create many instances of this model:
 
 ```text
-User[id=1, username=learner1, admin=False]
-User[id=14, username=admin1, admin=True]
+User[id=1, username=learner1, user_is_admin=False]
+User[id=14, username=admin1, user_is_admin=True]
 ```
 
 ### Model classes with ndb
@@ -88,20 +88,20 @@ In practice, we define models using special Python classes called _model classes
 class User(Model):
     id = IntegerProperty()
     username = StringProperty()
-    admin = BooleanProperty()
+    user_is_admin = BooleanProperty()
 ```
 
 Then we can create a user model instance (called an _entity_) like this:
 
 ```python
-user = User(id=1, username='learner1', admin=False)
+user = User(id=1, username='learner1', user_is_admin=False)
 ```
 
 The `Model` superclass provides methods for writing entities to the datastore and retrieving them:
 
 ```python
-user1 = User(id=1, username='learner1', admin=False)
-user2 = User(id=14, username='admin1', admin=True)
+user1 = User(id=1, username='learner1', user_is_admin=False)
+user2 = User(id=14, username='admin1', user_is_admin=True)
 
 user1.put()
 user2.put()
@@ -181,7 +181,7 @@ For some models (e.g. explorations), we want to keep a record of old versions. T
 
 That's pretty much it! The functions in `VersionedModel` will handle the snapshots for you. All you need to remember is that instead of calling `put()`, you should call `commit()` when saving versioned entities to the datastore. See the source code for [`VersionedModel`](https://github.com/oppia/oppia/blob/develop/core/storage/base_model/gae_models.py) for more information about what you can do with it.
 
-Un-versioned models don't track old versions and inherit from `core.storage.base_model.gae_models.BaseModel` instead.
+Unversioned models don't track old versions and inherit from `core.storage.base_model.gae_models.BaseModel` instead.
 
 #### Deletion policy for wipeout
 
@@ -243,7 +243,7 @@ Takeout is our program that lets users download their data. Takeout needs to kno
         return {
             'id': base_models.EXPORT_POLICY.NOT_APPLICABLE,
             'username': base_models.EXPORT_POLICY.EXPORTED,
-            'admin': base_models.EXPORT_POLICY.EXPORTED,
+            'user_is_admin': base_models.EXPORT_POLICY.EXPORTED,
         }
     ```
 
@@ -251,7 +251,7 @@ Takeout is our program that lets users download their data. Takeout needs to kno
 
 If a model has a [takeout policy](#takeout-policy) that results in exporting data from the model, the model class needs to provide an `export_data(user_id)` static method that returns the takeout dictionary for the model. This dictionary should follow the structure specified by the takeout policy.
 
-For instance, our example User model had a takeout policy indicating that the `username` and `admin` properties should be exported. Therefore, its `get_data()` function might look like this:
+For instance, our example User model had a takeout policy indicating that the `username` and `user_is_admin` properties should be exported. Therefore, its `get_data()` function might look like this:
 
 ```python
 @staticmethod
@@ -260,7 +260,7 @@ def export_data(user_id) -> Dict[str, Union[str, bool]]:
     assert user
     return {
         'username': user.username,
-        'admin': user.admin,
+        'user_is_admin': user.user_is_admin,
     }
 ```
 
@@ -295,7 +295,7 @@ def has_reference_to_user_id(cls, user_id):
     return cls.query().filter(User.id == user_id).count() > 0
 ```
 
-Note that in this example we only have to check the `id` property because the `username` and `admin` properties aren't going to store user IDs.
+Note that in this example we only have to check the `id` property because the `username` and `user_is_admin` properties aren't going to store user IDs.
 
 #### Apply deletion policy
 
@@ -319,7 +319,7 @@ Pseudonymization is not handled by the model classes. Instead, it's handled in [
 
 ### Create a new model class
 
-1. Decide if you want a [versioned or an un-versioned model](#model-versioning). Based on your decision, create the model following the [naming conventions ans structure](#naming-conventions-and-structure) and with the correct superclass (`VersionedModel` or `BaseModel`).
+1. Decide if you want a [versioned or an unversioned model](#model-versioning). Based on your decision, create the model following the [naming conventions ans structure](#naming-conventions-and-structure) and with the correct superclass (`VersionedModel` or `BaseModel`).
 
    Note that if you add a new module for your model class, you'll need to add support for it in our [GAE datastore interface implementation](#the-gae-datastore-interface-implementation).
 

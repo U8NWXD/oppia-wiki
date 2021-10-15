@@ -37,7 +37,7 @@ The best way to minimize the amount of collected data is to not collect user dat
 
 Do not store any **sensitive** data (see above for the explanation of **sensitive** data).
 
-An example of a good practice in Oppia codebase:
+An example of a good practice in the Oppia codebase:
 
 
 
@@ -49,7 +49,7 @@ An example of a good practice in Oppia codebase:
 
 Separate the handling of user data into unique services. Some user data might make sense to add to existing models, but if we collect a bigger subset of data that was not collected before, it might make sense to separate those into its own models. In general, if the code can be easily separated into its own models or parts of the codebase, then the data should also be separated. This doesn’t mean that all the parts of the code need to be separated, for example the rules for the Wipeout and Takeout are placed in our model modules, but the code that performs the operation is then separated. (Also, if the data is **sensitive**, it needs to be stored in a separate model that can be easily deleted in its entirety — but see the point above on not storing any sensitive data in the first place).
 
-An example of a good practice in Oppia codebase:
+An example of a good practice in the Oppia codebase:
 
 
 
@@ -62,7 +62,7 @@ An example of a good practice in Oppia codebase:
 
 Make sure that, where possible, the less granular versions of user data are collected (e.g. collecting only a birth year instead of the whole birthdate). Also, instead of collecting data specific for one user, aggregate the data for a whole group of people. One possible approach is to collect specific data only for a particular retention period, then aggregate and rely on aggregations indefinitely. Where possible, use a more approximate value instead of the exact value for user data.
 
-An example of a good practice in Oppia codebase:
+An example of a good practice in the Oppia codebase:
 
 
 *   When we collect the ratings that students give to explorations we both collect the individual rating of the student (so that when the student looks at the exploration again they can see what rating they gave) but also we immediately recalculate the overall average rating of the exploration. When the user deletes themselves we can remove its given rating right away, yet still benefit from the aggregate.
@@ -72,7 +72,7 @@ An example of a good practice in Oppia codebase:
 
 Restrict access to user data only to people with enough rights. In some cases we might want to show that some data exists to all the users, but only show the actual data to the admins. Remove links between user data where there is no need for the links.
 
-An example of a good practice in Oppia codebase:
+An example of a good practice in the Oppia codebase:
 
 
 *   We have an admin page where all the admin features reside, the authorisation for this page is only given to the people that also have access to Oppia in the Google Cloud Console.
