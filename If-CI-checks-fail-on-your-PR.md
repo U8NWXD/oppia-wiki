@@ -86,10 +86,10 @@ If the test/check is flaky, you can restart the test as follows:
 
    ![Screenshot of PR CI results with details link](images/prCiResults.png)
 
-2. Click on the "Re-run all jobs" link in the upper-right.
+2. Click on the "Re-run all jobs" button in the upper-right.
 
    ![Screenshot of CI result page with link to rerun jobs](images/rerunCI.png)
 
-If you don't have the necessary permissions, ask one of your reviewers to restart the test for you.
+   If you don't see the button or cannot click it, you might not have the necessary permissions. In that case, ask one of your reviewers to restart the test for you.
 
 Following these instructions should result in PRs that are green and ready to merge by the time a reviewer looks at them, thus shortening the review cycle! If you are still unable to resolve the issues yourself, please follow our instructions to [[get help|Get-help]] from other developers.
