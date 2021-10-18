@@ -10,6 +10,8 @@
     * [[Designers and artists|Contributing-to-Oppia's-design]]
   * **[[Google Summer of Code 2021|Google-Summer-of-Code-2021]]**
   * **[[Season of Docs 2021|Season-of-Docs-2021]]**
+  * **[[Hacktoberfest 2021|Hacktoberfest-2021]]**
+  * **[[Outreachy Dec 2021 to Mar 2022|Outreachy-Dec-2021-to-Mar-2022]]**
 
 ---
 **Developing Oppia**
@@ -17,7 +19,7 @@
   * [[Installing Oppia|https://github.com/oppia/oppia/wiki/Installing-Oppia]]
   * [[Tips for common IDEs|Tips-for-common-IDEs]]
   * [[Make a pull request|Make-a-pull-request]]
-  * [[Pull requests at Oppia|Pull-requests-at-Oppia]]
+  * [[Common pull request workflows|Common-pull-request-workflows]]
   * [[How to get help|Get-help]]
   * [[Learning resources for developers|Learning-Resources]]
   * [[Git cheat sheet|Git-cheat-sheet]]
@@ -37,14 +39,17 @@
     * [[How to write type definitions|Guide-on-defining-types]]
     * [[How to write design docs|Writing-design-docs]]
     * [[Revert and Regression Policy|Revert-and-Regression-Policy]]
-    * [[If your build fails...|If-Your-Build-Fails]]
+    * [[Debugging|Debugging]]
       * [[If your presubmit checks fail|If-your-presubmit-check-fails]]
-      * [[Interpreting CircleCI Results|Interpreting-CircleCI-Results]]
-      * Debugging
-        * [[Debugging Docs|Debugging-Docs]]
-        * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
-        * [[Debugging frontend tests|Debug-frontend-tests]]
-        * [[Debugging Stories|Debugging-Stories]]
+      * [[If CI checks fail on your PR|If-CI-checks-fail-on-your-PR.md]]
+      * [[Interpreting CircleCI Results | Interpreting CircleCI Results]]
+      * [[Debugging Docs|Debugging-Docs]]
+      * [[Debugging end-to-end tests|Debug-end-to-end-tests]]
+      * [[Debugging backend tests|Debug-backend-tests]]
+      * [[Debugging frontend tests|Debug-frontend-tests]]
+      * [[Debugging custom ESLint check tests|Debug-custom-ESLint-check-tests]]
+      * [[Debugging custom Pylint check tests|Debug-custom-Pylint-check-tests]]
+      * [[Debugging Stories|Debugging-Stories]]
     * **[[Guidelines for launching new features|Launching-new-features]]**
     * [[Feature Gating|Developing-new-features-with-feature-gating]]
     * [[Lint Checks|Lint-Checks]]
@@ -56,14 +61,15 @@
     * [[Bytes and string handling in Python 3|Bytes-and-string-handling-in-Python-3]]
     * [[Guidelines for Developers with Write Access to oppia/oppia|Guidelines-for-Developers-with-Write-Access-to-oppia-oppia]]
   * Testing
-    * [[Running tests|Running-Tests]]
-    * Writing Tests
+    * [[Automated tests|Tests]]
+      * [[TypeScript tests|TypeScript-tests]]
       * [[Backend tests|Backend-tests]]
       * [[Frontend tests|Frontend-unit-tests-guide]]
       * [[End-to-end tests|End-to-End-Tests]]
       * [[Lighthouse Tests|Lighthouse-Tests]]
-    * [[Testing for Accessibility|Testing-for-Accessibility]]
-    * [[Release accessibility checklist|Release-accessibility-checklist]]
+    * Manual tests
+      * [[Testing for Accessibility|Testing-for-Accessibility]]
+      * [[Release accessibility checklist|Release-accessibility-checklist]]
   * Release Process
     * [[Release schedule|Release-schedule-and-other-information]]
     * [[Testing jobs and other features on production|Testing-jobs-and-other-features-on-production]]
@@ -84,7 +90,7 @@
     * [[Writing audit jobs|Writing-audit-jobs]]
     * [[Writing new one-off MapReduce jobs|Writing-new-one-off-jobs-using-map-reduce]]
     * [[Calculating statistics|Calculating-statistics]]
-    * [[Creating and modifying storage models | Creating-and-modifying-storage-models]]
+    * [[Storage models|Storage-models]]
     * [[Writing validators for storage models | Writing-Validators-for-storage-models]]
     * [[Coding for speed in GAE | Coding-for-speed-in-GAE]]
     * [[Adding static assets|Adding-static-assets]]
@@ -92,10 +98,12 @@
     * [[Notes on NDB Datastore transactions|Notes-on-NDB-Datastore-Transactions]]
     * [[How to handle merging of change lists for exploration properties|Guide-to-handle-merging-of-change-lists-for-exploration-properties]]
     * [[Instructions for editing roles or actions|Instructions-for-editing-roles-or-actions]]
+    * [[Protocol buffers|Protocol-buffers]]
   * Translations
     * [[Adding new translations|Adding-new-translations-for-i18n]]
     * [[How to develop for i18n|How-to-develop-for-i18n]]
   * [[Webpack|Webpack]]
+  * [[Third-party libraries|Third-party-libraries]]
   * [[Extension frameworks|Extensions-Overview]]
     * [[Rich Text Components|Rich-Text-Editor-(RTE)-Overview]]
     * [[Interactions|Creating-Interactions]]
@@ -109,6 +117,7 @@
   * [[Mobile development|Mobile-development]]
   * [[Mobile device testing|Mobile-device-testing]]
   * [[Performance testing|Performance-Testing]]
+  * [[Build process|Build-process]]
   * [[Team structure|Team-Structure]]
   * Playbooks
     * [[Instructions for making PR passes|Instructions-for-making-PR-passes]]

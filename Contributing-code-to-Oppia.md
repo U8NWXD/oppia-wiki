@@ -25,11 +25,7 @@ If you run into any problems along the way, we're here to help! Check out our [[
 
 2. Fill in the [Oppia contributor survey](https://goo.gl/forms/otv30JV3Ihv0dT3C3) to let us know what your interests are. (You can always change your responses later.) Filling out the survey will also get you assigned to a mentor at Oppia who will reach out to you over email to help you get started.
 
-3. Install Oppia following the [[installation instructions|Installing-Oppia]].  If you run into any issues, please check out the [[troubleshooting instructions|Troubleshooting]].
-
-<!--
-TODO(#4): Add link to IDE tutorial.
--->
+3. Install Oppia following the [[installation instructions|Installing-Oppia]].  If you run into any issues, please check out the [[troubleshooting instructions|Troubleshooting]]. If you want help setting up a code editor, also check out our [[guide to common IDEs|Tips-for-common-IDEs]].
 
 4. Update your GitHub settings:
 
@@ -49,7 +45,8 @@ TODO(#4): Add link to IDE tutorial.
 
 8. Join [our discord](https://discord.com/invite/dCJwEAgk3D) for fun activities!
 
-9. Take up your first starter project! You can find more details below.
+9. Take up your first starter project! You can find more details below. (Make sure to read and follow the [[PR instructions|Make-a-pull-request]] closely so that your PR review proceeds smoothly.)
+
 
 ## Developing your skills
 
@@ -63,9 +60,9 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 
 #### Backend
 
-* [#11496](https://github.com/oppia/oppia/issues/11496) (Write lint checks for the end-to-end tests)
-
 * [#13162](https://github.com/oppia/oppia/issues/13162) (Write schemas for handler class arguments)
+
+* [#14033](https://github.com/oppia/oppia/issues/14033) (Adding MyPy type annotations to domain files)
 
 #### Frontend
 
@@ -73,7 +70,7 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 
 * [#9749](https://github.com/oppia/oppia/issues/9749) (Migrate directives/controllers to Angular components)
 
-* [#8472](https://github.com/oppia/oppia/issues/8472) (Migrating AngularJS files to Angular 2+)
+* [#13764](https://github.com/oppia/oppia/issues/13764) (Maintaining Oppia's core data with frontend validation checks)
 
 * [#10798](https://github.com/oppia/oppia/issues/10798) (Fixing end-to-end tests, which are written with protractor)
 
@@ -86,8 +83,6 @@ Welcome! Please make sure to follow the instructions above if you haven't alread
 * [#8038](https://github.com/oppia/oppia/issues/8038) (Refactoring frontend services - The backend api calls in the frontend should only happen through services)
 
 * [#10474](https://github.com/oppia/oppia/issues/10474) (Make typescript checks strict)
-
-* [#10306](https://github.com/oppia/oppia/issues/10306) (Refactoring frontend - Add "async" keyword to asynchronous functions that return a promise)
 
 * [#10616](https://github.com/oppia/oppia/issues/10616) (Introduce new @typescript-eslint rules n the codebase)
 
@@ -160,11 +155,7 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 
 1. Make dependent (“stacked”) PRs to ensure smaller time between reviews and subsequent PRs. A large PR results in difficulty to review for the reviewer as well as difficulty in making changes according to a review for an author. So, it is better to create smaller PRs which deliver a single small goal. If you have code changes dependent on a PR, it is better to create a separate PR for those changes.
 
-2. Try and follow test-driven development. This is the easiest way to make sure the code you wrote is working fine. The basic idea is to first write tests for the expected behaviour and then write code that will pass those tests. Refer to our guides for writing good tests:
-
-   * [[Backend Tests|Backend-tests]]
-   * [[Frontend Tests|Frontend-unit-tests-guide]]
-   * [[End to end tests|End-to-End-Tests]]
+2. Try and follow test-driven development. This is the easiest way to make sure the code you wrote is working fine. The basic idea is to first write tests for the expected behaviour and then write code that will pass those tests. Refer to our [[guides for writing good tests|Tests]].
 
 3. If you're stuck on something, ask for help instead of letting it block all your work. It can be difficult to know when to ask for help, so one rule of thumb is to ask whenever you've been unable to make progress for an hour.
 
@@ -177,6 +168,8 @@ If an issue hasn't got someone assigned to it, and there's no existing PR for th
 7. Take the time to understand what the code you are changing is doing.  Sometimes we see PRs for changes that don't do anything useful or that don't make sense given the context of the code. These won't get merged.
 
 8. If you are making a contribution which involves changing some user interface or introducing a new feature, it is good to start with a design doc to avoid wasting efforts later. Follow our [[guide for writing design docs|Writing-design-docs]].
+
+9. You will almost certainly run into bugs where you aren't sure what the cause is. This is normal! Our [[debugging guides|Debugging]] will help you investigate the problem.
 
 ## Notes
 
