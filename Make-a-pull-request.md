@@ -117,7 +117,7 @@ Once your feature is ready, you can open a pull request (PR)!
 
 Here's a video showing one example of the PR creation process:
 
-[![First frame of a screen recording showing how to open a new PR](images/demoOpenPR.png)](images/demoOpenPR.mov)
+[![First frame of a screen recording showing how to open a new PR](images/demoOpenPR.png)](https://user-images.githubusercontent.com/19878639/137946692-7c5f72e3-c6ce-4157-b8fa-b1e82bcc7642.mov)
 
 Notice that in this example:
 
