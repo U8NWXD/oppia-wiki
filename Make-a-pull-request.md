@@ -115,9 +115,9 @@ Once your feature is ready, you can open a pull request (PR)!
 
 * Then, wait for your code to get reviewed! While you're waiting, it's totally fine to start work on a new PR if you like. Just follow these instructions again from the beginning.
 
-Here's a GIF showing one example of the PR creation process:
+Here's a video showing one example of the PR creation process:
 
-![GIF showing how to open a new PR](images/demoOpenPR.gif)
+[![First frame of a screen recording showing how to open a new PR](images/demoOpenPR.png)](images/demoOpenPR.mov)
 
 Notice that in this example:
 
